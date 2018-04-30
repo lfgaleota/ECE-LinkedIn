@@ -63,6 +63,15 @@ return [
             'bucket' => env('AWS_BUCKET'),
         ],
 
+        'rackspace' => [
+            'driver'    => 'rackspace',
+            'username'  => env('RACKSPACE_USERNAME'),
+            'key'       => env('RACKSPACE_API_KEY'),
+            'container' => env('RACKSPACE_CONTAINER'),
+            'endpoint'  => env('RACKSPACE_ENDPOINT', 'https://identity.api.rackspacecloud.com/v2.0/'),
+            'region'    => env('RACKSPACE_REGION'),
+            'url_type'  => env('RACKSPACE_URL_TYPE', 'publicURL'),
+        ],
     ],
 
 ];
