@@ -12,7 +12,8 @@ class CreateMessagesTable extends Migration {
 			$table->integer('author_id')->unsigned()->index();
 			$table->enum('type', array('TEXT', 'IMAGE', 'VIDEO'));
 			$table->text('content');
-			$table->timestamps();
+			$table->timestamp('updated_at')->useCurrent();
+            			$table->timestamp('created_at')->useCurrent();;
 		});
 	}
 

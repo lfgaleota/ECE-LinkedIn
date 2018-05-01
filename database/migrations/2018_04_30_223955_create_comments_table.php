@@ -12,7 +12,8 @@ class CreateCommentsTable extends Migration {
 			$table->bigInteger('post_id')->unsigned()->index();
 			$table->integer('author_id')->unsigned()->index();
 			$table->text('text');
-			$table->timestamps();
+			$table->timestamp('updated_at')->useCurrent();
+            			$table->timestamp('created_at')->useCurrent();;
 		});
 	}
 

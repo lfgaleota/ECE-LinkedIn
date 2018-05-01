@@ -10,7 +10,8 @@ class CreateNetworksTable extends Migration {
 		Schema::create('networks', function(Blueprint $table) {
 			$table->integer('user1_id')->unsigned();
 			$table->integer('user2_id')->unsigned();
-            $table->timestamps();
+            $table->timestamp('updated_at')->useCurrent();
+                        $table->timestamp('created_at')->useCurrent();;
 
             $table->primary(['user1_id', 'user2_id']);
 		});

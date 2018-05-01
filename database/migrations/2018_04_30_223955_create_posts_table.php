@@ -17,7 +17,8 @@ class CreatePostsTable extends Migration {
 			$table->string('image_url')->nullable();
 			$table->string('video_url')->nullable();
 			$table->boolean('public')->default(1);
-			$table->timestamps();
+			$table->timestamp('updated_at')->useCurrent();
+            			$table->timestamp('created_at')->useCurrent();;
 		});
 	}
 
