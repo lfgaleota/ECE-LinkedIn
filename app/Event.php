@@ -11,7 +11,7 @@ class Event extends Model
     public $timestamps = true;
 
     protected $primaryKey = 'event_id';
-    protected $incrementing = false;
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.

@@ -11,7 +11,7 @@ class Conversation extends Model
     public $timestamps = false;
 
     protected $primaryKey = 'conversation_id';
-    protected $incrementing = false;
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.

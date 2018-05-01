@@ -11,7 +11,7 @@ class Entity extends Model
     public $timestamps = false;
 
     protected $primaryKey = 'entity_id';
-    protected $incrementing = true;
+    public $incrementing = true;
 
     /**
      * The attributes that are mass assignable.

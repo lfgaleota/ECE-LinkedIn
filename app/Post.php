@@ -11,7 +11,7 @@ class Post extends Model
     public $timestamps = true;
 
     protected $primaryKey = 'post_id';
-    protected $incrementing = false;
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.
