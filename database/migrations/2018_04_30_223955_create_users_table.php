@@ -13,6 +13,7 @@ class CreateUsersTable extends Migration {
 			$table->string('surname');
 			$table->string('username');
 			$table->string('email');
+            $table->string('password');
 			$table->enum('role', array('ADMIN', 'AUTHOR'));
 			$table->datetime('birth_date');
 			$table->string('title')->nullable();
