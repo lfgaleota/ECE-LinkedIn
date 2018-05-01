@@ -15,7 +15,8 @@ class CreateNotificationsTable extends Migration {
 			$table->bigInteger('reaction_id')->unsigned()->nullable()->index();
 			$table->bigInteger('comment_id')->unsigned()->nullable()->index();
 			$table->bigInteger('friend_request_id')->unsigned()->nullable()->index();
-            $table->timestamps();
+            $table->timestamp('updated_at')->useCurrent();
+                        $table->timestamp('created_at')->useCurrent();;
 		});
 	}
 

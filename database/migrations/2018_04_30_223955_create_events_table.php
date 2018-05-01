@@ -14,7 +14,8 @@ class CreateEventsTable extends Migration {
 			$table->string('name');
 			$table->string('description')->nullable();
 			$table->string('location');
-			$table->timestamps();
+			$table->timestamp('updated_at')->useCurrent();
+            			$table->timestamp('created_at')->useCurrent();;
 		});
 	}
 

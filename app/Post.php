@@ -4,6 +4,33 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Post
+ *
+ * @property int $post_id
+ * @property int $author_id
+ * @property int|null $event_id
+ * @property string $type
+ * @property string|null $location
+ * @property string|null $mood
+ * @property string|null $image_url
+ * @property string|null $video_url
+ * @property int $public
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereAuthorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereEventId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereImageUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereLocation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereMood($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post wherePostId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post wherePublic($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereVideoUrl($value)
+ * @mixin \Eloquent
+ */
 class Post extends Model 
 {
 

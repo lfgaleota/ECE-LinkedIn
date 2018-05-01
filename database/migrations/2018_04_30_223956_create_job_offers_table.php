@@ -13,7 +13,8 @@ class CreateJobOffersTable extends Migration {
 			$table->integer('entity_id')->unsigned()->index();
 			$table->string('position');
 			$table->longText('description');
-			$table->timestamps();
+			$table->timestamp('updated_at')->useCurrent();
+            			$table->timestamp('created_at')->useCurrent();;
 		});
 	}
 

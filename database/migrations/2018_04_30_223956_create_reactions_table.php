@@ -13,7 +13,8 @@ class CreateReactionsTable extends Migration {
 			$table->bigInteger('comment_id')->unsigned()->nullable()->index();
 			$table->integer('author_id')->unsigned()->index();
 			$table->enum('type', array('LIKE', 'LOVE', 'LOL', 'WOW', 'SAD', 'ANGRY'));
-			$table->timestamps();
+			$table->timestamp('updated_at')->useCurrent();
+            			$table->timestamp('created_at')->useCurrent();;
 		});
 	}
 

@@ -4,6 +4,23 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Comment
+ *
+ * @property int $comment_id
+ * @property int $post_id
+ * @property int $author_id
+ * @property string $text
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment whereAuthorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment whereCommentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment wherePostId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment whereText($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Comment extends Model 
 {
 
