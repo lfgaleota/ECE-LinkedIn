@@ -11,7 +11,7 @@ class Reaction extends Model
     public $timestamps = true;
 
     protected $primaryKey = 'reaction_id';
-    protected $incrementing = false;
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.

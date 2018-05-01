@@ -11,7 +11,7 @@ class Comment extends Model
     public $timestamps = true;
 
     protected $primaryKey = 'comment_id';
-    protected $incrementing = false;
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.

@@ -11,7 +11,7 @@ class Notification extends Model
     public $timestamps = true;
 
     protected $primaryKey = 'notification_id';
-    protected $incrementing = false;
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.

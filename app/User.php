@@ -13,7 +13,7 @@ class User extends Authenticatable
     public $timestamps = true;
 
     protected $primaryKey = 'user_id';
-    protected $incrementing = true;
+    public $incrementing = true;
 
     /**
      * The attributes that are mass assignable.
@@ -41,6 +41,18 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
+    ];
+
+    /**
+     * The attributes that should be validated and their respective format
+     */
+    const validation = [
+        'username' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'name' => 'required|string|max:255',
+        'surname' => 'required|string|max:255',
+        'password' => 'required|string|min:6|confirmed',
+        'birth_date' => 'required|date',
     ];
 
     public function getPhoto()

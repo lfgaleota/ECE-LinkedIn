@@ -11,7 +11,7 @@ class JobOffer extends Model
     public $timestamps = true;
 
     protected $primaryKey = 'job_id';
-    protected $incrementing = false;
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.
