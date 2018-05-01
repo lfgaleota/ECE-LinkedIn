@@ -11,6 +11,36 @@
 |
 */
 
+/*
+ * GENERAL
+ */
 Route::get('/', 'IndexController@get')->name('index');
 
+/*
+ * USERS
+ */
+Route::get('user/', 'UserController@list')->name( 'user.list' );
+
+/*
+ * NETWORK & FRIENDS
+ */
+Route::get('network', 'NetworkMembersController@list')->name( 'user.network.list' );
+Route::get('friend', 'FriendController@list')->name( 'user.friend.list' );
+
+Route::put('network/{username}', 'NetworkMembersController@add')->name( 'user.network.add' );
+Route::put('friend/{username}', 'FriendController@add')->name( 'user.friend.add' );
+
+Route::delete('network/{username}', 'NetworkMembersController@remove')->name( 'user.network.remove' );
+Route::delete('friend/{username}', 'FriendController@remove')->name( 'user.friend.remove' );
+
+/*
+ * AUTH
+ */
 Auth::routes();
+
+/*
+ * USER PROFILE
+ *
+ * (last one because it handles every other possible URLs)
+ */
+Route::get('{username}', 'UserController@profile')->name( 'user.profile' );

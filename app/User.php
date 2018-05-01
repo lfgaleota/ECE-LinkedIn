@@ -4,7 +4,44 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
+/**
+ * App\User
+ *
+ * @property int $user_id
+ * @property string $name
+ * @property string $surname
+ * @property string $username
+ * @property string $email
+ * @property string|null $password
+ * @property string $role
+ * @property string $birth_date
+ * @property string|null $title
+ * @property string|null $cv_url
+ * @property int|null $photo_id
+ * @property int|null $cover_id
+ * @property string|null $remember_token
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereBirthDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereCoverId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereCvUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User wherePhotoId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereRole($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereSurname($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereUsername($value)
+ * @mixin \Eloquent
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -25,6 +62,7 @@ class User extends Authenticatable
         'surname',
         'username',
         'email',
+        'password',
         'role',
         'birth_date',
         'title',
@@ -70,11 +108,6 @@ class User extends Authenticatable
         return $this->belongsToMany('Conversation', 'conversation_member', 'user_id', 'conversation_id');
     }
 
-    public function getFriends()
-    {
-        return $this->belongsToMany('User', 'friend', 'friend2_id', 'friend1_id');
-    }
-
     public function getFriendRequests()
     {
         return $this->hasMany('FriendRequest', 'invited_id');
@@ -85,4 +118,136 @@ class User extends Authenticatable
         return $this->hasMany('Notification');
     }
 
+    public function getName() {
+        return $this->name . " " . $this->surname;
+    }
+
+    public function selectorNetworkMembers()
+    {
+        /*return DB::table( 'users AS user1' )
+            ->join( 'networks', 'user1.user_id', '=', 'networks.user1_id' )
+            ->join( 'users AS user2', 'user2.user_id', '=', 'networks.user2_id' )
+            ->where( 'user1.user_id', '=', $this->user_id )
+            ->orWhere( 'user2.user_id', '=', $this->user_id );*/
+        return User::join( 'networks', 'users.user_id', '=', 'networks.user1_id' )
+            ->join( 'users AS user2', 'user2.user_id', '=', 'networks.user2_id' )
+            ->where( 'users.user_id', '=', $this->user_id )
+            ->orWhere( 'user2.user_id', '=', $this->user_id );
+    }
+
+    public function selectorFriends()
+    {
+        return User::join( 'friendships', 'users.user_id', '=', 'friendships.friend1_id' )
+            ->join( 'users AS user2', 'user2.user_id', '=', 'friendships.friend2_id' )
+            ->where( 'users.user_id', '=', $this->user_id )
+            ->orWhere( 'user2.user_id', '=', $this->user_id );
+    }
+
+    public function selectorNetworkMember(User $user ) {
+        return DB::table( 'networks' )
+            ->where(function ($query) use ($user) {
+                $query->where('user1_id', '=', $this->user_id)->where('user2_id', '=', $user->user_id);
+            })->orWhere(function ($query) use ($user) {
+                $query->where('user2_id', '=', $this->user_id)->where('user1_id', '=', $user->user_id);
+            });
+    }
+
+    public function selectorFriendship( User $user ) {
+        return DB::table( 'friendships' )
+            ->where(function ($query) use ($user) {
+                $query->where('friend1_id', '=', $this->user_id)->where('friend2_id', '=', $user->user_id);
+            })->orWhere(function ($query) use ($user) {
+                $query->where('friend2_id', '=', $this->user_id)->where('friend1_id', '=', $user->user_id);
+            });
+    }
+
+    public function getNetworks()
+    {
+        return $this->selectorNetworkMembers()->get();
+        //return DB::select('SELECT * FROM users AS user1 JOIN networks ON user1.user_id = networks.user1_id JOIN users AS user2 ON user2.user_id = networks.user2_id WHERE user1.user_id = :id OR user2.user_id = :id;', ['id' => $this->user_id]);
+    }
+
+    public function getFriends()
+    {
+        return $this->selectorFriends()->get();
+    }
+
+    public function isSame( User $user ) {
+        return $this->user_id === $user->user_id;
+    }
+
+    public function isInNetwork( User $user ) {
+        return $this->selectorNetworkMember( $user )->first() !== null;
+    }
+
+    public function isFriend( User $user ) {
+        return $this->selectorFriendship( $user )->first() !== null;
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     * @throws \Exception
+     */
+    public function addToNetwork(User $user ) {
+        if( $this->isSame( $user ) ) {
+            throw new \Exception( "Cannot add yourself to your network." );
+        }
+        return DB::table( 'networks' )->insert([
+            'user1_id' => $this->user_id,
+            'user2_id' => $user->user_id
+        ]);
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     * @throws \Exception
+     */
+    public function addFriend(User $user ) {
+        if( $this->isSame( $user ) ) {
+            throw new \Exception( "Cannot add yourself as friend." );
+        }
+        if( !$this->isInNetwork( $user ) ) {
+            $this->addToNetwork( $user );
+        }
+
+        return DB::table( 'friendships' )->insert([
+            'friend1_id' => $this->user_id,
+            'friend2_id' => $user->user_id
+        ]);
+    }
+
+    /**
+     * @param User $user
+     * @return int
+     * @throws \Exception
+     */
+    public function removeFromNetwork(User $user ) {
+        if( $this->isSame( $user ) ) {
+            throw new \Exception( "Illegal removing oneself from his network." );
+        }
+        if( $this->isFriend( $user ) ) {
+            $this->removeFriend( $user, true );
+        }
+
+        return $this->selectorNetworkMember( $user )->delete();
+    }
+
+    /**
+     * @param User $user
+     * @param bool $skipNetwork
+     * @return int
+     * @throws \Exception
+     */
+    public function removeFriend(User $user, $skipNetwork = true ) {
+        if( $this->isSame( $user ) ) {
+            throw new \Exception( "Illegal removing oneself as friend." );
+        }
+        if( !$skipNetwork && !$this->isInNetwork( $user ) ) {
+            $this->removeFromNetwork( $user );
+        }
+
+        return $this->selectorFriendship( $user )->delete();
+    }
 }
