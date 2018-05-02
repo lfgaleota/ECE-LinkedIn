@@ -132,7 +132,10 @@ class User extends Authenticatable
         return User::join( 'networks', 'users.user_id', '=', 'networks.user1_id' )
             ->join( 'users AS user2', 'user2.user_id', '=', 'networks.user2_id' )
             ->where( 'users.user_id', '=', $this->user_id )
-            ->leftJoin( 'friendships', 'friend2_id', '=', 'user2.user_id' )
+            ->leftJoin( 'friendships', function ( $join ) {
+                $join->on('friend2_id', '=', 'user2.user_id')
+                ->on('friend1_id', '=', 'users.user_id');
+            })
             ->addSelect( '*' )
             ->addSelect( 'friend2_id AS isFriendOf' );
     }
