@@ -22,4 +22,13 @@ class UserController extends Controller
             'user' => $user
         ]);
     }
+
+    public function network() {
+        $networkmembers = Auth::user()->selectorNetworkMembers( Auth::user() )->paginate( 20 );
+
+        return view( 'app.networks.list', [
+            'networkmembers' => $networkmembers
+        ]);
+    }
+
 }

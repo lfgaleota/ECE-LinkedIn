@@ -8,14 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class FriendController extends Controller
 {
-    public function list() {
-        $users = Auth::user()->selectorFriends()->paginate( 20 );
-
-        return view( 'app.friends.list', [
-            'users' => $users
-        ]);
-    }
-
     /**
      * @param $username
      * @return \Illuminate\Http\RedirectResponse

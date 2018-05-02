@@ -8,6 +8,11 @@
     @else
         @if( Auth::user()->isSame( $user ) )
             You are viewing your own profile
+            <p>{{ $user->cover_id or '' }}</p>
+            <p>{{ $user->photo_id or '' }}</p>
+            <p>Network</p>
+            @include( 'app.inc.users.list', ['users' => $user->getNetworks()])
+            
         @else
             @if( Auth::user()->isInNetwork( $user ) )
                 @include( 'app.inc.buttons.remove.network', [ 'username' => $user->username ] )

@@ -8,14 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class NetworkMembersController extends Controller
 {
-    public function list() {
-        $users = Auth::user()->selectorNetworkMembers()->paginate( 20 );
-
-        return view( 'app.networks.list', [
-            'users' => $users
-        ]);
-    }
-
     /**
      * @param $username
      * @return \Illuminate\Http\RedirectResponse
