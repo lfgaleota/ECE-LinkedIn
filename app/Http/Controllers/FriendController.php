@@ -8,12 +8,16 @@ use Illuminate\Support\Facades\Auth;
 
 class FriendController extends Controller
 {
+    public function get() {
+        return response()->json( Auth::user()->getFriends() );
+    }
+
     /**
      * @param $username
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function add($username ) {
+    public function add( $username ) {
         $user = User::whereUsername( $username )->firstOrFail();
 
         Auth::user()->addFriend( $user );
@@ -42,7 +46,7 @@ class FriendController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function remove($username ) {
+    public function remove( $username ) {
         $user = User::whereUsername( $username )->firstOrFail();
 
         Auth::user()->removeFriend( $user );

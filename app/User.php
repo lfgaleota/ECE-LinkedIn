@@ -147,7 +147,7 @@ class User extends Authenticatable
             ->where( 'users.user_id', '=', $this->user_id );
     }
 
-    public function selectorNetworkMember(User $user ) {
+    public function selectorNetworkMember( User $user ) {
         return DB::table( 'networks' )
             ->where(function ($query) use ($user) {
                 $query->where('user1_id', '=', $this->user_id)->where('user2_id', '=', $user->user_id);
@@ -161,7 +161,44 @@ class User extends Authenticatable
             });
     }
 
-    public function getNetworks()
+    public function selectorTimeline()
+    {
+        return Post::join( 'networks', function ( $join ) {
+            $join->on( 'networks.user1_id', '=', 'posts.author_id' )->orOn( 'networks.user2_id', '=', 'posts.author_id' );
+        })->where(function ($query) {
+            $query->where( 'networks.user1_id', '=', $this->user_id )
+                ->orWhere( 'networks.user2_id', '=', $this->user_id );
+        })->where( function( $query ) {
+            $query->where('visibility', '=',  'PUBLIC' )
+                ->orWhere(function ($query) {
+                    $query->where('visibility', '=', 'NETWORKMEMBERS')->where(function ($query) {
+                        $query->where( 'user1_id', '=', $this->user_id )
+                            ->orWhere( 'user2_id', '=', $this->user_id );
+                    });
+                })->orWhere(function ($query) {
+                    $query->where('visibility', '=', 'FRIENDS')
+                        ->whereExists(function ($query) {
+                            $query->select( DB::raw( '*' ) )
+                                ->from( 'friendships' )
+                                ->where(function ($query) {
+                                    $query->where('friendships.friend1_id', '=', $this->user_id)->where('friendships.friend2_id', '=', 'posts.author_id');
+                                })->orWhere(function ($query) {
+                                    $query->where('friendships.friend2_id', '=', $this->user_id)->where('friendships.friend1_id', '=', 'posts.author_id');
+                                });
+                        });
+                })->orWhere(function ($query) {
+                    $query->where('visibility', '=', 'RESTRICTED')
+                        ->whereExists(function ($query) {
+                            $query->select( DB::raw( '*' ) )
+                                ->from( 'post_visibilities' )
+                                ->where( 'post_visibilities.post_id', '=', 'posts.post_id' )
+                                ->where( 'post_visibilities.user_id', '=', $this->user_id );
+                        });
+                });
+        });
+    }
+
+    public function getNetworkMembers()
     {
         return $this->selectorNetworkMembers()->get();
         //return DB::select('SELECT * FROM users AS user1 JOIN networks ON user1.user_id = networks.user1_id JOIN users AS user2 ON user2.user_id = networks.user2_id WHERE user1.user_id = :id OR user2.user_id = :id;', ['id' => $this->user_id]);
@@ -170,6 +207,11 @@ class User extends Authenticatable
     public function getFriends()
     {
         return $this->selectorFriends()->get();
+    }
+
+    public function getTimeline()
+    {
+        return $this->selectorTimeline()->get();
     }
 
     public function isSame( User $user ) {

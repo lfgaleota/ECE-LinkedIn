@@ -1,3 +1,8 @@
+@section( 'scripts' )
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/riot@3.9/riot+compiler.min.js"></script>
+@endsection
+
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
@@ -22,7 +27,6 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
     @yield( 'scripts' )
 </body>
 </html>
