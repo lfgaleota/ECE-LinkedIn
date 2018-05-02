@@ -37,11 +37,16 @@
                 </div>
             </div>
         </div>
+        <div class="progress" ref="progressBar"></div>
     </form>
 
     <style>
         :scope {
             display: block;
+        }
+
+        form {
+            position: relative;
         }
 
         .card-section {
@@ -84,6 +89,18 @@
         .visilibity-selector:checked + .visibility-label {
             background: #23a3ba;
             color: white;
+        }
+
+        .progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            width: 0;
+            padding: 0;
+            margin: 0;
+            background: #23a3ba;
+            transition: width 0.25s ease-in;
         }
     </style>
 
@@ -277,6 +294,10 @@
             return that.form;
         }
 
+        setProgress( progress ) {
+            that.refs.progressBar.style.width = progress + '%';
+        }
+
         clear() {
 		    that.clearForm();
             that.clearVisibility();
@@ -303,7 +324,7 @@
         	e.preventDefault();
         	e.stopImmediatePropagation();
         	that.disable();
-            opts.callback(getForm());
+            opts.onSubmitted( getForm(), that );
         }
     </script>
 </post-form>

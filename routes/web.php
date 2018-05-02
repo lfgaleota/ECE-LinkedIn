@@ -39,10 +39,10 @@ Route::middleware(['auth'])->group( function() {
 Route::middleware(['auth', 'api'])->group( function() {
     Route::get('api/network', 'NetworkMembersController@get')->name( 'api.user.network.list' );
     Route::get('api/friend', 'FriendController@get')->name( 'api.user.friend.list' );
-	Route::get('api/timeline', 'UserController@timeline')->name( 'api.user.timeline' );
-	Route::get('api/images', 'UserController@images')->name( 'api.user.images' );
-	Route::get('api/videos', 'UserController@videos')->name( 'api.user.videos' );
-	Route::get('api/events', 'UserController@events')->name( 'api.user.events' );
+	Route::get('api/timeline/{last_id?}', 'UserController@timeline')->name( 'api.user.timeline' );
+	Route::get('api/images/{last_id?}', 'UserController@images')->name( 'api.user.images' );
+	Route::get('api/videos/{last_id?}', 'UserController@videos')->name( 'api.user.videos' );
+	Route::get('api/events/{last_id?}', 'UserController@events')->name( 'api.user.events' );
 });
 
 /*

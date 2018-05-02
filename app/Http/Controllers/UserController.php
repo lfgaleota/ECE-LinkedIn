@@ -18,7 +18,7 @@ class UserController extends Controller
     public function timeline( $after = null ) {
     	$posts = Auth::user()->selectorTimeline()->limit( 20 );
     	if( $after != null ) {
-    		$posts->where( 'post_id', '>', $after );
+    		$posts->where( 'post_id', '<', $after );
 	    }
 	    $posts = $posts->get();
 
@@ -28,7 +28,7 @@ class UserController extends Controller
 	public function images( $after = null ) {
 		$posts = Auth::user()->selectorImages()->limit( 20 );
 		if( $after != null ) {
-			$posts->where( 'post_id', '>', $after );
+			$posts->where( 'post_id', '<', $after );
 		}
 		$posts = $posts->get();
 
@@ -38,7 +38,7 @@ class UserController extends Controller
 	public function videos( $after = null ) {
 		$posts = Auth::user()->selectorVideos()->limit( 20 );
 		if( $after != null ) {
-			$posts->where( 'post_id', '>', $after );
+			$posts->where( 'post_id', '<', $after );
 		}
 		$posts = $posts->get();
 
@@ -48,7 +48,7 @@ class UserController extends Controller
 	public function events( $after = null ) {
 		$posts = Auth::user()->selectorEvents()->limit( 20 );
 		if( $after != null ) {
-			$posts->where( 'event_id', '>', $after );
+			$posts->where( 'event_id', '<', $after );
 		}
 		$posts = $posts->get();
 
