@@ -21,6 +21,22 @@ class FriendController extends Controller
         return back();
     }
 
+        public function ask($username ) {
+        $user = User::whereUsername( $username )->firstOrFail();
+
+        Auth::user()->sendFriendRequest( $user );
+
+        return back();
+    }
+
+        public function refuse($username ) {
+        $user = User::whereUsername( $username )->firstOrFail();
+
+        Auth::user()->delFriendRequest( $user );
+
+        return back();
+    }
+
     /**
      * @param $username
      * @return \Illuminate\Http\RedirectResponse

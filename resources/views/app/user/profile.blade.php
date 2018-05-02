@@ -21,6 +21,10 @@
             @endif
             @if( Auth::user()->isFriend( $user ) )
                 @include( 'app.inc.buttons.remove.friend', [ 'username' => $user->username ] )
+            @elseif (Auth::user()->askedFriend( $user ) )
+               Your request was sent
+            @elseif (Auth::user()->wasAskedFriend( $user ) )
+                @include( 'app.inc.buttons.request', [ 'username' => $user->username ] )
             @else
                 @include( 'app.inc.buttons.add.friend', [ 'username' => $user->username ] )
             @endif

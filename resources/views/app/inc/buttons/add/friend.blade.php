@@ -1,4 +1,4 @@
-{!! Form::open(['route' => [ 'user.friend.add', $username ]]) !!}
+{!! Form::open(['route' => [ 'user.friend.ask', $username ]]) !!}
 {{ method_field('PUT') }}
-<button type="submit" class="button">Add as friend</button>
+<button type="submit" class="button">Send friend request</button>
 {!! Form::close() !!}
