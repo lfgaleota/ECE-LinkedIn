@@ -5,6 +5,9 @@
 // Variables
 @import "settings";
 
-// Bootstrap
+// Foundation
 @import "~foundation-sites/scss/foundation.scss";
 @include foundation-everything(true);
+
+// Font Awesome
+@import "~font-awesome/scss/font-awesome.scss";

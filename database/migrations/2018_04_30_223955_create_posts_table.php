@@ -16,7 +16,7 @@ class CreatePostsTable extends Migration {
 			$table->enum('mood', array('HAPPY', 'MAD', 'SAD', 'LAUGHING', 'HUNGRY', 'EXCITED', 'ACTIVITY_RUNNING', 'ACTIVITY_EATING', 'ACTIVITY_TRAVELING', 'ACTIVITY_WATCHING'))->nullable();
 			$table->string('image_url')->nullable();
 			$table->string('video_url')->nullable();
-			$table->boolean('public')->default(1);
+            $table->enum('visibility', array('PUBLIC', 'NETWORKMEMBERS', 'FRIENDS', 'RESTRICTED'));
 			$table->timestamp('updated_at')->useCurrent();
             			$table->timestamp('created_at')->useCurrent();;
 		});
