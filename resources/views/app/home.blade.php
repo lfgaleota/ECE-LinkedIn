@@ -27,9 +27,10 @@
 			window.axios.put( '{{ url( "api/post" ) }}', form, { onUploadProgress: onProgress } )
 				.then( function( response ) {
 					tag.clear();
+					tag.setProgress( 0 );
 					tag.enable();
-					document.location.reload();
-				} ).catch( function( error ) {
+					infiniteScroller.reload();
+				}).catch( function( error ) {
 				tag.enable();
 				tag.setProgress( 0 );
 				console.log( error );
@@ -52,6 +53,7 @@
 				});
 		}
 
-		window.riot.mount( 'tag-infinite-scroller', { load: loadPost, getItemId: getPostId, component: 'post-renderer', scrollElement: document } );
+		var infiniteScroller = window.riot.mount( 'tag-infinite-scroller', { load: loadPost, getItemId: getPostId, component: 'post-renderer', scrollElement: document } );
+		infiniteScroller = infiniteScroller[ 0 ];
 	</script>
 @endsection
