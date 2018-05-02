@@ -15,11 +15,45 @@ class UserController extends Controller
         ]);
     }
 
-    public function timeline() {
-    	$posts = Auth::user()->selectorTimeline()->limit( 20 )->get();
+    public function timeline( $after = null ) {
+    	$posts = Auth::user()->selectorTimeline()->limit( 20 );
+    	if( $after != null ) {
+    		$posts->where( 'post_id', '>', $after );
+	    }
+	    $posts = $posts->get();
 
     	return response()->json( $posts );
     }
+
+	public function images( $after = null ) {
+		$posts = Auth::user()->selectorImages()->limit( 20 );
+		if( $after != null ) {
+			$posts->where( 'post_id', '>', $after );
+		}
+		$posts = $posts->get();
+
+		return response()->json( $posts );
+	}
+
+	public function videos( $after = null ) {
+		$posts = Auth::user()->selectorVideos()->limit( 20 );
+		if( $after != null ) {
+			$posts->where( 'post_id', '>', $after );
+		}
+		$posts = $posts->get();
+
+		return response()->json( $posts );
+	}
+
+	public function events( $after = null ) {
+		$posts = Auth::user()->selectorEvents()->limit( 20 );
+		if( $after != null ) {
+			$posts->where( 'event_id', '>', $after );
+		}
+		$posts = $posts->get();
+
+		return response()->json( $posts );
+	}
 
     public function profile( $username ) {
         $user = User::whereUsername( $username )->firstOrFail();

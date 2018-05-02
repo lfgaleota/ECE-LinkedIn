@@ -2,16 +2,18 @@
     <div class="back"></div>
     <form ref="form" class="card" onreset={ cancel } onsubmit={ submit }>
         <div class="card-section grid-y">
-            <div class="contents cell medium-auto">
+            <div class="contents cell medium-auto" if={ !loading }>
                 <label each={ item in items } class={ opts.fullWidth ? 'full-width' : '' }>
                     <input type="checkbox" checked={ item.selected } onchange={ parent.elementChecked }>
                     <div class="content"><div data-is={ opts.component } item={ item }></div></div>
                 </label>
             </div>
-            <div class="toolbar cell medium-shrink">
-                <button class="button align-right" type="reset"><i class="fa fa-remove"></i></button>
-                <button class="button align-right" type="submit"><i class="fa fa-check"></i></button>
+            <div class="toolbar cell medium-shrink" if={ !loading }>
+                <button class="button" if={ opts.hasAdd } onclick={ addClick }><i class="fa fa-plus"></i></button>
+                <button class="button float-right" type="submit"><i class="fa fa-check"></i></button>
+                <button class="button float-right" type="reset"><i class="fa fa-remove"></i></button>
             </div>
+            <spinner if={ loading }></spinner>
         </div>
     </form>
 
@@ -45,12 +47,9 @@
             z-index: 10;
         }
 
-        .card {
-            /*overflow: auto;*/
-        }
-
         .card-section {
             position: relative;
+            padding: 0;
         }
 
         .contents {
@@ -98,13 +97,27 @@
         }
 
         .toolbar {
-            text-align: right;
             border-top: 1px solid #e6e6e6;
+            font-size: 0;
+        }
+
+        .toolbar > *,
+        .toolbar .button {
+            display: inline-block;
+            margin: 0;
+        }
+
+        spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%); translateY(-50%);
         }
     </style>
 
     <script>
         this.items = [];
+        this.loading = false;
 
         let that = this;
 
@@ -131,19 +144,37 @@
             e.item.item.selected = e.target.checked;
         }
 
+        addClick( e ) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            opts.add( that );
+        }
+
         submit(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let items = getItems();
             this.unmount();
-            opts.onSelected(items);
+            if( opts.onSelected ) {
+                opts.onSelected(items);
+            }
         }
 
         cancel(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             this.unmount();
-            opts.onCancelled();
+            if( opts.onCancelled ) {
+                opts.onCancelled();
+            }
+        }
+
+        loading() {
+            this.loading = true;
+        }
+
+        notLoading() {
+            this.loading = false;
         }
     </script>
 </tag-selector>

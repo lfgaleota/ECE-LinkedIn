@@ -13,9 +13,11 @@
 @section( 'scripts' )
     @parent
     <script data-src="{{ asset( 'tags/post-form.tag' ) }}" type="riot/tag"></script>
+    <script data-src="{{ asset( 'tags/image-form.tag' ) }}" type="riot/tag"></script>
     <script data-src="{{ asset( 'tags/tag-selector.tag' ) }}" type="riot/tag"></script>
     <script data-src="{{ asset( 'tags/friend-renderer.tag' ) }}" type="riot/tag"></script>
-    <!--<script data-src="{{ asset( 'tags/friend-selector.tag' ) }}" type="riot/tag"></script>-->
+    <script data-src="{{ asset( 'tags/image-renderer.tag' ) }}" type="riot/tag"></script>
+    <script data-src="{{ asset( 'tags/spinner.tag' ) }}" type="riot/tag"></script>
     <script>
         function onPostSubmit( form ) {
         	window.axios.put( '{{ url( "api/post" ) }}', form )
