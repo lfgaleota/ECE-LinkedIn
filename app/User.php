@@ -132,23 +132,22 @@ class User extends Authenticatable
         return User::join( 'networks', 'users.user_id', '=', 'networks.user1_id' )
             ->join( 'users AS user2', 'user2.user_id', '=', 'networks.user2_id' )
             ->where( 'users.user_id', '=', $this->user_id )
-            ->orWhere( 'user2.user_id', '=', $this->user_id );
+            ->leftJoin( 'friendships', 'friend2_id', '=', 'user2.user_id' )
+            ->addSelect( '*' )
+            ->addSelect( 'friend2_id AS isFriendOf' );
     }
 
     public function selectorFriends()
     {
         return User::join( 'friendships', 'users.user_id', '=', 'friendships.friend1_id' )
             ->join( 'users AS user2', 'user2.user_id', '=', 'friendships.friend2_id' )
-            ->where( 'users.user_id', '=', $this->user_id )
-            ->orWhere( 'user2.user_id', '=', $this->user_id );
+            ->where( 'users.user_id', '=', $this->user_id );
     }
 
     public function selectorNetworkMember(User $user ) {
         return DB::table( 'networks' )
             ->where(function ($query) use ($user) {
                 $query->where('user1_id', '=', $this->user_id)->where('user2_id', '=', $user->user_id);
-            })->orWhere(function ($query) use ($user) {
-                $query->where('user2_id', '=', $this->user_id)->where('user1_id', '=', $user->user_id);
             });
     }
 
@@ -156,8 +155,6 @@ class User extends Authenticatable
         return DB::table( 'friendships' )
             ->where(function ($query) use ($user) {
                 $query->where('friend1_id', '=', $this->user_id)->where('friend2_id', '=', $user->user_id);
-            })->orWhere(function ($query) use ($user) {
-                $query->where('friend2_id', '=', $this->user_id)->where('friend1_id', '=', $user->user_id);
             });
     }
 
@@ -184,6 +181,10 @@ class User extends Authenticatable
         return $this->selectorFriendship( $user )->first() !== null;
     }
 
+    public function hasFriendOf() {
+        return array_key_exists('isFriendOf',$this->toArray());
+    }
+
     /**
      * @param User $user
      * @return bool
@@ -193,10 +194,15 @@ class User extends Authenticatable
         if( $this->isSame( $user ) ) {
             throw new \Exception( "Cannot add yourself to your network." );
         }
-        return DB::table( 'networks' )->insert([
+        $status = DB::table( 'networks' )->insert([
             'user1_id' => $this->user_id,
             'user2_id' => $user->user_id
         ]);
+        $status &= DB::table( 'networks' )->insert([
+            'user2_id' => $this->user_id,
+            'user1_id' => $user->user_id
+        ]);
+        return $status;
     }
 
     /**
@@ -212,10 +218,15 @@ class User extends Authenticatable
             $this->addToNetwork( $user );
         }
 
-        return DB::table( 'friendships' )->insert([
+        $status = DB::table( 'friendships' )->insert([
             'friend1_id' => $this->user_id,
             'friend2_id' => $user->user_id
         ]);
+        $status &= DB::table( 'friendships' )->insert([
+            'friend2_id' => $this->user_id,
+            'friend1_id' => $user->user_id
+        ]);
+        return $status;
     }
 
     /**
@@ -231,7 +242,12 @@ class User extends Authenticatable
             $this->removeFriend( $user, true );
         }
 
-        return $this->selectorNetworkMember( $user )->delete();
+        return DB::table( 'networks' )
+            ->where(function ($query) use ($user) {
+                $query->where('user1_id', '=', $this->user_id)->where('user2_id', '=', $user->user_id);
+            })->orWhere(function ($query) use ($user) {
+                $query->where('user2_id', '=', $this->user_id)->where('user1_id', '=', $user->user_id);
+            })->delete();
     }
 
     /**
@@ -248,6 +264,11 @@ class User extends Authenticatable
             $this->removeFromNetwork( $user );
         }
 
-        return $this->selectorFriendship( $user )->delete();
+        return DB::table( 'friendships' )
+            ->where(function ($query) use ($user) {
+                $query->where('friend1_id', '=', $this->user_id)->where('friend2_id', '=', $user->user_id);
+            })->orWhere(function ($query) use ($user) {
+                $query->where('friend2_id', '=', $this->user_id)->where('friend1_id', '=', $user->user_id);
+            })->delete();
     }
 }

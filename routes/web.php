@@ -24,8 +24,7 @@ Route::get('user/', 'UserController@list')->name( 'user.list' );
 /*
  * NETWORK & FRIENDS
  */
-Route::get('network', 'NetworkMembersController@list')->name( 'user.network.list' );
-Route::get('friend', 'FriendController@list')->name( 'user.friend.list' );
+Route::get('network', 'UserController@network')->name( 'user.network.list' );
 
 Route::put('network/{username}', 'NetworkMembersController@add')->name( 'user.network.add' );
 Route::put('friend/{username}', 'FriendController@add')->name( 'user.friend.add' );

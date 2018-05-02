@@ -22,7 +22,6 @@
                 @auth
                     <li><a href="{{ route( 'user.list' ) }}">Users</a></li>
                     <li><a href="{{ route( 'user.network.list' ) }}">Network</a></li>
-                    <li><a href="{{ route( 'user.friend.list' ) }}">Friends</a></li>
                 @endif
             </ul>
 
@@ -30,7 +29,7 @@
             <ul class="nav navbar-nav navbar-right">
                 @auth
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                        <a href="{{ route( 'user.profile', [ 'username' => Auth::user()->username ] ) }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 
