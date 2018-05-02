@@ -185,6 +185,22 @@ class User extends Authenticatable
         return array_key_exists('isFriendOf',$this->toArray());
     }
 
+    public function askedFriend(User $user ) {
+        $status = DB::table( 'friend_requests' )
+            ->where('invited_id', '=', $user->user_id)
+            ->where('requester_id', '=', $this->user_id)
+            ->first();
+        return $status !== null;
+    }
+
+   public function wasAskedFriend(User $user ) {
+        $status = DB::table( 'friend_requests' )
+            ->where('invited_id', '=', $this->user_id)
+            ->where('requester_id', '=', $user->user_id)
+            ->first();
+        return $status !== null;
+    }
+
     /**
      * @param User $user
      * @return bool
@@ -226,9 +242,35 @@ class User extends Authenticatable
             'friend2_id' => $this->user_id,
             'friend1_id' => $user->user_id
         ]);
+
+
         return $status;
     }
 
+       public function sendFriendRequest(User $user ) {
+        //send friend request
+        //check if selected user is not the same user
+         if( $this->isSame( $user ) ) {
+            throw new \Exception( "Cannot add yourself as friend." );
+        }
+        //create request
+     $status = DB::table( 'friend_requests' )->insert([
+            'requester_id' => $this->user_id,
+            'invited_id' => $user->user_id
+        ]);
+        return $status;
+    }
+
+        public function delFriendRequest(User $user ) {
+        //delete friend request
+
+        //create request
+     $status = DB::table( 'friend_requests' )
+     ->where('requester_id','=', $user->user_id)
+     ->where('invited_id','=', $this->user_id)
+     ->delete();
+        return $status;
+    }
     /**
      * @param User $user
      * @return int

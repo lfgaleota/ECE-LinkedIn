@@ -31,4 +31,6 @@ class UserController extends Controller
         ]);
     }
 
+    
+
 }
