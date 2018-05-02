@@ -14,20 +14,29 @@
             @include( 'app.inc.users.list', ['users' => $user->getNetworks()])
             
         @else
+            
             @if( Auth::user()->isInNetwork( $user ) )
                 @include( 'app.inc.buttons.remove.network', [ 'username' => $user->username ] )
+            
             @else
                 @include( 'app.inc.buttons.add.network', [ 'username' => $user->username ] )
             @endif
+
             @if( Auth::user()->isFriend( $user ) )
                 @include( 'app.inc.buttons.remove.friend', [ 'username' => $user->username ] )
+
             @elseif (Auth::user()->askedFriend( $user ) )
                Your request was sent
+               @include( 'app.inc.buttons.remove.request', [ 'username' => $user->username ] )
+
             @elseif (Auth::user()->wasAskedFriend( $user ) )
-                @include( 'app.inc.buttons.request', [ 'username' => $user->username ] )
+                @include( 'app.inc.buttons.add.request', [ 'username' => $user->username ] )
+                @include( 'app.inc.buttons.remove.request', [ 'username' => $user->username ] )
+           
             @else
                 @include( 'app.inc.buttons.add.friend', [ 'username' => $user->username ] )
             @endif
+
         @endif
     @endif
 @endsection

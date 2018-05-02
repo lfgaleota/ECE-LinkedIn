@@ -266,9 +266,11 @@ class User extends Authenticatable
 
         //create request
      $status = DB::table( 'friend_requests' )
-     ->where('requester_id','=', $user->user_id)
-     ->where('invited_id','=', $this->user_id)
-     ->delete();
+      ->where(function ($query) use ($user) {
+         $query->where('requester_id', '=', $this->user_id)->where('invited_id', '=', $user->user_id);
+    })->orWhere(function ($query) use ($user) {
+                $query->where('invited_id', '=', $this->user_id)->where('requester_id', '=', $user->user_id);
+            })->delete();
         return $status;
     }
     /**
