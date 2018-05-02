@@ -30,10 +30,10 @@ Route::middleware(['auth'])->group( function() {
     Route::put('network/{username}', 'NetworkMembersController@add')->name( 'user.network.add' );
     Route::put('friend/{username}', 'FriendController@add')->name( 'user.friend.add' );
     Route::put('friend/{username}/ask', 'FriendController@ask')->name( 'user.friend.ask' );
-    Route::put('friend/{username}/refuse', 'FriendController@refuse')->name( 'user.friend.refuse' );
 
     Route::delete('network/{username}', 'NetworkMembersController@remove')->name( 'user.network.remove' );
-    Route::delete('friend/{username}/remove', 'FriendController@remove')->name( 'user.friend.remove' );
+    Route::delete('friend/{username}', 'FriendController@remove')->name( 'user.friend.remove' );
+	Route::delete('friend/{username}/ask', 'FriendController@refuse')->name( 'user.friend.ask.refuse' );
 });
 
 Route::middleware(['auth', 'api'])->group( function() {
