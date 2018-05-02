@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * App\Post
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $mood
  * @property string|null $image_url
  * @property string|null $video_url
- * @property int $public
+ * @property string $visibility
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereAuthorId($value)
@@ -25,7 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereLocation($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereMood($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post wherePostId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Post wherePublic($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereVisibility($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereVideoUrl($value)
@@ -54,8 +55,23 @@ class Post extends Model
         'mood',
         'image_url',
         'video_url',
-        'public',
+        'visibility',
     ];
+
+	const validation = [
+		'post_id' => 'required|unique:posts|digits:64',
+		'author_id' => 'required|numeric',
+		'event_id' => 'numeric',
+		'type' => 'required|string',
+		'location' => 'string',
+		'mood' => 'string',
+		'image_url' => 'string',
+		'video_url' => 'string',
+		'visibility' => 'required|string',
+		'photo_ids' => 'json',
+		'video_ids' => 'json',
+		'post_visibility_user_ids' => 'json'
+	];
 
     public function getAuthor()
     {
@@ -87,4 +103,25 @@ class Post extends Model
         return $this->belongsToMany('Post', 'sub_post', 'child_post_id', 'parent_post_id');
     }
 
+    public function setSubPosts( array $post_ids ) {
+    	DB::table( 'sub_posts' )->where( 'parent_post_id', '=', $this->post_id )->delete();
+
+	    foreach( $post_ids as $post_id ) {
+		    DB::table( 'sub_posts' )->insert([
+			    'parent_post_id' => $this->post_id,
+			    'child_post_id' => $post_id
+		    ]);
+	    }
+    }
+
+	public function setPostVisibility( array $user_ids ) {
+		DB::table( 'post_visibilities' )->where( 'post_id', '=', $this->post_id )->delete();
+
+		foreach( $user_ids as $user_id ) {
+			DB::table( 'post_visibilities' )->insert([
+				'post_id' => $this->post_id,
+				'user_id' => $user_id
+			]);
+		}
+	}
 }
