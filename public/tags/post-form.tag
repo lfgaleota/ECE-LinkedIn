@@ -45,10 +45,6 @@
             display: block;
         }
 
-        form {
-            position: relative;
-        }
-
         .card-section {
             padding: 0;
         }
@@ -92,9 +88,7 @@
         }
 
         .progress {
-            position: absolute;
-            bottom: 0;
-            left: 0;
+            display: none;
             height: 4px;
             width: 0;
             padding: 0;
@@ -295,7 +289,12 @@
         }
 
         setProgress( progress ) {
-            that.refs.progressBar.style.width = progress + '%';
+		    that.refs.progressBar.style.width = progress + '%';
+        	if( progress > 0 ) {
+        		$( that.refs.progressBar ).show();
+	        } else {
+		        $( that.refs.progressBar ).hide();
+        	}
         }
 
         clear() {

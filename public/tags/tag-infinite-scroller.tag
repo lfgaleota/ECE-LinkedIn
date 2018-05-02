@@ -29,10 +29,15 @@
 
 		let that = this;
 
+		reload() {
+			that.loadInitial();
+		}
+
 		loadInitial() {
 			that.loading = true;
 			that.hasError = false;
 			that.noMore = false;
+			that.items = [];
 			opts.load( null, that );
 		}
 
