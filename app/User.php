@@ -174,7 +174,7 @@ class User extends Authenticatable {
 									->where( 'post_visibilities.user_id', '=', $this->user_id );
 							});
 					});
-			});
+			})->orderBy( 'post_id', 'DESC' );
 	}
 
 	public function getNetworkMembers() {

@@ -134,9 +134,31 @@
         	that.clearVisibility();
         }
 
+        function friendGet( tag ) {
+            window.axios.get( opts.baseApiPath + '/network' )
+                .then(function( response ) {
+                    let constructItems = response.data;
+                    if( opts.postId ) {
+                        window.axios.get( opts.baseApiPath + '/post/' + opts.postId + '/access' )
+                            .then(function( response ) {
+                                console.log( reponse );
+                            }).catch(function( error ) {
+                            console.log( error );
+                        });
+                    } else {
+                        for( let i = 0; i < constructItems.length; i++ ) {
+                            constructItems[ 'selected' ] = false;
+                        }
+                    }
+                    tag.setItems( constructItems );
+                }).catch(function( error ) {
+                console.log( error );
+            });
+        }
+
         function openFriendSelector() {
-			$( that.refs.form ).append( $( '<friend-selector></friend-selector>' ) );
-			window.riot.mount( 'friend-selector', { onSelected: onFriendSelected, onCancelled: onFriendNotSelected, baseApiPath: opts.baseApiPath, postId: opts.postId } );
+			$( that.refs.form ).append( $( '<tag-selector></tag-selector>' ) );
+			window.riot.mount( 'tag-selector', { onSelected: onFriendSelected, onCancelled: onFriendNotSelected, component: 'friend-renderer', itemGetInitier: friendGet, fullWidth: true } );
         }
 
         this.on('mount', function(){
