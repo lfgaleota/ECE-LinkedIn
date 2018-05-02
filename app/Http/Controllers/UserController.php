@@ -15,6 +15,12 @@ class UserController extends Controller
         ]);
     }
 
+    public function timeline() {
+    	$posts = Auth::user()->selectorTimeline()->limit( 20 )->get();
+
+    	return response()->json( $posts );
+    }
+
     public function profile( $username ) {
         $user = User::whereUsername( $username )->firstOrFail();
 
@@ -30,7 +36,4 @@ class UserController extends Controller
             'networkmembers' => $networkmembers
         ]);
     }
-
-    
-
 }

@@ -1,11 +1,11 @@
-<friend-selector>
+<tag-selector>
     <div class="back"></div>
     <form ref="form" class="card" onreset={ cancel } onsubmit={ submit }>
         <div class="card-section grid-y">
-            <div class="thumbnails cell medium-auto">
-                <label each={ items }>
-                    <input type="checkbox" value="{ user_id }" checked={ selected } onchange={ parent.friendChecked }>
-                    <div class="thumbnail"><img src="{ photo_url }" alt="{ name } { surname }"></div>
+            <div class="contents cell medium-auto">
+                <label each={ item in items } class={ opts.fullWidth ? 'full-width' : '' }>
+                    <input type="checkbox" checked={ item.selected } onchange={ parent.elementChecked }>
+                    <div class="content"><div data-is={ opts.component } item={ item }></div></div>
                 </label>
             </div>
             <div class="toolbar cell medium-shrink">
@@ -53,9 +53,10 @@
             position: relative;
         }
 
-        .thumbnails {
+        .contents {
             overflow: auto;
             text-align: center;
+            padding: 0.5em 1em 0.5em;
         }
 
         label {
@@ -64,27 +65,32 @@
             margin: 1em;
         }
 
-        .thumbnail {
-            width: 128px;
-            height: 128px;
+        label.full-width {
+            display: block;
+            margin: 1em 0;
+            width: 100%;
+        }
+
+        .content {
             cursor: pointer;
+            border: 4px solid white;
         }
 
         input[type="checkbox"] {
             display: none;
         }
 
-        input[type="checkbox"]:checked + .thumbnail {
+        input[type="checkbox"]:checked + .content {
             border: 4px solid #23a3ba;
         }
 
-        input[type="checkbox"]:checked + .thumbnail::after {
+        input[type="checkbox"]:checked + .content::after {
             content: "\002715";
             position: absolute;
             display: block;
             width: 1rem;
             height: 1rem;
-            bottom: 0.5rem;
+            bottom: -0.5rem;
             right: -0.5rem;
             background: #23a3ba;
             color: white;
@@ -102,56 +108,42 @@
 
         let that = this;
 
+        setItems( items ) {
+            that.items = items;
+            that.update();
+        }
+
         this.on('mount', function() {
-        	window.axios.get( opts.baseApiPath + '/network' )
-		        .then(function( response ) {
-			        let constructItems = response.data;
-			        if( opts.postId ) {
-				        window.axios.get( opts.baseApiPath + '/post/' + opts.postId + '/access' )
-					        .then(function( response ) {
-						        console.log( reponse );
-					        }).catch(function( error ) {
-                                console.log( error );
-                            });
-			        } else {
-			            for( let i = 0; i < constructItems.length; i++ ) {
-				            constructItems[ 'selected' ] = false;
-			            }
-			        }
-			        that.items = constructItems;
-			        that.update();
-                }).catch(function( error ) {
-                    console.log( error );
-                });
+            opts.itemGetInitier( that );
         });
 
         function getItems() {
-        	let items = [];
-	        for( let i = 0; i < that.items.length; i++ ) {
-	        	if( that.items[ i ].selected ) {
-		            items.push( that.items[ i ] );
-		        }
-	        }
+            let items = [];
+            for( let i = 0; i < that.items.length; i++ ) {
+                if( that.items[ i ].selected ) {
+                    items.push( that.items[ i ] );
+                }
+            }
             return items;
         }
 
-        friendChecked(e) {
-            e.item.selected = e.target.checked;
+        elementChecked(e) {
+            e.item.item.selected = e.target.checked;
         }
 
         submit(e) {
-        	e.preventDefault();
-        	e.stopImmediatePropagation();
-        	let items = getItems();
-	        this.unmount();
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let items = getItems();
+            this.unmount();
             opts.onSelected(items);
         }
 
         cancel(e) {
-	        e.preventDefault();
-	        e.stopImmediatePropagation();
-	        this.unmount();
-	        opts.onCancelled();
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            this.unmount();
+            opts.onCancelled();
         }
     </script>
-</friend-selector>
+</tag-selector>
