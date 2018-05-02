@@ -156,7 +156,7 @@
             let items = getItems();
             this.unmount();
             if( opts.onSelected ) {
-                opts.onSelected(items);
+                opts.onSelected( items, that );
             }
         }
 
@@ -165,7 +165,7 @@
             e.stopImmediatePropagation();
             this.unmount();
             if( opts.onCancelled ) {
-                opts.onCancelled();
+                opts.onCancelled( that );
             }
         }
 
