@@ -341,4 +341,22 @@ class User extends Authenticatable {
 				$query->where( 'friend2_id', '=', $this->user_id )->where( 'friend1_id', '=', $user->user_id );
 			})->delete();
 	}
+
+	public function selectorImages() {
+		return Post::where( 'author_id', '=', $this->user_id )
+			->where( 'type', '=', 'IMAGE' )
+			->orderBy( 'post_id', 'DESC' );
+	}
+
+	public function selectorVideos() {
+		return Post::where( 'author_id', '=', $this->user_id )
+			->where( 'type', '=', 'IMAGE' )
+			->orderBy( 'post_id', 'DESC' );
+	}
+
+	public function selectorEvents() {
+		return Event::where( 'author_id', '=', $this->user_id )
+			->where( 'type', '=', 'IMAGE' )
+			->orderBy( 'event_id', 'DESC' );
+	}
 }

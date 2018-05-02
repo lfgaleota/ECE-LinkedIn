@@ -68,6 +68,8 @@ class Post extends Model
 		'location' => 'string',
 		'mood' => 'string',
 		'image_url' => 'string',
+		'image' => 'file',
+		'video' => 'file',
 		'video_url' => 'string',
 		'visibility' => 'required|string',
 		'photo_ids' => 'json',

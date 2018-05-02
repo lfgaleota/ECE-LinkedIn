@@ -39,15 +39,20 @@ Route::middleware(['auth'])->group( function() {
 Route::middleware(['auth', 'api'])->group( function() {
     Route::get('api/network', 'NetworkMembersController@get')->name( 'api.user.network.list' );
     Route::get('api/friend', 'FriendController@get')->name( 'api.user.friend.list' );
+	Route::get('api/timeline', 'UserController@timeline')->name( 'api.user.timeline' );
+	Route::get('api/images', 'UserController@images')->name( 'api.user.images' );
+	Route::get('api/videos', 'UserController@videos')->name( 'api.user.videos' );
+	Route::get('api/events', 'UserController@events')->name( 'api.user.events' );
 });
 
 /*
  * POSTS
  */
 Route::middleware(['auth', 'api'])->group( function() {
-	Route::put('api/post', 'PostController@create')->name( 'api.post.create' );
-
 	Route::get('api/post/{post_id}/access', 'PostController@access')->name( 'api.post.access' );
+
+	Route::put('api/post', 'PostController@create')->name( 'api.post.create' );
+	Route::put('api/image', 'PostController@createImage')->name( 'api.image.create' );
 });
 
 /*
