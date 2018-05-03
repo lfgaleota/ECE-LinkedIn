@@ -2,14 +2,13 @@
 
 @section('content')
 
-  @guest
-      <a href="{{ route( 'index' ) }}">Connect to interact</a>
+@guest
+    <a href="{{ route( 'index' ) }}">Connect to interact</a>
+@else
 
-  @else
   <div class="grid-container">
 
   <div class="grid-x grid-padding-x">
-
   <div class="large-8 medium-8 cell">
     <div class="callout">
       <h1>{{ $user->getName() }}</h1>
@@ -48,67 +47,28 @@
 
   <div class="large-4 medium-4 cell">
     <div class="callout">
-      <h5>Your network</h5>
-      <p>Network</p>
+      <h5>Network</h5>
       @include( 'app.inc.users.list', ['users' => $user->getNetworkMembers()])
     </div>
   </div>
 
   <div class="large-8 medium-8 cell">
     <div class="callout">
-      <h5>Experience:</h5>
+      <h5>Experience</h5>
       <!-- Grid -->
       <div class="grid-x grid-padding-x">
         <div class="large-12 cell">
-          <div class="primary callout">
             <p><strong>ECE Paris</strong> Diplome coloriage.</p>
-          </div>
         </div>
       </div>
-      <div class="grid-x grid-padding-x">
-        <div class="large-6 medium-6 cell">
-          <div class="primary callout">
-            <p>kebabiste</p>
-          </div>
-        </div>
-        <div class="large-6 medium-6 cell">
-          <div class="primary callout">
-            <p>6 ans</p>
-          </div>
-        </div>
-      </div>
-      <div class="grid-x grid-padding-x">
-        <div class="large-4 medium-4 small-4 cell">
-          <div class="primary callout">
-            <p>oui</p>
-          </div>
-        </div>
-        <div class="large-4 medium-4 small-4 cell">
-          <div class="primary callout">
-            <p>des fois</p>
-          </div>
-        </div>
-        <div class="large-4 medium-4 small-4 cell">
-          <div class="primary callout">
-            <p>non</p>
-          </div>
-        </div>
-      </div>
-        <hr/>
-      <div class="grid-x grid-padding-x">
-        <div class="large-6 medium-6 cell">
-          <div class="primary callout">
-            <p>kebabiste</p>
-          </div>
-        </div>
-        <div class="large-6 medium-6 cell">
-          <div class="primary callout">
-            <p>6 ans</p>
-          </div>
-        </div>
-      </div>
-    </div>
 
+        <hr/>
+        <div class="grid-x grid-padding-x">
+          <div class="large-12 cell">
+              <p><strong>ECE Paris</strong> Diplome coloriage.</p>
+          </div>
+        </div>
+    </div>
           <hr/>
   </div>
 
@@ -136,8 +96,29 @@
         </div>
       </div>
       </div>
+        <hr />
     </div>
           <hr />
+
+    <div class="large-8 medium-8 cell">
+      <div class="callout">
+        <h5>Skills</h5>
+        <!-- Grid -->
+        <div class="grid-x grid-padding-x">
+          <div class="large-12 cell">
+              <p><strong>ECE Paris</strong> Diplome coloriage.</p>
+          </div>
+        </div>
+
+          <hr/>
+          <div class="grid-x grid-padding-x">
+            <div class="large-12 cell">
+                <p><strong>ECE Paris</strong> Diplome coloriage.</p>
+            </div>
+          </div>
+      </div>
+            <hr/>
+    </div>
   </div>
 
     <div class="large-4 medium-4 cell">
@@ -176,3 +157,5 @@
 
 </div>
 </div>
+
+@endsection
