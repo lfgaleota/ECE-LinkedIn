@@ -21,6 +21,8 @@ Route::get('/', 'IndexController@get')->name('index');
  */
 Route::get('user/', 'UserController@list')->name( 'user.list' );
 
+Route::post('user/{id}', 'UserController@update')->name( 'user.update' );
+
 /*
  * NETWORK & FRIENDS
  */

@@ -62,7 +62,7 @@ class RegisterController extends Controller
     }
 
     /**
-     * Create a new user instance after a valid registration.
+    * Create a new user instance after a valid registration.
      *
      * @param  array $data
      * @return \App\User
@@ -72,14 +72,11 @@ class RegisterController extends Controller
     {
         if (env('REGISTRATION_ALLOWED'))
         {
-            $params = [];
-            foreach( User::validation as $field => $validation_param ) {
-                $params[ $field ] = $data[ $field ];
-            }
+            $params = $data
             $params[ 'password' ] = Hash::make( $params[ 'password' ] );
 
             return User::create( $params );
         }
         throw new \Exception( 'Registration not allowed.' );
-    }
+    } 
 }
