@@ -11,7 +11,7 @@
             <div class="toolbar cell medium-shrink" if={ !loading }>
                 <button class="button" if={ opts.hasAdd } onclick={ addClick }><i class="fa fa-plus"></i></button>
                 <button class="button float-right" type="submit"><i class="fa fa-check"></i></button>
-                <button class="button float-right" type="reset"><i class="fa fa-remove"></i></button>
+                <button class="button float-right" type="reset"><i class="fas fa-times"></i></button>
             </div>
             <spinner if={ loading }></spinner>
         </div>
@@ -84,7 +84,14 @@
         }
 
         input[type="checkbox"]:checked + .content::after {
-            content: "\002715";
+            content: "\F00C";
+            box-sizing: inherit;
+            font-weight: 900;
+            font-family: "Font Awesome 5 Free";
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            line-height: 1;
             position: absolute;
             display: block;
             width: 1rem;
@@ -94,6 +101,8 @@
             background: #23a3ba;
             color: white;
             line-height: 1;
+            font-size: 10px;
+            padding-top: 3px;
         }
 
         .toolbar {
