@@ -1,11 +1,13 @@
 <tag-infinite-scroller>
 	<div ref="scroller">
 		<virtual each={ item in items }>
-			<div data-is={ opts.component } item={ item }></div>
+			<div data-is={ opts.component } item={ item } addsopts={ parent.opts.addsopts }></div>
 		</virtual>
-		<spinner if={ loading }></spinner>
-		<div class="text-center" if={ hasError }>
-			<h5>Une erreur est survenue durant le chargement.</h5>
+		<div class="text-center" if={ loading }>
+			<spinner></spinner>
+		</div>
+		<div class="callout alert" if={ hasError }>
+			<p><i class="fas fa-exclamation-triangle"></i> Erreur lors du chargements des données.</p>
 		</div>
 	</div>
 
@@ -17,7 +19,7 @@
 		}
 
 		spinner {
-			margin: 0.5em auto;
+			display: inline-block;
 		}
 	</style>
 
@@ -38,6 +40,7 @@
 			that.hasError = false;
 			that.noMore = false;
 			that.items = [];
+			that.update();
 			opts.load( null, that );
 		}
 
@@ -45,6 +48,7 @@
 			that.loading = true;
 			that.hasError = false;
 			that.noMore = false;
+			that.update();
 			if( that.items.length === 0 ) {
 				opts.load( null, that );
 			} else {
@@ -67,6 +71,7 @@
 		error() {
 			that.loading = false;
 			that.hasError = false;
+			that.update();
 		}
 
 		function getHeight() {

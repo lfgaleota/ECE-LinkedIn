@@ -44,16 +44,35 @@
 		}
 
 		function loadPost( last_id, tag ) {
-			window.axios.get( '{{ url( "api/timeline" ) }}' + ( last_id !== null ? '/' + last_id : '' ) )
+			window.axios.get( '{{ route( 'api.user.timeline' ) }}' + ( last_id !== null ? '/' + last_id : '' ) )
 				.then( function( response ) {
-					tag.addItems( response.data );
+					let posts = response.data;
+					let ids = [];
+					for( let i = 0; i < posts.length; i++ ) {
+						ids.push( posts[ i ].post_id );
+					}
+					window.axios.post( '{{ route( 'api.post.subs' ) }}', { ids : ids } )
+						.then( function( response ) {
+							for( let i = 0; i < posts.length; i++ ) {
+								let post_id = posts[ i ].post_id;
+								if( response.data.hasOwnProperty( post_id ) ) {
+									posts[ i ].subposts = response.data[ post_id ];
+								} else {
+									posts[ i ].subposts = [];
+								}
+							}
+							tag.addItems( posts );
+						}).catch( function( error ) {
+							tag.error();
+								console.log( error );
+							});
 				}).catch( function( error ) {
 					tag.error();
-					console.log( error );
-				});
+						console.log( error );
+					});
 		}
 
-		var infiniteScroller = window.riot.mount( 'tag-infinite-scroller', { load: loadPost, getItemId: getPostId, component: 'post-renderer', scrollElement: document } );
+		var infiniteScroller = window.riot.mount( 'tag-infinite-scroller', { load: loadPost, getItemId: getPostId, component: 'post-renderer', scrollElement: document, addsopts: { basepath: '{{ url( '/' ) }}', baseapipath: '{{ url( 'api' ) }}' } } );
 		infiniteScroller = infiniteScroller[ 0 ];
 	</script>
 @endsection

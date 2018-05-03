@@ -53,3 +53,8 @@ if (token) {
 //     cluster: 'mt1',
 //     encrypted: true
 // });
+
+/**
+ * Loads Moment.js for date and time manipulation.
+ */
+window.moment = require( 'moment' );

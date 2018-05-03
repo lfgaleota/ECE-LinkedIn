@@ -112,6 +112,15 @@ class User extends Authenticatable {
 		'cover_id' => 'numeric|nullable'
 	];
 
+	public function newEloquentBuilder( $query ) {
+		return parent::newEloquentBuilder( $query )
+			->leftJoin( 'posts AS photo', 'users.photo_id', '=', 'photo.post_id' )
+			->leftJoin( 'posts AS cover', 'users.cover_id', '=', 'cover.post_id' )
+			->addSelect( '*' )
+			->addSelect( 'photo.image_url AS photo_url' )
+			->addSelect( 'cover.image_url AS cover_url' );
+	}
+
 	public function getPhoto() {
 		return $this->hasOne( 'Post', 'photo_id' );
 	}
@@ -138,11 +147,6 @@ class User extends Authenticatable {
 	}
 
 	public function selectorNetworkMembers() {
-		/*return DB::table( 'users AS user1' )
-			->join( 'networks', 'user1.user_id', '=', 'networks.user1_id' )
-			->join( 'users AS user2', 'user2.user_id', '=', 'networks.user2_id' )
-			->where( 'user1.user_id', '=', $this->user_id )
-			->orWhere( 'user2.user_id', '=', $this->user_id );*/
 		return User::join( 'networks', 'users.user_id', '=', 'networks.user1_id' )
 			->join( 'users AS user2', 'user2.user_id', '=', 'networks.user2_id' )
 			->where( 'users.user_id', '=', $this->user_id )
@@ -150,7 +154,6 @@ class User extends Authenticatable {
 				$join->on( 'friend2_id', '=', 'user2.user_id' )
 					->on( 'friend1_id', '=', 'users.user_id' );
 			})
-			->addSelect( '*' )
 			->addSelect( 'friend2_id AS isFriendOf' );
 	}
 
@@ -195,6 +198,10 @@ class User extends Authenticatable {
 									->where( 'post_visibilities.user_id', '=', $this->user_id );
 							});
 					});
+			})->where( function( $query ) {
+				$query->where( 'type', '=', 'POST' )
+					->orWhere( 'type', '=', 'EVENT' )
+					->orWhere( 'type', '=', 'SHARE' );
 			})->orderBy( 'post_id', 'DESC' );
 	}
 
