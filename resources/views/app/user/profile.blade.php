@@ -10,12 +10,20 @@
             You are viewing your own profile
             <p>{{ $user->cover_id or '' }}</p>
             <p>{{ $user->photo_id or '' }}</p>
+            
             <p>Network</p>
             @include( 'app.inc.users.list', ['users' => $user->getNetworkMembers()])
           <p>Informations</p>
-         
-          @include( 'app.inc.forms.edit', [ 'user' => $user ])
+         <p><button class="button" data-toggle="profileEditModal">Edit le profil</button></p>
 
+        <div class="reveal" id="profileEditModal" data-reveal data-close-on-click="true" data-animation-in="spin-in" data-animation-out="spin-out">
+         @include( 'app.inc.forms.edit', [ 'user' => $user ])
+
+          <button class="close-button" data-close aria-label="Close reveal" type="button">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+          
             
         @else
             
@@ -42,5 +50,15 @@
             @endif
 
         @endif
+    @endif
+@endsection
+
+@section('scripts')
+    @parent
+
+    @if($errors->any())
+        <script>
+            $( '#profileEditModal' ).foundation( 'open' );
+        </script>
     @endif
 @endsection

@@ -76,7 +76,12 @@ class UserController extends Controller
 	public function update(Request $request, $username){
 		$user = User::whereUsername( $username )->firstOrFail();
 
-	    $validator = Validator::make($request->all(), User::validation);
+		$params = $request->all();
+		if( isset( $params[ 'email' ] ) && $params[ 'email' ] === $user->email ) {
+			unset( $params[ 'email' ] );
+		}
+
+	    $validator = Validator::make($params, User::validation_update);
 
 	    if($validator->fails()) {
 		    return redirect()->back()->withErrors($validator)->withInput();
