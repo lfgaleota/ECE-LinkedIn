@@ -1,31 +1,40 @@
 <nav class="navbar navbar-default navbar-static-top">
-
   <nav class="top-bar">
       <div class="top-bar-left">
           <ul class="menu">
               <li class="menu-text"><img src="{{asset('img/home.png')}}" alt="network" width="30" height="75"></li>
-              <li><input type="search" placeholder="Recherche" class="animated-search-form"></li>
-              <li><button type="button" class="button">Search</button></li>
+              @auth
+                  <li>
+                    <form>
+                        <input type="search" placeholder="Recherche" class="animated-search-form">
+                    </form>
+                  </li>
+              @endauth
           </ul>
       </div>
 
       <div class="top-bar-right">
           <ul class="dropdown menu" data-dropdown-menu>
-            <li><img src="{{asset('img/network.png')}}" alt="network" width="30" height="75"></li>
+            @auth
+              <li><img src="{{asset('img/network.png')}}" alt="network" width="30" height="75"></li>
               <li><img src="{{asset('img/messaging.png')}}" alt="messaging" width="30" height="75"></li>
               <li><img src="{{asset('img/notification.png')}}" alt="notification" width="30" height="75"></li>
-              <li><li>
+              <li>
                   <img src="{{asset('img/user.png')}}" alt="user" width="30" height="75">
                   <ul class="menu vertical">
                       <li><a href="#">Mon profile</a></li>
                       <li><a href="#">Mon reseau</a></li>
                       <li><a href="#">Parametres</a></li>
                   </ul>
-              </li></li>
+              </li>
+          @else
+              <li><a href="{{ url( '/' ) }}">Connexion</a></li>
+              <li><a href="{{ url( '/' ) }}">Inscription</a></li>
+          @endauth
           </ul>
       </div>
+</nav>
 
-    </nav>
     <div class="container">
         <div class="navbar-header">
 

@@ -10,7 +10,9 @@
 @include foundation-everything(true);
 
 // Font Awesome
-@import "~font-awesome/scss/font-awesome.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-regular.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-solid.scss";
 
 $animated-search-form-initial-width: 10rem;
 $animated-search-form-transition-duration: 0.4s;
