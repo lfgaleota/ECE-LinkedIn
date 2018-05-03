@@ -24,7 +24,7 @@ class PostController extends Controller {
 
 	    $validator = Validator::make($params, Post::validation);
 
-	    if (!$validator->fails()) {
+	    if ($validator->fails()) {
 		    return response()->json(['errors'=>$validator->errors()]);
 	    }
 
