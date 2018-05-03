@@ -21,7 +21,8 @@ class CreateUsersTable extends Migration {
 			$table->bigInteger('photo_id')->unsigned()->nullable();
 			$table->bigInteger('cover_id')->unsigned()->nullable();
             $table->rememberToken();
-			$table->timestamps();
+			$table->timestamp('updated_at')->useCurrent();
+            			$table->timestamp('created_at')->useCurrent();;
 
             $table->unique([DB::raw('username(191)'), DB::raw('email(191)')]);
 		});

@@ -4,6 +4,23 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Entity
+ *
+ * @property int $entity_id
+ * @property int $author_id
+ * @property string $name
+ * @property string|null $location
+ * @property string|null $photo_url
+ * @property string|null $description
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity whereAuthorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity whereEntityId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity whereLocation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity wherePhotoUrl($value)
+ * @mixin \Eloquent
+ */
 class Entity extends Model 
 {
 

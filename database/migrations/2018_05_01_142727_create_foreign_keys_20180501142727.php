@@ -2,9 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Eloquent\Model;
 
-class CreateForeignKeys extends Migration {
+class CreateForeignKeys20180501142727 extends Migration {
 
     public function up()
     {
