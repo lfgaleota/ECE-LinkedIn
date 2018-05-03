@@ -97,6 +97,21 @@ class User extends Authenticatable {
 		'cover_id' => 'numeric'
 	];
 
+	/**
+	 * The attributes that should be validated and their respective format on update
+	 */
+	const validation_update = [
+		'username' => 'string|max:255',
+		'email' => 'string|email|max:255|unique:users',
+		'name' => 'string|max:255',
+		'surname' => 'string|max:255',
+		'birth_date' => 'date',
+		'title' => 'string|nullable',
+		'cv' => 'mimes:pdf|nullable',
+		'photo_id' => 'numeric|nullable',
+		'cover_id' => 'numeric|nullable'
+	];
+
 	public function getPhoto() {
 		return $this->hasOne( 'Post', 'photo_id' );
 	}
