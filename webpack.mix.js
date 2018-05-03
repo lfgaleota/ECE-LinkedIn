@@ -1,4 +1,5 @@
 let mix = require('laravel-mix');
+mix.riotjs = require('laravel-mix-riot');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +12,4 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix.riotjs('resources/assets/js/app.js', 'public/js').sass('resources/assets/sass/app.scss', 'public/css');

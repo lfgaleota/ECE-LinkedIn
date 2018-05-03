@@ -5,9 +5,12 @@
 // Variables
 @import "settings";
 
-// Bootstrap
+// Foundation
 @import "~foundation-sites/scss/foundation.scss";
 @include foundation-everything(true);
+
+// Font Awesome
+@import "~font-awesome/scss/font-awesome.scss";
 
 $animated-search-form-initial-width: 10rem;
 $animated-search-form-transition-duration: 0.4s;

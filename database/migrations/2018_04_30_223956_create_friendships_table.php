@@ -10,7 +10,8 @@ class CreateFriendshipsTable extends Migration {
 		Schema::create('friendships', function(Blueprint $table) {
 			$table->integer('friend1_id')->unsigned();
 			$table->integer('friend2_id')->unsigned();
-			$table->timestamps();
+			$table->timestamp('updated_at')->useCurrent();
+            			$table->timestamp('created_at')->useCurrent();;
 
             $table->primary(['friend1_id', 'friend2_id']);
 		});

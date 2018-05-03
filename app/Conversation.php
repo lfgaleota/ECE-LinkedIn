@@ -4,6 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Conversation
+ *
+ * @property int $conversation_id
+ * @property int $message_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Conversation whereConversationId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Conversation whereMessageId($value)
+ * @mixin \Eloquent
+ */
 class Conversation extends Model 
 {
 

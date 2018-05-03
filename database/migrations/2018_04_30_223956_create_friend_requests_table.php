@@ -10,7 +10,8 @@ class CreateFriendRequestsTable extends Migration {
 		Schema::create('friend_requests', function(Blueprint $table) {
 			$table->integer('requester_id')->unsigned();
 			$table->integer('invited_id')->unsigned();
-			$table->timestamps();
+			$table->timestamp('updated_at')->useCurrent();
+            			$table->timestamp('created_at')->useCurrent();;
 
 			$table->primary(['requester_id', 'invited_id']);
 		});
