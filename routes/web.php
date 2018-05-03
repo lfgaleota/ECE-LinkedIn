@@ -52,6 +52,8 @@ Route::middleware(['auth', 'api'])->group( function() {
  */
 Route::middleware(['auth', 'api'])->group( function() {
 	Route::get('api/post/{post_id}/access', 'PostController@access')->name( 'api.post.access' );
+	Route::post( 'api/post/subs', 'PostController@subposts' )->name( 'api.post.subs' );
+	Route::post( 'api/post/gets', 'PostController@gets' )->name( 'api.post.get' );
 
 	Route::put('api/post', 'PostController@create')->name( 'api.post.create' );
 	Route::put('api/image', 'PostController@createImage')->name( 'api.image.create' );

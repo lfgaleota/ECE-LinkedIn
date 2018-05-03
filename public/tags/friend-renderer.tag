@@ -1,7 +1,7 @@
 <friend-renderer>
     <div class="grid-x grid-padding-x">
         <div class="cell shrink">
-            <img src="{ opts.item.photo_src }" />
+            <img src="{ __getProfileUrl( opts.item.photo_url ) }" />
         </div>
         <div class="cell auto">
             <p>{ opts.item.name } { opts.item.surname }</p>
@@ -17,7 +17,7 @@
             width: 64px;
             height: 64px;
             border-radius: 50%;
-            border: 1px solid black;
+            border: 1px solid hsla(0,0%,4%,.25);
         }
 
         p {
