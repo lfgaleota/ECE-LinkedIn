@@ -61,7 +61,7 @@ class Post extends Model
     ];
 
 	const validation = [
-		'post_id' => 'required|unique:posts|digits:64',
+		'post_id' => 'required|unique:posts|numeric',
 		'author_id' => 'required|numeric',
 		'event_id' => 'numeric',
 		'type' => 'required|string',

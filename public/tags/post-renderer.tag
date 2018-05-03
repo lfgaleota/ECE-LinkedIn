@@ -3,7 +3,7 @@
 </author-tag>
 
 <post-renderer>
-	<div class="post" if={ opts.item.type == 'POST' }>
+	<div class="post form-container" if={ opts.item.type == 'POST' }>
 		<div class="author">
 			<author-tag item={ opts.item } addsopts={ opts.addsopts } ></author-tag> · <a class="time" href={ opts.addsopts.basepath + '/post/' + opts.item.post_id }>{ moment( opts.item.created_at ).fromNow() }</a>
 		</div>
@@ -22,15 +22,15 @@
 			<p><i class="fas fa-exclamation-triangle"></i> Erreur lors du chargements des éléments de la publication.</p>
 		</div>
 		<div class="toolbar">
-			<button class="button"><i class="fas fa-heart"></i></button>
+			<like-button item={ opts.item } addsopts={ opts.addsopts } iscomment="false"></like-button>
 			<button class="button float-right"><i class="fas fa-comments"></i></button>
 			<button class="button float-right"><i class="fas fa-share"></i></button>
 		</div>
 	</div>
 
-	<div class="post" if={ opts.item.type == 'SHARE' && subposts != null }>
+	<div class="post form-container" if={ opts.item.type == 'SHARE' && subposts != null }>
 		<div class="author">
-			<author-tag item={ opts.item } addsopts={ opts.addsopts } ></author-tag> a partagé le poste de <author-tag item={ subposts[ 0 ] } addsopts={ opts.addsopts } picture="false"></author-tag> · <a class="time" href={ opts.addsopts.basepath + '/post/' + opts.item.post_id }>{ moment( opts.item.created_at ).fromNow() }</a>
+			<author-tag item={ opts.item } addsopts={ opts.addsopts }></author-tag> a partagé le poste de <author-tag item={ subposts[ 0 ] } addsopts={ opts.addsopts } picture="false"></author-tag> · <a class="time" href={ opts.addsopts.basepath + '/post/' + opts.item.post_id }>{ moment( opts.item.created_at ).fromNow() }</a>
 		</div>
 		<div class="content" if={ opts.item.description != null }>
 			<p>{ opts.item.description }</p>
@@ -44,7 +44,7 @@
 			<p><i class="fas fa-exclamation-triangle"></i> Erreur lors du chargements des éléments de la publication.</p>
 		</div>
 		<div class="toolbar">
-			<button class="button"><i class="fas fa-heart"></i></button>
+			<like-button item={ opts.item } addsopts={ opts.addsopts } iscomment="false"></like-button>
 			<button class="button float-right"><i class="fas fa-comments"></i></button>
 			<button class="button float-right"><i class="fas fa-share"></i></button>
 		</div>
@@ -52,6 +52,10 @@
 
 	<a class="thumbnail" if={ opts.item.type == 'IMAGE' }>
 		<img src={ opts.item.image_url } />
+	</a>
+
+	<a class="thumbnail" if={ opts.item.type == 'VIDEO' }>
+		<video src={ opts.item.video_url } />
 	</a>
 
 	<style>
@@ -81,18 +85,10 @@
 			margin: 0.5rem;
 		}
 
-		.thumbnail img {
+		.thumbnail img,
+		.thumbnail video {
 			width: 128px;
 			height: 128px;
-		}
-
-		.post {
-			position: relative;
-			margin: 0 0 1rem;
-			border: 1px solid hsla(0,0%,4%,.25);
-			border-radius: 0;
-			background-color: #fff;
-			color: #0a0a0a;
 		}
 
 		.post .author img {
@@ -132,6 +128,10 @@
 			margin-bottom: 0;
 		}
 
+		.post .toolbar .reaction-count {
+			margin-left: 0.4em;
+		}
+
 		.post .callout.alert {
 			border-left: none;
 			border-right: none;
@@ -161,8 +161,14 @@
 				that.update();
 				window.axios.post( opts.addsopts.baseapipath + '/post/gets', { ids: opts.item.subposts }  )
 				.then( function( response ) {
-						that.loading = false;
-						that.setSubPosts( response.data );
+						__post__loadAdditional( opts.addsopts.baseapipath, response.data, function( items ) {
+							that.loading = false;
+							that.setSubPosts( items );
+						}, function( error ) {
+							that.loading = false;
+							that.subPostError();
+							console.log( error );
+						});
 					}).catch( function( error ) {
 						that.loading = false;
 						that.subPostError();

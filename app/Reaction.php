@@ -25,8 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Reaction extends Model 
 {
-
-    protected $table = 'reactions';
+	protected $table = 'reactions';
     public $timestamps = true;
 
     protected $primaryKey = 'reaction_id';
@@ -38,11 +37,28 @@ class Reaction extends Model
      * @var array
      */
     protected $fillable = [
+    	'reaction_id',
         'post_id',
         'comment_id',
         'author_id',
         'type',
     ];
+
+	/**
+	 * The attributes that should be validated and their respective format
+	 */
+	const validation = [
+		'reaction_id' => 'required|unique:reactions|numeric',
+		'post_id' => 'numeric',
+		'comment_id' => 'numeric',
+		'author_id' => 'required|numeric',
+		'type' => 'required|string'
+	];
+
+	public function newEloquentBuilder( $query ) {
+		return parent::newEloquentBuilder( $query )
+			->join( 'users AS authors', 'reactions.author_id', '=', 'authors.user_id' );
+	}
 
     public function getPost()
     {

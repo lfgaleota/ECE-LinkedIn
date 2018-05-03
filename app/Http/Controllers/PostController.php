@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Reaction;
 use App\Snowflake;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,7 @@ class PostController extends Controller {
 
 	public function subposts( Request $request ) {
 		$finalAssocs = [];
-		$assocs = DB::table( 'sub_posts' )->whereIn( 'parent_post_id', $request->get('ids') )->get();
+		$assocs = DB::table( 'sub_posts' )->whereIn( 'parent_post_id', $request->get('ids') )->orderBy( 'child_post_id', 'DESC' )->get();
 		foreach( $assocs as $assoc ) {
 			if( !array_key_exists( $assoc->parent_post_id, $finalAssocs ) ) {
 				$finalAssocs[ $assoc->parent_post_id ] = [];
@@ -36,7 +37,7 @@ class PostController extends Controller {
 	}
 
 	public function gets( Request $request ) {
-		$posts = Post::whereIn( 'post_id', $request->input( 'ids' ) )->get();
+		$posts = Post::whereIn( 'post_id', $request->input( 'ids' ) )->orderBy( 'post_id', 'DESC' )->get();
 		return response()->json( $posts );
 	}
 
