@@ -32,3 +32,15 @@ $animated-search-form-transition-duration: 0.4s;
     width: 100%;
   }
 }
+
+#app {
+  padding-top: 4rem;
+}
+
+#menubar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+}
