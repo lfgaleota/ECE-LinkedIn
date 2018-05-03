@@ -11,7 +11,7 @@
             <p>{{ $user->cover_id or '' }}</p>
             <p>{{ $user->photo_id or '' }}</p>
             <p>Network</p>
-            @include( 'app.inc.users.list', ['users' => $user->getNetworks()])
+            @include( 'app.inc.users.list', ['users' => $user->getNetworkMembers()])
             
         @else
             
