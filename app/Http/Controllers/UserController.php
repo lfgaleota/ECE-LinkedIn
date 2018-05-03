@@ -4,26 +4,28 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    public function list() {
-        $users = User::paginate( 20 );
+	public function list() {
+		$users = User::paginate( 20 );
 
-        return view( 'app.user.list', [
-            'users' => $users
-        ]);
-    }
+		return view( 'app.user.list', [
+			'users' => $users
+		]);
+	}
 
-    public function timeline( $after = null ) {
-    	$posts = Auth::user()->selectorTimeline()->limit( 20 );
-    	if( $after != null ) {
-    		$posts->where( 'post_id', '<', $after );
-	    }
-	    $posts = $posts->get();
+	public function timeline( $after = null ) {
+		$posts = Auth::user()->selectorTimeline()->limit( 20 );
+		if( $after != null ) {
+			$posts->where( 'post_id', '<', $after );
+		}
+		$posts = $posts->get();
 
-    	return response()->json( $posts );
-    }
+		return response()->json( $posts );
+	}
 
 	public function images( $after = null ) {
 		$posts = Auth::user()->selectorImages()->limit( 20 );
@@ -55,19 +57,57 @@ class UserController extends Controller
 		return response()->json( $posts );
 	}
 
-    public function profile( $username ) {
-        $user = User::whereUsername( $username )->firstOrFail();
+	public function profile( $username ) {
+		$user = User::whereUsername( $username )->firstOrFail();
 
-        return view( 'app.user.profile', [
-            'user' => $user
-        ]);
-    }
+		return view( 'app.user.profile', [
+			'user' => $user
+		]);
+	}
 
-    public function network() {
-        $networkmembers = Auth::user()->selectorNetworkMembers( Auth::user() )->paginate( 20 );
+	public function network() {
+		$networkmembers = Auth::user()->selectorNetworkMembers( Auth::user() )->paginate( 20 );
 
-        return view( 'app.networks.list', [
-            'networkmembers' => $networkmembers
-        ]);
-    }
+		return view( 'app.networks.list', [
+			'networkmembers' => $networkmembers
+		]);
+	}
+
+	public function update(Request $request, $username){
+		$user = User::whereUsername( $username )->firstOrFail();
+
+	    $validator = Validator::make($request->all(), User::validation);
+
+	    if($validator->fails()) {
+		    return redirect()->back()->withErrors($validator)->withInput();
+	    }
+
+		if( $request->has('name')) {
+			$user->name = $request->input('name');
+		}
+		if( $request->has('surname')) {
+			$user->surname = $request->input('surname');
+		}
+		if( $request->has('username')) {
+			$user->username = $request->input('username') ;
+		}
+		if( $request->has('email')) {
+			$user->email = $request->input('email') ;
+		}
+		if( $request->has('birth_date')) {
+			$user->birth_date = $request->input('birth_date') ;
+		}
+		if( $request->has('title')) {
+			$user->title = $request->input('title') ;
+
+		}
+
+		if( $request->hasFile('cv') ) {
+			$user->setCV( $request->file('cv') );
+		}
+
+		$user->save();
+
+		return redirect()->route( 'user.profile', [ 'username' => $user->username ] );
+	}
 }

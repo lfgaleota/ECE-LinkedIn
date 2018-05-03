@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * App\User
@@ -90,6 +91,10 @@ class User extends Authenticatable {
 		'surname' => 'required|string|max:255',
 		'password' => 'required|string|min:6|confirmed',
 		'birth_date' => 'required|date',
+		'title' => 'string',
+		'cv' => 'mimes:pdf',
+		'photo_id' => 'numeric',
+		'cover_id' => 'numeric'
 	];
 
 	public function getPhoto() {
@@ -99,6 +104,7 @@ class User extends Authenticatable {
 	public function getCover() {
 		return $this->hasOne( 'Post', 'cover_id' );
 	}
+
 
 	public function getConversations() {
 		return $this->belongsToMany( 'Conversation', 'conversation_member', 'user_id', 'conversation_id' );
@@ -359,4 +365,27 @@ class User extends Authenticatable {
 			->where( 'type', '=', 'IMAGE' )
 			->orderBy( 'event_id', 'DESC' );
 	}
+
+	public function setCV( $file ) {
+		if( $this->cv_url != null ) {
+			Storage::delete( $this->cv_url );
+		}
+		$this->cv_url = $file->store('cvs');
+	}
+
+    public function getBirthDateAttribute($value)
+    {
+        return \Carbon\Carbon::parse($value)->format('Y-m-d');
+    }
+
+    /**
+     * Get the user's date of birth for forms.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function formBirthDateAttribute($value)
+    {
+        return \Carbon\Carbon::parse($value)->format('Y-m-d');
+    }
 }
