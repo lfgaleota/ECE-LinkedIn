@@ -12,6 +12,10 @@
             <p>{{ $user->photo_id or '' }}</p>
             <p>Network</p>
             @include( 'app.inc.users.list', ['users' => $user->getNetworkMembers()])
+          <p>Informations</p>
+         
+          @include( 'app.inc.forms.edit', [ 'user' => $user ])
+
             
         @else
             
