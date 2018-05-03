@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Notifications\Notification;
+use App\Notifications\FriendRequest;
 
 class FriendController extends Controller
 {
@@ -21,6 +23,7 @@ class FriendController extends Controller
         $user = User::whereUsername( $username )->firstOrFail();
 
         Auth::user()->addFriend( $user );
+        $user->notify( new FriendRequest( $user, Auth::user(), true ) );
 
         return back();
     }
@@ -29,6 +32,7 @@ class FriendController extends Controller
         $user = User::whereUsername( $username )->firstOrFail();
 
         Auth::user()->sendFriendRequest( $user );
+        $user->notify( new FriendRequest( Auth::user(), $user, false ) );
 
         return back();
     }
