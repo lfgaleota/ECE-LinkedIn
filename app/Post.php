@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -68,14 +69,19 @@ class Post extends Model
 		'location' => 'string',
 		'mood' => 'string',
 		'image_url' => 'string',
-		'image' => 'file',
-		'video' => 'file',
+		'image' => 'mimes:jpeg,png',
+		'video' => 'mimes:video/avi,video/mpeg,video/quicktime,video/mp4,video/ogg,video/webm',
 		'video_url' => 'string',
 		'visibility' => 'required|string',
 		'photo_ids' => 'json',
 		'video_ids' => 'json',
 		'post_visibility_user_ids' => 'json'
 	];
+
+	public function newEloquentBuilder( $query ) {
+		return parent::newEloquentBuilder( $query )
+			->join( 'users AS authors', 'posts.author_id', '=', 'authors.user_id' );
+	}
 
     public function getAuthor()
     {
