@@ -17,7 +17,7 @@
     "laravel-mix": "^1.0",
     "laravel-mix-riot": "^1.1.7",
     "lodash": "^4.17.4",
-    "font-awesome": "^4.7.0",
-    "riot": "^3.9.4"
+    "riot": "^3.9.4",
+    "@fortawesome/fontawesome-free-webfonts": "^1.0.7"
   }
 }
