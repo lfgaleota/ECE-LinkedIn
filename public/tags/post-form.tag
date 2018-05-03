@@ -1,6 +1,6 @@
 <post-form>
-    <form ref="form" class="card" onsubmit={ submit }>
-        <div class="card-section">
+    <form ref="form" class="form-container" onsubmit={ submit }>
+        <div>
             <textarea ref="text_content" name="description" class="text-content" required></textarea>
             <div class="toolbar">
                 <button ref="photo_button" class="button" type="button" name="photo_button" onclick={ openImageSelector }><i class="fa fa-image"></i></button>
@@ -45,13 +45,9 @@
             display: block;
         }
 
-        .card-section {
-            padding: 0;
-        }
-
         .text-content {
             border: 0;
-            border-bottom: 1px solid #e6e6e6;
+            border-bottom: 1px solid hsla(0,0%,4%,.25);
             margin: 0;
             min-height: 100px;
         }

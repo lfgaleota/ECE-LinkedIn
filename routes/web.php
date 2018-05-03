@@ -50,13 +50,35 @@ Route::middleware(['auth', 'api'])->group( function() {
 /*
  * POSTS
  */
+Route::middleware(['auth'])->group( function() {
+	Route::get('post/{post_id}', 'PostController@view')->name( 'post.get' );
+});
+
 Route::middleware(['auth', 'api'])->group( function() {
+	Route::get('api/post/{post_id}', 'PostController@get')->name( 'api.post.get' );
 	Route::get('api/post/{post_id}/access', 'PostController@access')->name( 'api.post.access' );
 	Route::post( 'api/post/subs', 'PostController@subposts' )->name( 'api.post.subs' );
-	Route::post( 'api/post/gets', 'PostController@gets' )->name( 'api.post.get' );
+	Route::post( 'api/post/gets', 'PostController@gets' )->name( 'api.post.gets' );
 
 	Route::put('api/post', 'PostController@create')->name( 'api.post.create' );
 	Route::put('api/image', 'PostController@createImage')->name( 'api.image.create' );
+});
+
+/*
+ * REACTIONS
+ */
+Route::middleware(['auth', 'api'])->group( function() {
+	Route::get('api/post/{post_id}/reaction', 'ReactionController@forPost')->name( 'api.post.reaction.get' );
+	Route::get('api/comment/{comment_id}/reaction', 'ReactionController@forComment')->name( 'api.comment.reaction.get' );
+
+	Route::post('api/post/gets/reaction', 'ReactionController@forPosts')->name( 'api.post.gets.reaction' );
+	Route::post('api/comment/gets/reaction', 'ReactionController@forComments')->name( 'api.comment.gets.reaction' );
+
+	Route::put('api/post/{post_id}/reaction', 'ReactionController@addForPost')->name( 'api.post.reaction.add' );
+	Route::put('api/comment/{comment_id}/reaction', 'ReactionController@addForComment')->name( 'api.comment.reaction.add' );
+
+	Route::delete('api/post/{post_id}/reaction', 'ReactionController@removeForPost')->name( 'api.post.reaction.remove' );
+	Route::delete('api/comment/{comment_id}/reaction', 'ReactionController@removeForComment')->name( 'api.comment.reaction.remove' );
 });
 
 /*

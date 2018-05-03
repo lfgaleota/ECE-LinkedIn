@@ -1,7 +1,7 @@
 <image-form>
     <div class="back"></div>
-    <form ref="form" class="card" onreset={ cancel } onsubmit={ submit }>
-        <div class="card-section">
+    <form ref="form" class="form-container" onreset={ cancel } onsubmit={ submit }>
+        <div>
             <textarea ref="text_content" name="description" class="text-content"></textarea>
             <div class="toolbar">
                 <input ref="file" if={ !edit } type="file" name="image" required onchange={ onFileChange } />
@@ -28,8 +28,8 @@
         }
 
         form {
-            position: fixed;
-            display: block;
+            position: fixed !important;
+            display: block !important;
             top: 50%;
             left: 50%;
             transform: translateX(-50%) translateY(-50%);
@@ -55,7 +55,7 @@
 
         .text-content {
             border: 0;
-            border-bottom: 1px solid #e6e6e6;
+            border-bottom: 1px solid hsla(0,0%,4%,.25);
             margin: 0;
             min-height: 100px;
         }

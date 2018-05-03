@@ -44,3 +44,12 @@ $animated-search-form-transition-duration: 0.4s;
     right: 0;
     z-index: 5;
 }
+
+.form-container {
+    position: relative;
+    margin: 0 0 1rem;
+    border: 1px solid hsla(0,0%,4%,.25);
+    border-radius: 0;
+    background-color: #fff;
+    color: #0a0a0a;
+}

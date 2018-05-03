@@ -1,7 +1,7 @@
 <tag-selector>
     <div class="back"></div>
-    <form ref="form" class="card" onreset={ cancel } onsubmit={ submit }>
-        <div class="card-section grid-y">
+    <form ref="form" class="form-container" onreset={ cancel } onsubmit={ submit }>
+        <div class="form-content grid-y">
             <div class="contents cell medium-auto" if={ !loading }>
                 <label each={ item in items } class={ opts.fullWidth ? 'full-width' : '' }>
                     <input type="checkbox" checked={ item.selected } onchange={ parent.elementChecked }>
@@ -25,8 +25,8 @@
         }
 
         form {
-            position: fixed;
-            display: block;
+            position: fixed !important;
+            display: block !important;
             top: 1em;
             bottom: 1em;
             left: 50%;
@@ -34,6 +34,7 @@
             max-width: 600px;
             width: 100%;
             z-index: 20;
+            margin: 0;
         }
 
         .back {
@@ -47,8 +48,9 @@
             z-index: 10;
         }
 
-        .card-section {
+        .form-content {
             position: relative;
+            height: 100%;
             padding: 0;
         }
 
@@ -106,7 +108,7 @@
         }
 
         .toolbar {
-            border-top: 1px solid #e6e6e6;
+            border-top: 1px solid hsla(0,0%,4%,.25);
             font-size: 0;
         }
 
