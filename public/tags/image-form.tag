@@ -6,7 +6,7 @@
             <div class="toolbar">
                 <input ref="file" if={ !edit } type="file" name="image" required onchange={ onFileChange } />
                 <button class="button float-right" type="submit"><i class="fa fa-check"></i></button>
-                <button class="button float-right" type="reset"><i class="fa fa-remove"></i></button>
+                <button class="button float-right" type="reset"><i class="fas fa-times"></i></button>
             </div>
         </div>
         <div class="progress" ref="progressBar"></div>

@@ -7,7 +7,7 @@
                 <button ref="video_button" class="button" type="button" name="video_button"><i class="fa fa-video"></i></button>
                 <button ref="visibility_button" class="button" type="button" data-toggle="post-visiblity-selector"><i class="fa fa-globe" ref="visibility_icon"></i>
                 </button>
-                <button class="button float-right" type="submit"><i class="fa fa-send"></i></button>
+                <button class="button float-right" type="submit"><i class="fas fa-paper-plane"></i></button>
                 <div ref="visibility_dropdown" class="dropdown-pane visibility-dropdown" id="post-visiblity-selector" data-dropdown
                      data-auto-focus="true">
                     <label>
