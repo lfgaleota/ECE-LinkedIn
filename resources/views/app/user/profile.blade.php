@@ -11,10 +11,7 @@
   <div class="grid-x grid-padding-x">
   <div class="large-8 medium-8 cell">
     <div class="callout profile-header-card">
-      <h1>{{ $user->getName() }}</h1>
-      <h2>{{ $user->title or 'No title' }}</h2>
       <p>{{ $user->cover_id or '' }}</p>
-      <p>{{ $user->photo_id or '' }}</p>
       <h3>pouet cover pouet pp </h3>
 
       @if( Auth::user()->isSame( $user ) )
@@ -43,6 +40,14 @@
         @endif
 
   @endif
+
+      <hr/>
+      <h1>{{ $user->getName() }}</h1>
+                <hr/>
+      <h2>{{ $user->title or 'No title' }}</h2>
+      <p>{{ $user->photo_id or '' }}</p>
+
+
 
     </div>
   </div>
@@ -77,8 +82,6 @@
         </div>
           <hr/>
   </div>
-
-  <div class="large-4 medium-4 cell">
 
   <h5></h5><br/>
 
@@ -159,7 +162,6 @@
 
 @endif
 
-</div>
 </div>
 
 @endsection
