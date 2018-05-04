@@ -72,7 +72,7 @@ class RegisterController extends Controller
     {
         if (env('REGISTRATION_ALLOWED'))
         {
-            $params = $data
+            $params = $data;
             $params[ 'password' ] = Hash::make( $params[ 'password' ] );
 
             return User::create( $params );

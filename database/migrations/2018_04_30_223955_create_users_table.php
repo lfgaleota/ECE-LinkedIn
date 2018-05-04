@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration {
 			$table->datetime('birth_date');
 			$table->string('title')->nullable();
 			$table->string('cv_url')->nullable();
-			$table->json('infos');
+			$table->json('infos')->nullable();
 			$table->bigInteger('photo_id')->unsigned()->nullable();
 			$table->bigInteger('cover_id')->unsigned()->nullable();
             $table->rememberToken();
