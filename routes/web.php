@@ -63,6 +63,7 @@ Route::middleware(['auth', 'api'])->group( function() {
 
 	Route::put('api/post', 'PostController@create')->name( 'api.post.create' );
 	Route::put('api/image', 'PostController@createImage')->name( 'api.image.create' );
+	Route::put('api/video', 'PostController@createVideo')->name( 'api.video.create' );
 });
 
 /*
@@ -80,6 +81,13 @@ Route::middleware(['auth', 'api'])->group( function() {
 
 	Route::delete('api/post/{post_id}/reaction', 'ReactionController@removeForPost')->name( 'api.post.reaction.remove' );
 	Route::delete('api/comment/{comment_id}/reaction', 'ReactionController@removeForComment')->name( 'api.comment.reaction.remove' );
+});
+
+/*
+ * NOTIFICATIONS
+ */
+Route::middleware(['auth', 'api'])->group( function() {
+	Route::post('api/notification/{notification_id}/read', 'NotificationController@read')->name( 'api.notification.read.mark' );
 });
 
 /*

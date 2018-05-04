@@ -18,7 +18,7 @@ class PostController extends Controller {
 
 	public function subposts( Request $request ) {
 		$finalAssocs = [];
-		$assocs = DB::table( 'sub_posts' )->whereIn( 'parent_post_id', $request->get('ids') )->orderBy( 'child_post_id', 'DESC' )->get();
+		$assocs = DB::table( 'sub_posts' )->whereIn( 'parent_post_id', $request->get( 'ids' ) )->orderBy( 'child_post_id', 'DESC' )->get();
 		foreach( $assocs as $assoc ) {
 			if( !array_key_exists( $assoc->parent_post_id, $finalAssocs ) ) {
 				$finalAssocs[ $assoc->parent_post_id ] = [];
@@ -33,7 +33,10 @@ class PostController extends Controller {
 	}
 
 	public function get( $post_id ) {
-		return response()->json( Post::findOrFail( $post_id ) );
+		$post = Post::findOrFail( $post_id );
+		$post->subposts = Post::join( 'sub_posts', 'posts.post_id', '=', 'sub_posts.parent_post_id' )->get();
+		$post->reactions = Reaction::wherePostId( $post_id )->get();
+		return response()->json( $post );
 	}
 
 	public function gets( Request $request ) {
@@ -41,49 +44,67 @@ class PostController extends Controller {
 		return response()->json( $posts );
 	}
 
-    public function create(Request $request) {
-    	$params = $request->all();
-    	if( !isset( $params[ 'post_id' ] ) ) {
-		    $params[ 'post_id' ] = Snowflake::create( with(new Post)->getTable() );
-	    }
+	public function create( Request $request ) {
+		$jsonVars = Post::jsonVars;
+		$params = $request->all();
 
-	    $params[ 'author_id' ] = Auth::user()->user_id;
+		if( !isset( $params[ 'post_id' ] ) ) {
+			$params[ 'post_id' ] = Snowflake::create( with( new Post )->getTable() );
+		}
 
-	    $validator = Validator::make($params, Post::validation);
+		$params[ 'author_id' ] = Auth::user()->user_id;
 
-	    if ($validator->fails()) {
-		    return response()->json(['errors'=>$validator->errors()]);
-	    }
+		if( !isset( $params[ 'type' ] ) ) {
+			$params[ 'type' ] = 'POST';
+		}
 
-	    $posts_ids = [];
-	    if( isset( $params[ 'photo_ids' ] ) ) {
-	    	$posts_ids = array_merge( $params[ 'photo_ids' ], $posts_ids );
-	    }
-	    if( isset( $params[ 'video_ids' ] ) ) {
-		    $posts_ids = array_merge( $params[ 'video_ids' ], $posts_ids );
-	    }
+		foreach( $jsonVars as $jsonVar ) {
+			if( isset( $params[ $jsonVar ] ) && is_array( $params[ $jsonVar ] ) ) {
+				$params[ $jsonVar ] = json_encode( $params[ $jsonVar ]);
+			}
+		}
 
-	    $post = Post::create( $params );
-	    $post->setSubposts( $posts_ids );
-	    if( isset( $params[ 'post_visibility_user_ids' ] ) && $params[ 'visibility' ] == 'RESTRICTED' ) {
-		    $post->setPostVisibility( $params[ 'post_visibility_user_ids' ] );
-	    }
-	    return response()->json( $post );
-    }
+		$validator = Validator::make( $params, Post::validation );
 
-	public function createImage(Request $request) {
+		if( $validator->fails() ) {
+			return response()->json( [ 'errors' => $validator->errors() ], 420 );
+		}
+
+		foreach( $jsonVars as $jsonVar ) {
+			if( isset( $params[ $jsonVar ] ) ) {
+				$params[ $jsonVar ] = json_decode( $params[ $jsonVar ], true );
+			}
+		}
+
+		$posts_ids = [];
+		if( isset( $params[ 'photo_ids' ] ) ) {
+			$posts_ids = array_merge( $params[ 'photo_ids' ], $posts_ids );
+		}
+		if( isset( $params[ 'video_ids' ] ) ) {
+			$posts_ids = array_merge( $params[ 'video_ids' ], $posts_ids );
+		}
+
+		$post = Post::create( $params );
+		$post->setSubposts( $posts_ids );
+		if( isset( $params[ 'post_visibility_user_ids' ] ) && $params[ 'visibility' ] == 'RESTRICTED' ) {
+			$post->setPostVisibility( $params[ 'post_visibility_user_ids' ] );
+		}
+		return response()->json( $post );
+	}
+
+	public function createImage( Request $request ) {
 		$params = $request->all();
 		if( !isset( $params[ 'post_id' ] ) ) {
-			$params[ 'post_id' ] = Snowflake::create( with(new Post)->getTable() );
+			$params[ 'post_id' ] = Snowflake::create( with( new Post )->getTable() );
 		}
 
 		$params[ 'author_id' ] = Auth::user()->user_id;
 		$params[ 'type' ] = 'IMAGE';
 
-		$validator = Validator::make($params, Post::validation);
+		$validator = Validator::make( $params, Post::validation );
 
-		if (!$validator->fails()) {
-			return response()->json(['errors'=>$validator->errors()]);
+		if( !$validator->fails() ) {
+			return response()->json( [ 'errors' => $validator->errors() ], 420 );
 		}
 
 		if( !$request->hasFile( 'image' ) ) {
@@ -91,6 +112,34 @@ class PostController extends Controller {
 		}
 		$path = $request->file( 'image' )->store( 'images' );
 		$params[ 'image_url' ] = Storage::url( $path );
+
+		$post = Post::create( $params );
+		if( isset( $params[ 'post_visibility_user_ids' ] ) && $params[ 'visibility' ] == 'RESTRICTED' ) {
+			$post->setPostVisibility( $params[ 'post_visibility_user_ids' ] );
+		}
+		return response()->json( $post );
+	}
+
+	public function createVideo( Request $request ) {
+		$params = $request->all();
+		if( !isset( $params[ 'post_id' ] ) ) {
+			$params[ 'post_id' ] = Snowflake::create( with( new Post )->getTable() );
+		}
+
+		$params[ 'author_id' ] = Auth::user()->user_id;
+		$params[ 'type' ] = 'VIDEO';
+
+		$validator = Validator::make( $params, Post::validation );
+
+		if( !$validator->fails() ) {
+			return response()->json( [ 'errors' => $validator->errors() ], 420 );
+		}
+
+		if( !$request->hasFile( 'video' ) ) {
+			throw new \Exception( "Video not uploaded." );
+		}
+		$path = $request->file( 'video' )->store( 'videos' );
+		$params[ 'video_url' ] = Storage::url( $path );
 
 		$post = Post::create( $params );
 		if( isset( $params[ 'post_visibility_user_ids' ] ) && $params[ 'visibility' ] == 'RESTRICTED' ) {

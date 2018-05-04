@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class UserController extends Controller
 	public function timeline( $after = null ) {
 		$posts = Auth::user()->selectorTimeline()->limit( 20 );
 		if( $after != null ) {
-			$posts->where( 'post_id', '<', $after );
+			$posts->where( 'posts.post_id', '<', $after );
 		}
 		$posts = $posts->get();
 
@@ -104,11 +105,22 @@ class UserController extends Controller
 		}
 		if( $request->has('title')) {
 			$user->title = $request->input('title') ;
-
 		}
 
 		if( $request->hasFile('cv') ) {
 			$user->setCV( $request->file('cv') );
+		}
+		if( $request->has('photo_id')) {
+	    	if( Post::find( $request->input('photo_id') )->author_id != $user->user_id ) {
+				throw new \Exception( 'Cannot set picture from anotehr user.' );
+		    }
+			$user->photo_id = $request->input('photo_id');
+		}
+		if( $request->has('cover_id')) {
+			if( Post::find( $request->input('cover_id') )->author_id != $user->user_id ) {
+				throw new \Exception( 'Cannot set picture from anotehr user.' );
+			}
+			$user->cover_id = $request->input('cover_id');
 		}
 
 		$user->save();

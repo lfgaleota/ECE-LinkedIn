@@ -1,10 +1,10 @@
-<image-form>
+<video-form>
     <div class="back"></div>
     <form ref="form" class="form-container" onreset={ cancel } onsubmit={ submit }>
         <div>
             <textarea ref="text_content" name="description" class="text-content"></textarea>
             <div class="toolbar">
-                <input ref="file" if={ !edit } type="file" name="image" required accept="image/jpeg,image/png" onchange={ onFileChange } />
+                <input ref="file" if={ !edit } type="file" name="video" accept="video/avi,video/mpeg,video/quicktime,video/mp4,video/ogg,video/webm" required onchange={ onFileChange } />
                 <button class="button float-right" type="submit"><i class="fa fa-check"></i></button>
                 <button class="button float-right" type="reset"><i class="fas fa-times"></i></button>
             </div>
@@ -108,7 +108,7 @@
 
         function getForm() {
             let formData = new FormData();
-            formData.append( 'image', that.files[ 0 ], that.files[ 0 ].name );
+            formData.append( 'video', that.files[ 0 ], that.files[ 0 ].name );
             formData.append( 'description', that.refs.text_content.value );
             if( that.post_id ) {
                 formData.append( 'post_id', that.post_id );
@@ -158,4 +158,4 @@
             }
         }
     </script>
-</image-form>
+</video-form>
