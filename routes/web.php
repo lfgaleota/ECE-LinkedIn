@@ -84,6 +84,13 @@ Route::middleware(['auth', 'api'])->group( function() {
 });
 
 /*
+ * NOTIFICATIONS
+ */
+Route::middleware(['auth', 'api'])->group( function() {
+	Route::post('api/notification/{notification_id}/read', 'NotificationController@read')->name( 'api.notification.read.mark' );
+});
+
+/*
  * AUTH
  */
 Auth::routes();
