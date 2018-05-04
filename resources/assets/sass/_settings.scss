@@ -17,13 +17,3 @@ $white: #fefefe;
 
 $topbar-background: map-get($foundation-palette, primary) !global;
 $topbar-submenu-background: $light-gray;
-
-.top-bar .menu:not(.vertical) > li > a {
-    color: $light-gray;
-
-    &:hover,
-    &:focus {
-        color: $topbar-background;
-        background-color: $light-gray;
-    }
-}

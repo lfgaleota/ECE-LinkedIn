@@ -14,8 +14,14 @@
       <p>{{ $user->cover_id or '' }}</p>
       <h3>pouet cover pouet pp </h3>
 
+      <hr/>
+      <h1>{{ $user->getName() }}</h1>
+                <hr/>
+      <h2>{{ $user->title or 'No title' }}</h2>
+      <p>{{ $user->photo_id or '' }}</p>
+
       @if( Auth::user()->isSame( $user ) )
-        <button type="submit" class="edit button secondary" data-toggle="profileEditModal"><i class="fas fa-edit"></i></button>
+        <button type="submit" class="edit button" data-toggle="profileEditModal"><i class="fas fa-edit"></i></button>
       @else
         @if( Auth::user()->isInNetwork( $user ) )
             @include( 'app.inc.buttons.remove.network', [ 'username' => $user->username ] )
@@ -41,12 +47,6 @@
 
   @endif
 
-      <hr/>
-      <h1>{{ $user->getName() }}</h1>
-                <hr/>
-      <h2>{{ $user->title or 'No title' }}</h2>
-      <p>{{ $user->photo_id or '' }}</p>
-
 
 
     </div>
@@ -63,6 +63,9 @@
     <div class="callout card profile-content-card">
       <div class="card-divider">
           Experience
+          @if( Auth::user()->isSame( $user ) )
+            <button type="submit" class="edit-experience success button" data-toggle="addExp"><i class="fas fa-plus"></i></i></i></button>
+          @endif
       </div>
       <div class="card-section">
           <!-- Grid -->
@@ -92,6 +95,17 @@
   <button class="close-button" data-close aria-label="Close reveal" type="button">
     <span aria-hidden="true">&times;</span>
   </button>
+</div>
+
+@endif
+
+@if( Auth::user()->isSame( $user ) )
+<div class="reveal" id="addExp" data-reveal data-close-on-click="true" data-animation-in="spin-in" data-animation-out="spin-out">
+@include( 'app.inc.forms.edit-experience', [ 'user' => $user ])
+
+<button class="close-button" data-close aria-label="Close reveal" type="button">
+  <span aria-hidden="true">&times;</span>
+</button>
 </div>
 
 @endif

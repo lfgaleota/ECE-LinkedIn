@@ -64,3 +64,18 @@ $animated-search-form-transition-duration: 0.4s;
   padding: 0;
   border: 1px solid hsla(0,0%,4%,.25);
 }
+
+.top-bar .menu:not(.vertical) > li > a {
+    color: $light-gray;
+
+    &:hover,
+    &:focus {
+        color: $topbar-background;
+        background-color: $light-gray;
+    }
+}
+
+h3{
+ color: $topbar-background;
+
+}
