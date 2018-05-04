@@ -23,6 +23,12 @@ Route::get('user/', 'UserController@list')->name( 'user.list' );
 
 Route::post('user/{id}', 'UserController@update')->name( 'user.update' );
 
+Route::middleware(['auth', 'api'])->group( function() {
+	Route::post('api/{username}/education', 'UserController@education');
+	Route::post('api/{username}/experience', 'UserController@experience');
+	Route::post('api/{username}/skill', 'UserController@skill');
+});
+
 /*
  * NETWORK & FRIENDS
  */

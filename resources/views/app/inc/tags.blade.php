@@ -12,3 +12,6 @@
 <script data-src="{{ asset( 'tags/image-popup.tag' ) }}" type="riot/tag"></script>
 <script data-src="{{ asset( 'tags/video-popup.tag' ) }}" type="riot/tag"></script>
 <script data-src="{{ asset( 'tags/comment-section.tag' ) }}" type="riot/tag"></script>
+<script data-src="{{ asset( 'tags/experience-renderer.tag' ) }}" type="riot/tag"></script>
+<script data-src="{{ asset( 'tags/education-renderer.tag' ) }}" type="riot/tag"></script>
+<script data-src="{{ asset( 'tags/skill-renderer.tag' ) }}" type="riot/tag"></script>
