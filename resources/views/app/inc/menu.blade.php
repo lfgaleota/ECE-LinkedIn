@@ -8,11 +8,11 @@
 				<a href="{{ url('/') }}"><i class="fas fa-home"></i></a>
 			</li>
 			@auth
-				<li>
-					<form>
-						<input type="search" placeholder="Recherche" class="animated-search-form">
-					</form>
-				</li>
+			<li>
+				<form>
+					<input type="search" placeholder="Recherche" class="animated-search-form">
+				</form>
+			</li>
 			@endauth
 		</ul>
 	</div>
@@ -20,25 +20,31 @@
 	<div class="top-bar-right">
 		<ul class="dropdown menu" data-dropdown-menu>
 			@auth
-				<li><a href="{{ route( 'user.network.list' ) }}"><i class="fas fa-users"></i></a></li>
-				<li><a href="#"><i class="fas fa-envelope"></i></a></li>
-				<li>
-					<a href="#">
-						<i class="fas fa-bell"></i><span class="badge">{{count(auth()->user()->unreadNotifications)}}</span>
-					</a>
-					<ul class="menu vertical">
-						<li>
-							@foreach(auth()->user()->unreadNotifications as $notification)
-								<a href="#"><?php var_dump( $notification ); ?></a>
-							@endforeach
-						</li>
+			<li><a href="{{ route( 'user.network.list' ) }}"><i class="fas fa-users"></i></a></li>
+			<li><a href="#"><i class="fas fa-envelope"></i></a></li>
+			<li>
+				<a href="#">
+					<i class="fas fa-bell"></i><span class="badge">{{count(auth()->user()->unreadNotifications)}}</span>
+				</a>
+				<ul class="menu vertical">
 
-					</ul>
-				</li>
+					@foreach(auth()->user()->unreadNotifications as $notification)
+					@php
+					$filename = preg_split( "/\\\\/", $notification->type );
+					$filename = strtolower( $filename[ count( $filename ) - 1 ] );
+					$notification->markAsRead();
+					@endphp
+					@include( 'app.inc.notifications.' . $filename , [ 'notification' => $notification ])
 
-				<li>
-					<a href="{{ route( 'user.profile', [ 'username' => Auth::user()->username ] ) }}"><i
-								class="fas fa-user-circle"></i></a>
+					@endforeach
+
+
+				</ul>
+			</li>
+
+			<li>
+				<a href="{{ route( 'user.profile', [ 'username' => Auth::user()->username ] ) }}"><i
+					class="fas fa-user-circle"></i></a>
 					<ul class="menu vertical">
 
 						<li>
@@ -50,20 +56,20 @@
 
 						<li>
 							<a href="{{ route('logout') }}"
-							   onclick="event.preventDefault();
-                                               document.getElementById('logout-form').submit();">
-								Déconnexion
-							</a>
+							onclick="event.preventDefault();
+							document.getElementById('logout-form').submit();">
+							Déconnexion
+						</a>
 
-							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-								{{ csrf_field() }}
-							</form>
-						</li>
-					</ul>
-				</li>
+						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+							{{ csrf_field() }}
+						</form>
+					</li>
+				</ul>
+			</li>
 			@else
-				<li><a href="{{ url( '/' ) }}">Connexion</a></li>
-				<li><a href="{{ url( '/' ) }}">Inscription</a></li>
+			<li><a href="{{ url( '/' ) }}">Connexion</a></li>
+			<li><a href="{{ url( '/' ) }}">Inscription</a></li>
 			@endauth
 		</ul>
 	</div>
