@@ -1,15 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
+
 	<div id="home" class="grid-container">
 		<div class="grid-x grid-margin-x">
-			<div class="cell medium-4 hide-for-small-only">Profil</div>
+			<div class="cell medium-4 hide-for-small-only">
+					@include( 'app.inc.users.profile-card', [ 'user' => Auth::user() ] )
+		 </div>
 			<div class="cell small-12 medium-8">
 				<post-form></post-form>
 				<tag-infinite-scroller></tag-infinite-scroller>
 			</div>
 		</div>
 	</div>
+
 @endsection
 
 @section('styles')
