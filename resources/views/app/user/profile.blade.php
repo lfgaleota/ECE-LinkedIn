@@ -30,11 +30,11 @@
 
         @elseif (Auth::user()->askedFriend( $user ) )
            Your request was sent
-           @include( 'app.inc.buttons.remove.request', [ 'username' => $user->username ] )
+           @include( 'app.inc.buttons.remove.request.remove', [ 'username' => $user->username ] )
 
         @elseif (Auth::user()->wasAskedFriend( $user ) )
             @include( 'app.inc.buttons.add.request', [ 'username' => $user->username ] )
-            @include( 'app.inc.buttons.remove.request', [ 'username' => $user->username ] )
+            @include( 'app.inc.buttons.remove.request.refuse', [ 'username' => $user->username ] )
 
         @else
             @include( 'app.inc.buttons.add.friend', [ 'username' => $user->username ] )

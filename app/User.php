@@ -6,6 +6,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Notifications\FriendRequestReceived;
+use App\Notifications\FriendRequestAccepted;
 
 /**
  * App\User
@@ -288,6 +290,8 @@ class User extends Authenticatable {
 			$this->addToNetwork( $user );
 		}
 
+		$this->delReceivedFriendRequest( $user );
+
 		$status = DB::table( 'friendships' )->insert( [
 			'friend1_id' => $this->user_id,
 			'friend2_id' => $user->user_id
@@ -297,6 +301,7 @@ class User extends Authenticatable {
 			'friend1_id' => $user->user_id
 		] );
 
+        $user->notify( new FriendRequestAccepted( $this ) );
 
 		return $status;
 	}
@@ -312,19 +317,29 @@ class User extends Authenticatable {
 			'requester_id' => $this->user_id,
 			'invited_id' => $user->user_id
 		] );
+
+        $user->notify( new FriendRequestReceived( $this ) );
+
 		return $status;
 	}
 
-	public function delFriendRequest( User $user ) {
+	public function delReceivedFriendRequest( User $user ) {
 		//delete friend request
 
 		//create request
 		$status = DB::table( 'friend_requests' )
-			->where( function( $query ) use ( $user ) {
-				$query->where( 'requester_id', '=', $this->user_id )->where( 'invited_id', '=', $user->user_id );
-			})->orWhere( function( $query ) use ( $user ) {
-				$query->where( 'invited_id', '=', $this->user_id )->where( 'requester_id', '=', $user->user_id );
-			})->delete();
+			->where( 'invited_id', '=', $this->user_id )->where( 'requester_id', '=', $user->user_id )
+			->delete();
+		return $status;
+	}
+
+	public function delSentFriendRequest( User $user ) {
+		//delete friend request
+
+		//create request
+		$status = DB::table( 'friend_requests' )
+			->where( 'requester_id', '=', $this->user_id )->where( 'invited_id', '=', $user->user_id )
+			->delete();
 		return $status;
 	}
 
