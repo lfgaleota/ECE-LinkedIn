@@ -69,6 +69,7 @@ class User extends Authenticatable {
 		'cv_url',
 		'photo_id',
 		'cover_id',
+		'infos',
 		'remember_token'
 	];
 
@@ -92,6 +93,7 @@ class User extends Authenticatable {
 		'password' => 'required|string|min:6|confirmed',
 		'birth_date' => 'required|date',
 		'title' => 'string',
+		'infos' => 'json|nullable',
 		'cv' => 'mimes:pdf',
 		'photo_id' => 'numeric',
 		'cover_id' => 'numeric'
@@ -109,7 +111,8 @@ class User extends Authenticatable {
 		'title' => 'string|nullable',
 		'cv' => 'mimes:pdf|nullable',
 		'photo_id' => 'numeric|nullable',
-		'cover_id' => 'numeric|nullable'
+		'cover_id' => 'numeric|nullable',
+		'infos' => 'json|nullable'
 	];
 
 	public function newEloquentBuilder( $query ) {
