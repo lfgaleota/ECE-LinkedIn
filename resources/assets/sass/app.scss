@@ -45,6 +45,12 @@ $animated-search-form-transition-duration: 0.4s;
     z-index: 5;
 }
 
+#menubar img {
+    width: 2rem;
+    height: 2rem;
+    margin-top: 0.2rem;
+}
+
 .form-container {
     position: relative;
     margin: 0 0 1rem;

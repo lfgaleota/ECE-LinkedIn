@@ -117,6 +117,23 @@ class User extends Authenticatable {
 		'infos' => 'json|nullable'
 	];
 
+	const select = [
+		'users.name',
+		'users.surname',
+		'users.username',
+		'users.email',
+		'users.password',
+		'users.role',
+		'users.birth_date',
+		'users.title',
+		'users.cv_url'
+	];
+
+	const select_more = [
+		'users.created_at',
+		'users.updated_at'
+	];
+
 	public function newEloquentBuilder( $query ) {
 		return parent::newEloquentBuilder( $query )
 			->leftJoin( 'posts AS photo', 'users.photo_id', '=', 'photo.post_id' )
