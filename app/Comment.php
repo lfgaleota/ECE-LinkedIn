@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model 
 {
 
-    protected $table = 'comments';
+	protected $table = 'comments';
     public $timestamps = true;
 
     protected $primaryKey = 'comment_id';
@@ -41,6 +41,16 @@ class Comment extends Model
         'author_id',
         'text',
     ];
+
+	/**
+	 * The attributes that should be validated and their respective format
+	 */
+	const validation = [
+		'comment_id' => 'required|numeric|unique:comments',
+		'post_id' => 'required|numeric',
+		'author_id' => 'required|numeric',
+		'text' => 'required|string'
+	];
 
     public function getPost()
     {
