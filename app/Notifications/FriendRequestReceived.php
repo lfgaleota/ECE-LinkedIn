@@ -17,9 +17,9 @@ class FriendRequestReceived extends Notification
      *
      * @return void
      */
-    public function __construct( User $requester )
+    public function __construct( User $sender )
     {
-        $this->requester = $requester;
+        $this->sender = $sender;
     }
 
     /**
@@ -53,7 +53,7 @@ class FriendRequestReceived extends Notification
     public function toArray($notifiable)
     {
        return [
-            'sender' => $this->requester
+            'sender' => $this->sender
         ];
     }
 }
