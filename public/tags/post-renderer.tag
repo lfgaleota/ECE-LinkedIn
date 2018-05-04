@@ -10,9 +10,7 @@
 		<div class="content" if={ opts.item.description != null }>
 			<p>{ opts.item.description }</p>
 		</div>
-		<div class="loader" if={ loading }>
-			<spinner></spinner>
-		</div>
+		<loader if={ loading }></loader>
 		<div class="subposts" if={ ( subposts != null ) && ( subposts.length > 0 ) }>
 			<virtual each={ subpost in subposts } if={ !hasSubPostError }>
 				<post-renderer item={ subpost } addsopts={ parent.opts.addsopts }></post-renderer>
@@ -50,12 +48,16 @@
 		</div>
 	</div>
 
-	<a class="thumbnail" if={ opts.item.type == 'IMAGE' }>
+	<a class="thumbnail" if={ opts.item.type == 'IMAGE' } onclick={ imageOpen }>
 		<img src={ opts.item.image_url } />
 	</a>
 
-	<a class="thumbnail" if={ opts.item.type == 'VIDEO' }>
-		<video src={ opts.item.video_url } />
+	<a class="thumbnail" if={ opts.item.type == 'VIDEO' } onclick={ videoOpen }>
+		<video src={ opts.item.video_url }>
+			<div class="callout alert">
+				<p><i class="fas fa-exclamation-triangle"></i> Vid"o non  prise en charge par le navigateur.</p>
+			</div>
+		</video>
 	</a>
 
 	<style>
@@ -70,14 +72,6 @@
 		.post .author,
 		.post .subposts {
 			padding: 0.5rem 1rem;
-		}
-
-		.loader {
-			text-align: center;
-		}
-
-		spinner {
-			display: inline-block;
 		}
 
 		a.thumbnail {
@@ -144,6 +138,16 @@
 		this.loading = false;
 		this.hasSubPostError = false;
 		let that = this;
+
+		imageOpen( e ) {
+			$( 'body' ).append( $( '<image-popup></image-popup>' ) );
+			window.riot.mount( 'image-popup', { item: e.item.subpost } );
+		}
+
+		videoOpen( e ) {
+			$( 'body' ).append( $( '<video-popup></video-popup>' ) );
+			window.riot.mount( 'video-popup', { item: e.item.subpost } );
+		}
 
 		setSubPosts( subposts ) {
 			that.subposts = subposts;
