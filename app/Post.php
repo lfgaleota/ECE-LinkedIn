@@ -42,6 +42,9 @@ class Post extends Model
     protected $primaryKey = 'post_id';
     public $incrementing = false;
 
+	const CREATED_AT = 'posts.created_at';
+	const UPDATED_AT = 'posts.updated_at';
+
     /**
      * The attributes that are mass assignable.
      *

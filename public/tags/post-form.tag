@@ -311,8 +311,8 @@
 						}
 					}
 				).then( function( response ) {
+					selectorTag.onAdd();
 					tag.unmount();
-					imagesGet( selectorTag );
 				} ).catch( function( error ) {
 					tag.enable();
 					tag.setProgress( 0 );
@@ -381,8 +381,8 @@
 						}
 					}
 				).then( function( response ) {
+					selectorTag.onAdd();
 					tag.unmount();
-					videosGet( selectorTag );
 				} ).catch( function( error ) {
 					tag.enable();
 					tag.setProgress( 0 );
