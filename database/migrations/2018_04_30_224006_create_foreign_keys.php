@@ -63,16 +63,6 @@ class CreateForeignKeys extends Migration {
 						->onDelete('restrict')
 						->onUpdate('restrict');
 		});
-		Schema::table('notifications', function(Blueprint $table) {
-			$table->foreign('user_id')->references('user_id')->on('users')
-						->onDelete('restrict')
-						->onUpdate('restrict');
-		});
-		Schema::table('notifications', function(Blueprint $table) {
-			$table->foreign('comment_id')->references('comment_id')->on('comments')
-						->onDelete('restrict')
-						->onUpdate('restrict');
-		});
 		Schema::table('entities', function(Blueprint $table) {
 			$table->foreign('author_id')->references('user_id')->on('users')
 						->onDelete('restrict')
@@ -179,12 +169,6 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('messages', function(Blueprint $table) {
 			$table->dropForeign('messages_author_id_foreign');
-		});
-		Schema::table('notifications', function(Blueprint $table) {
-			$table->dropForeign('notifications_user_id_foreign');
-		});
-		Schema::table('notifications', function(Blueprint $table) {
-			$table->dropForeign('notifications_comment_id_foreign');
 		});
 		Schema::table('entities', function(Blueprint $table) {
 			$table->dropForeign('entities_author_id_foreign');

@@ -54,6 +54,9 @@ class User extends Authenticatable {
 	protected $primaryKey = 'user_id';
 	public $incrementing = true;
 
+	const CREATED_AT = 'users.created_at';
+	const UPDATED_AT = 'users.updated_at';
+
 	/**
 	 * The attributes that are mass assignable.
 	 *
@@ -118,20 +121,19 @@ class User extends Authenticatable {
 	];
 
 	const select = [
-		'users.name',
-		'users.surname',
-		'users.username',
-		'users.email',
-		'users.password',
-		'users.role',
-		'users.birth_date',
-		'users.title',
-		'users.cv_url'
+		'name',
+		'surname',
+		'username',
+		'email',
+		'role',
+		'birth_date',
+		'title',
+		'cv_url'
 	];
 
 	const select_more = [
-		'users.created_at',
-		'users.updated_at'
+		'created_at',
+		'updated_at'
 	];
 
 	public function newEloquentBuilder( $query ) {
@@ -175,7 +177,7 @@ class User extends Authenticatable {
 			->leftJoin( 'friendships', function( $join ) {
 				$join->on( 'friend2_id', '=', 'user2.user_id' )
 					->on( 'friend1_id', '=', 'users.user_id' );
-			})
+			} )
 			->addSelect( 'friend2_id AS isFriendOf' );
 	}
 
@@ -189,42 +191,55 @@ class User extends Authenticatable {
 		return DB::table( 'networks' )
 			->where( function( $query ) use ( $user ) {
 				$query->where( 'user1_id', '=', $this->user_id )->where( 'user2_id', '=', $user->user_id );
-			});
+			} );
 	}
 
 	public function selectorFriendship( User $user ) {
 		return DB::table( 'friendships' )
 			->where( function( $query ) use ( $user ) {
 				$query->where( 'friend1_id', '=', $this->user_id )->where( 'friend2_id', '=', $user->user_id );
-			});
+			} );
 	}
 
 	public function selectorTimeline() {
-		return Post::join( 'networks', 'networks.user1_id', '=', 'posts.author_id' )
+		$sel = Post::join( 'networks', 'networks.user1_id', '=', 'posts.author_id' )
 			->leftJoin( 'friendships', function( $join ) {
 				$join->on( 'friend1_id', '=', 'posts.author_id' )
 					->on( 'friend2_id', '=', 'networks.user2_id' );
-			})->where( 'networks.user2_id', '=', $this->user_id )
+			})->leftJoin( 'posts AS authorsImage', 'authorsImage.post_id', '=', 'authors.photo_id' )
+			->where( 'networks.user2_id', '=', $this->user_id )
 			->where( function( $query ) {
-				$query->where( 'visibility', '=', 'PUBLIC' )
-					->orWhere( 'visibility', '=', 'NETWORKMEMBERS' )
+				$query->where( 'posts.author_id', '=', $this->user_id )
+					->orWhere( 'posts.visibility', '=', 'PUBLIC' )
+					->orWhere( 'posts.visibility', '=', 'NETWORKMEMBERS' )
 					->orWhere( function( $query ) {
-						$query->where( 'visibility', '=', 'FRIENDS' )
+						$query->where( 'posts.visibility', '=', 'FRIENDS' )
 							->whereNotNull( 'friend2_id' );
-					})->orWhere( function( $query ) {
-						$query->where( 'visibility', '=', 'RESTRICTED' )
+					} )->orWhere( function( $query ) {
+						$query->where( 'posts.visibility', '=', 'RESTRICTED' )
 							->whereExists( function( $query ) {
 								$query->select( DB::raw( '*' ) )
 									->from( 'post_visibilities' )
 									->where( 'post_visibilities.post_id', '=', DB::raw( 'posts.post_id' ) )
 									->where( 'post_visibilities.user_id', '=', $this->user_id );
-							});
-					});
+							} );
+					} );
 			})->where( function( $query ) {
-				$query->where( 'type', '=', 'POST' )
-					->orWhere( 'type', '=', 'EVENT' )
-					->orWhere( 'type', '=', 'SHARE' );
-			})->orderBy( 'post_id', 'DESC' );
+				$query->where( 'posts.type', '=', 'POST' )
+					->orWhere( 'posts.type', '=', 'EVENT' )
+					->orWhere( 'posts.type', '=', 'SHARE' );
+			});
+		foreach( Post::select as $select ) {
+			$sel->addSelect( 'posts.' . $select . ' AS ' . $select );
+		}
+		foreach( Post::select_more as $select ) {
+			$sel->addSelect( 'posts.' . $select . ' AS ' . $select );
+		}
+		foreach( User::select as $select ) {
+			$sel->addSelect( 'authors.' . $select . ' AS ' . $select );
+		}
+		return $sel->addSelect( 'authorsImage.image_url AS photo_url' )
+			->orderBy( 'posts.post_id', 'DESC' );
 	}
 
 	public function getNetworkMembers() {
@@ -318,7 +333,7 @@ class User extends Authenticatable {
 			'friend1_id' => $user->user_id
 		] );
 
-        $user->notify( new FriendRequestAccepted( $this ) );
+		$user->notify( new FriendRequestAccepted( $this ) );
 
 		return $status;
 	}
@@ -335,7 +350,7 @@ class User extends Authenticatable {
 			'invited_id' => $user->user_id
 		] );
 
-        $user->notify( new FriendRequestReceived( $this ) );
+		$user->notify( new FriendRequestReceived( $this ) );
 
 		return $status;
 	}
@@ -377,9 +392,9 @@ class User extends Authenticatable {
 		return DB::table( 'networks' )
 			->where( function( $query ) use ( $user ) {
 				$query->where( 'user1_id', '=', $this->user_id )->where( 'user2_id', '=', $user->user_id );
-			})->orWhere( function( $query ) use ( $user ) {
+			} )->orWhere( function( $query ) use ( $user ) {
 				$query->where( 'user2_id', '=', $this->user_id )->where( 'user1_id', '=', $user->user_id );
-			})->delete();
+			} )->delete();
 	}
 
 	/**
@@ -400,9 +415,9 @@ class User extends Authenticatable {
 		return DB::table( 'friendships' )
 			->where( function( $query ) use ( $user ) {
 				$query->where( 'friend1_id', '=', $this->user_id )->where( 'friend2_id', '=', $user->user_id );
-			})->orWhere( function( $query ) use ( $user ) {
+			} )->orWhere( function( $query ) use ( $user ) {
 				$query->where( 'friend2_id', '=', $this->user_id )->where( 'friend1_id', '=', $user->user_id );
-			})->delete();
+			} )->delete();
 	}
 
 	public function selectorImages() {
@@ -413,13 +428,12 @@ class User extends Authenticatable {
 
 	public function selectorVideos() {
 		return Post::where( 'author_id', '=', $this->user_id )
-			->where( 'type', '=', 'IMAGE' )
+			->where( 'type', '=', 'VIDEO' )
 			->orderBy( 'post_id', 'DESC' );
 	}
 
 	public function selectorEvents() {
 		return Event::where( 'author_id', '=', $this->user_id )
-			->where( 'type', '=', 'IMAGE' )
 			->orderBy( 'event_id', 'DESC' );
 	}
 
@@ -427,22 +441,32 @@ class User extends Authenticatable {
 		if( $this->cv_url != null ) {
 			Storage::delete( $this->cv_url );
 		}
-		$this->cv_url = $file->store('cvs');
+		$this->cv_url = $file->store( 'cvs' );
 	}
 
-    public function getBirthDateAttribute($value)
-    {
-        return \Carbon\Carbon::parse($value)->format('Y-m-d');
-    }
+	public function getBirthDateAttribute( $value ) {
+		return \Carbon\Carbon::parse( $value )->format( 'Y-m-d' );
+	}
 
-    /**
-     * Get the user's date of birth for forms.
-     *
-     * @param  string  $value
-     * @return string
-     */
-    public function formBirthDateAttribute($value)
-    {
-        return \Carbon\Carbon::parse($value)->format('Y-m-d');
-    }
+	/**
+	 * Get the user's date of birth for forms.
+	 *
+	 * @param  string $value
+	 *
+	 * @return string
+	 */
+	public function formBirthDateAttribute( $value ) {
+		return \Carbon\Carbon::parse( $value )->format( 'Y-m-d' );
+	}
+
+	public static function boot() {
+		parent::boot();
+
+		self::created(function($model){
+			DB::table( 'networks' )->insert([
+				'user1_id' => $model->user_id,
+				'user2_id' => $model->user_id
+			]);
+		});
+	}
 }

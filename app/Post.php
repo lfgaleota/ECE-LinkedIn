@@ -36,18 +36,21 @@ use Illuminate\Support\Facades\DB;
 class Post extends Model 
 {
 
-    protected $table = 'posts';
+	protected $table = 'posts';
     public $timestamps = true;
 
     protected $primaryKey = 'post_id';
     public $incrementing = false;
+
+	const CREATED_AT = 'posts.created_at';
+	const UPDATED_AT = 'posts.updated_at';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
+    const select = [
         'post_id',
         'author_id',
         'event_id',
@@ -59,6 +62,15 @@ class Post extends Model
         'video_url',
         'visibility',
     ];
+
+	const select_more = [
+		'created_at',
+		'updated_at'
+	];
+
+	const jsonVars = [ 'photo_ids', 'video_ids', 'post_visibility_user_ids' ];
+
+	protected $fillable = Post::select;
 
 	const validation = [
 		'post_id' => 'required|unique:posts|numeric',
@@ -78,6 +90,15 @@ class Post extends Model
 		'post_visibility_user_ids' => 'json'
 	];
 
+	/**
+	 * The attributes that should be hidden for arrays.
+	 *
+	 * @var array
+	 */
+	protected $hidden = [
+		'password', 'remember_token',
+	];
+
 	public function newEloquentBuilder( $query ) {
 		return parent::newEloquentBuilder( $query )
 			->join( 'users AS authors', 'posts.author_id', '=', 'authors.user_id' );
@@ -85,7 +106,7 @@ class Post extends Model
 
     public function getAuthor()
     {
-        return $this->belongsTo('User', 'author_id');
+        return \App\User::find( $this->author_id );
     }
 
     public function getEvent()

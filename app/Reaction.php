@@ -62,7 +62,7 @@ class Reaction extends Model
 
     public function getPost()
     {
-        return $this->belongsTo('Post', 'post_id');
+        return \App\Post::find($this->post_id);
     }
 
     public function getComment()

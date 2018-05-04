@@ -61,28 +61,26 @@ class Notification extends Model
         return $status;
     }
 
-    public function getRequesterId() {
-        return $this->data.requester;
+    public function getUser() {
+        return $this->data.sender;
     }
-    public function getRequesterUser() {
-         $user = User::whereUserId($this->getRequesterId())->firstOrFail();
-       return $user;
-   }
-   public function getRequesterName() {
-         $user = User::whereUserId($this->getRequesterId())->firstOrFail();
-       return $user->getName();
-   }
 
-
-
-   public function getAcceptFriend() {
-    return $this->data.accept;
+    public function getNameSender() {
+    return $this->getUser()->getName();
     }
+
 
     public function getTextNotification( ) {
     $text="pouet";
     return $text;
-}
+    }
+
+    public function getNotification($id){
+        $notification = Notification::where( 'id', '=', $id )
+        return $notification;
+    }
+
+
 
 
 
