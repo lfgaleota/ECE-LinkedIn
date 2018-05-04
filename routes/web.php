@@ -35,7 +35,8 @@ Route::middleware(['auth'])->group( function() {
 
     Route::delete('network/{username}', 'NetworkMembersController@remove')->name( 'user.network.remove' );
     Route::delete('friend/{username}', 'FriendController@remove')->name( 'user.friend.remove' );
-	Route::delete('friend/{username}/ask', 'FriendController@refuse')->name( 'user.friend.ask.refuse' );
+	Route::delete('friend/{username}/ask/refuse', 'FriendController@refuse')->name( 'user.friend.ask.refuse' );
+	Route::delete('friend/{username}/ask', 'FriendController@removeRequest')->name( 'user.friend.ask.delete' );
 });
 
 Route::middleware(['auth', 'api'])->group( function() {

@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class FriendRequest extends Notification
+class FriendRequestAccepted extends Notification
 {
     use Queueable;
 
@@ -17,11 +17,9 @@ class FriendRequest extends Notification
      *
      * @return void
      */
-    public function __construct( User $requester, User $invited, $accept )
+    public function __construct( User $invited )
     {
-        $this->requester = $requester;
         $this->invited = $invited;
-        $this->accept = $accept;
     }
 
     /**
@@ -55,9 +53,7 @@ class FriendRequest extends Notification
     public function toArray($notifiable)
     {
        return [
-            'requester' => $this->requester->user_id,
-            'invited' => $this->invited->user_id,
-            'accept' => $this->accept,
+            'invited' => $this->invited
         ];
     }
 }

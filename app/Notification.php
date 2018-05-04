@@ -51,4 +51,39 @@ class Notification extends Model
         'friend_request_id',
     ];
 
+
+    public static function getUserNotifications( ) {
+        $userid= Auth::user()->user_id;
+
+        $status = Notification::where( 'notifiable_id', '=', $userid )
+        ->orderBy( 'updated_at', 'DESC' );
+
+        return $status;
+    }
+
+    public function getRequesterId() {
+        return $this->data.requester;
+    }
+    public function getRequesterUser() {
+         $user = User::whereUserId($this->getRequesterId())->firstOrFail();
+       return $user;
+   }
+   public function getRequesterName() {
+         $user = User::whereUserId($this->getRequesterId())->firstOrFail();
+       return $user->getName();
+   }
+
+
+
+   public function getAcceptFriend() {
+    return $this->data.accept;
+    }
+
+    public function getTextNotification( ) {
+    $text="pouet";
+    return $text;
+}
+
+
+
 }
