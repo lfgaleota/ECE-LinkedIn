@@ -53,22 +53,26 @@
   </div>
 
   <div class="large-8 medium-8 cell">
-    <div class="callout">
-      <h5>Experience</h5>
-      <!-- Grid -->
-      <div class="grid-x grid-padding-x">
-        <div class="large-12 cell">
-            <p><strong>ECE Paris</strong> Diplome coloriage.</p>
-        </div>
+    <div class="callout card profile-content-card">
+      <div class="card-divider">
+          Experience
       </div>
+      <div class="card-section">
+          <!-- Grid -->
+          <div class="grid-x grid-padding-x">
+            <div class="large-12 cell">
+                <p><strong>ECE Paris</strong> Diplome coloriage.</p>
+            </div>
+          </div>
 
-        <hr/>
-        <div class="grid-x grid-padding-x">
-          <div class="large-12 cell">
-              <p><strong>ECE Paris</strong> Diplome coloriage.</p>
+            <hr>
+            <div class="grid-x grid-padding-x">
+              <div class="large-12 cell">
+                  <p><strong>ECE Paris</strong> Diplome coloriage.</p>
+              </div>
+            </div>
           </div>
         </div>
-    </div>
           <hr/>
   </div>
 
