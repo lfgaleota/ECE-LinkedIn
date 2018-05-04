@@ -36,13 +36,7 @@ class Reaction extends Model
      *
      * @var array
      */
-    protected $fillable = [
-    	'reaction_id',
-        'post_id',
-        'comment_id',
-        'author_id',
-        'type',
-    ];
+    protected $fillable = Reaction::select;
 
 	/**
 	 * The attributes that should be validated and their respective format
@@ -53,6 +47,19 @@ class Reaction extends Model
 		'comment_id' => 'numeric',
 		'author_id' => 'required|numeric',
 		'type' => 'required|string'
+	];
+
+	const select = [
+		'reaction_id',
+		'post_id',
+		'comment_id',
+		'author_id',
+		'type',
+	];
+
+	const select_more = [
+		'created_at',
+		'updated_at'
 	];
 
 	public function newEloquentBuilder( $query ) {
