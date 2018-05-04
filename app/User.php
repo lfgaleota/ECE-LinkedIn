@@ -54,6 +54,9 @@ class User extends Authenticatable {
 	protected $primaryKey = 'user_id';
 	public $incrementing = true;
 
+	const CREATED_AT = 'users.created_at';
+	const UPDATED_AT = 'users.updated_at';
+
 	/**
 	 * The attributes that are mass assignable.
 	 *
