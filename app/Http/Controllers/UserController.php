@@ -127,4 +127,82 @@ class UserController extends Controller
 
 		return redirect()->route( 'user.profile', [ 'username' => $user->username ] );
 	}
+
+	public function education( Request $request, $username ) {
+		$user = User::whereUsername( $username )->firstOrFail();
+
+		if( !Auth::user()->role == 'ADMIN' && !Auth::user()->isSame( $user ) ) {
+			return response()->json( [ 'errors' => 'Unauthorized' ], 401 );
+		}
+
+		$validator = Validator::make( $request->all(), [
+			'data' => 'required|array'
+		]);
+
+		if( $validator->fails() ) {
+			return response()->json( [ 'errors' => $validator->errors() ], 420 );
+		}
+
+		if( $user->infos == null ) {
+			$user->infos = '{}';
+		}
+		$infos = json_decode( $user->infos, true );
+		$infos[ 'education' ] = $request->get( 'data' );
+		$user->infos = json_encode( $infos );
+		$user->save();
+
+		return response()->json();
+	}
+
+	public function experience( Request $request, $username ) {
+		$user = User::whereUsername( $username )->firstOrFail();
+
+		if( !Auth::user()->role == 'ADMIN' && !Auth::user()->isSame( $user ) ) {
+			return response()->json( [ 'errors' => 'Unauthorized' ], 401 );
+		}
+
+		$validator = Validator::make( $request->all(), [
+			'data' => 'required|array'
+		]);
+
+		if( $validator->fails() ) {
+			return response()->json( [ 'errors' => $validator->errors() ], 420 );
+		}
+
+		if( $user->infos == null ) {
+			$user->infos = '{}';
+		}
+		$infos = json_decode( $user->infos, true );
+		$infos[ 'experience' ] = $request->get( 'data' );
+		$user->infos = json_encode( $infos );
+		$user->save();
+
+		return response()->json();
+	}
+
+	public function skill( Request $request, $username ) {
+		$user = User::whereUsername( $username )->firstOrFail();
+
+		if( !Auth::user()->role == 'ADMIN' && !Auth::user()->isSame( $user ) ) {
+			return response()->json( [ 'errors' => 'Unauthorized' ], 401 );
+		}
+
+		$validator = Validator::make( $request->all(), [
+			'data' => 'required|array'
+		]);
+
+		if( $validator->fails() ) {
+			return response()->json( [ 'errors' => $validator->errors() ], 420 );
+		}
+
+		if( $user->infos == null ) {
+			$user->infos = '{}';
+		}
+		$infos = json_decode( $user->infos, true );
+		$infos[ 'skill' ] = $request->get( 'data' );
+		$user->infos = json_encode( $infos );
+		$user->save();
+
+		return response()->json();
+	}
 }

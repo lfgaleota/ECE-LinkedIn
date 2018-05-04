@@ -112,7 +112,7 @@
 
 @section('scripts')
 	@parent
-	@include( 'app.inc.tags' )
+
 	<script>
 		var photo_id = $( 'input[name="photo_id"]' );
 		var cover_id = $( 'input[name="cover_id"]' );
