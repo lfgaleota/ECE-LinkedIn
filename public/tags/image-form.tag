@@ -35,7 +35,7 @@
             transform: translateX(-50%) translateY(-50%);
             max-width: 500px;
             width: 100%;
-            z-index: 30;
+            z-index: 2030;
         }
 
         .back {
@@ -46,7 +46,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            z-index: 25;
+            z-index: 2025;
         }
 
         .card-section {

@@ -33,7 +33,7 @@
             transform: translateX(-50%);
             max-width: 600px;
             width: 100%;
-            z-index: 20;
+            z-index: 2020;
             margin: 0;
         }
 
@@ -45,7 +45,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            z-index: 10;
+            z-index: 2010;
         }
 
         .form-content {
@@ -159,6 +159,10 @@
             e.preventDefault();
             e.stopImmediatePropagation();
             opts.add( that );
+        }
+
+        onAdd() {
+	        opts.itemGetInitier( that );
         }
 
         submit(e) {
