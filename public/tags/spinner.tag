@@ -61,3 +61,18 @@
         }
     </style>
 </spinner>
+
+<loader>
+    <spinner></spinner>
+
+    <style>
+        :scope {
+            display: block;
+            text-align: center;
+        }
+
+        spinner {
+            display: inline-block;
+        }
+    </style>
+</loader>

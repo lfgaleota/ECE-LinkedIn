@@ -63,6 +63,7 @@ Route::middleware(['auth', 'api'])->group( function() {
 
 	Route::put('api/post', 'PostController@create')->name( 'api.post.create' );
 	Route::put('api/image', 'PostController@createImage')->name( 'api.image.create' );
+	Route::put('api/video', 'PostController@createVideo')->name( 'api.video.create' );
 });
 
 /*

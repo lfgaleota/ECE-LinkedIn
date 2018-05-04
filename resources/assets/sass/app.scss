@@ -64,3 +64,8 @@ $animated-search-form-transition-duration: 0.4s;
   padding: 0;
   border: 1px solid hsla(0,0%,4%,.25);
 }
+
+.full.reveal video {
+    width: 100%;
+    height: 100%;
+}
