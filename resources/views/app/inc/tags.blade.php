@@ -11,3 +11,4 @@
 <script data-src="{{ asset( 'tags/spinner.tag' ) }}" type="riot/tag"></script>
 <script data-src="{{ asset( 'tags/image-popup.tag' ) }}" type="riot/tag"></script>
 <script data-src="{{ asset( 'tags/video-popup.tag' ) }}" type="riot/tag"></script>
+<script data-src="{{ asset( 'tags/comment-section.tag' ) }}" type="riot/tag"></script>
