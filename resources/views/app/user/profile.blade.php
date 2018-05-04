@@ -10,14 +10,16 @@
 
   <div class="grid-x grid-padding-x">
   <div class="large-8 medium-8 cell">
-    <div class="callout">
+    <div class="callout profile-header-card">
       <h1>{{ $user->getName() }}</h1>
       <h2>{{ $user->title or 'No title' }}</h2>
       <p>{{ $user->cover_id or '' }}</p>
       <p>{{ $user->photo_id or '' }}</p>
       <h3>pouet cover pouet pp </h3>
 
-      @if( ! Auth::user()->isSame( $user ) )
+      @if( Auth::user()->isSame( $user ) )
+        <button type="submit" class="edit button secondary" data-toggle="profileEditModal"><i class="fas fa-edit"></i></button>
+      @else
         @if( Auth::user()->isInNetwork( $user ) )
             @include( 'app.inc.buttons.remove.network', [ 'username' => $user->username ] )
 
@@ -76,76 +78,74 @@
           <hr/>
   </div>
 
+  <div class="large-4 medium-4 cell">
+
+  <h5></h5><br/>
+
+  @if( Auth::user()->isSame( $user ) )
+<div class="reveal" id="profileEditModal" data-reveal data-close-on-click="true" data-animation-in="spin-in" data-animation-out="spin-out">
+ @include( 'app.inc.forms.edit', [ 'user' => $user ])
+
+  <button class="close-button" data-close aria-label="Close reveal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+@endif
+
   <div class="large-8 medium-8 cell">
-    <div class="callout">
-      <h5>Education:</h5>
-      <!-- Grid -->
-      <div class="grid-x grid-padding-x">
-        <div class="large-12 cell">
-          <div class="primary callout">
-            <p><strong>ECE Paris</strong> Diplome coloriage.</p>
-          </div>
-        </div>
+    <div class="callout card profile-content-card">
+      <div class="card-divider">
+          Education
       </div>
-      <div class="grid-x grid-padding-x">
-        <div class="large-6 medium-6 cell">
-          <div class="primary callout">
-            <p>kebabiste</p>
-          </div>
-        </div>
-        <div class="large-6 medium-6 cell">
-          <div class="primary callout">
-            <p>6 ans</p>
-          </div>
-        </div>
-      </div>
-      </div>
-        <hr />
-    </div>
-          <hr />
-
-    <div class="large-8 medium-8 cell">
-      <div class="callout">
-        <h5>Skills</h5>
-        <!-- Grid -->
-        <div class="grid-x grid-padding-x">
-          <div class="large-12 cell">
-              <p><strong>ECE Paris</strong> Diplome coloriage.</p>
-          </div>
-        </div>
-
-          <hr/>
+      <div class="card-section">
+          <!-- Grid -->
           <div class="grid-x grid-padding-x">
             <div class="large-12 cell">
                 <p><strong>ECE Paris</strong> Diplome coloriage.</p>
             </div>
           </div>
-      </div>
-            <hr/>
-    </div>
-  </div>
 
-    <div class="large-4 medium-4 cell">
-
-    <h5></h5><br/>
-
-    @if( Auth::user()->isSame( $user ) )
-      <div class="grid-x grid-padding-x">
-        <div class="large-6 medium-6 cell">
-            <p><button type="submit" class="button" data-toggle="profileEditModal">Edit the Profile</button>
+            <hr>
+            <div class="grid-x grid-padding-x">
+              <div class="large-12 cell">
+                  <p><strong>ECE Paris</strong> Diplome coloriage.</p>
+              </div>
+            </div>
+          </div>
         </div>
+          <hr/>
+  </div>
+
+  <div class="large-8 medium-8 cell">
+    <div class="callout card profile-content-card">
+      <div class="card-divider">
+          Skills
       </div>
+      <div class="card-section">
+          <!-- Grid -->
+          <div class="grid-x grid-padding-x">
+            <div class="large-12 cell">
+                <p><strong>ECE Paris</strong> Diplome coloriage.</p>
+            </div>
+          </div>
+
+            <hr>
+            <div class="grid-x grid-padding-x">
+              <div class="large-12 cell">
+                  <p><strong>ECE Paris</strong> Diplome coloriage.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+          <hr/>
   </div>
 
-  <div class="reveal" id="profileEditModal" data-reveal data-close-on-click="true" data-animation-in="spin-in" data-animation-out="spin-out">
-   @include( 'app.inc.forms.edit', [ 'user' => $user ])
 
-    <button class="close-button" data-close aria-label="Close reveal" type="button">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
 
-@endif
+    </div>
+
+
 
 @section('scripts')
     @parent

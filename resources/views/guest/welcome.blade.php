@@ -14,9 +14,9 @@
     <div class="grid-container">
         <div class="grid-x grid-padding-x">
             <div class="cell small-12 medium-7 large-9">
-                <h1> Bienvenue sur Calmar Flamboyant </h1>
+                <h1>Bienvenue sur Calamar Flamboyant</h1>
                 <h4>Le réseau social des professionnels</h4>
-                <img src="{{asset('img/calmar.png')}}" alt="notification">
+                <img src="{{asset('img/logo.png')}}" alt="Logo">
             </div>
 
             <div class="cell small-12 medium-5 large-3">
