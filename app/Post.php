@@ -36,7 +36,7 @@ use Illuminate\Support\Facades\DB;
 class Post extends Model 
 {
 
-    protected $table = 'posts';
+	protected $table = 'posts';
     public $timestamps = true;
 
     protected $primaryKey = 'post_id';
@@ -47,7 +47,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = [
+    const select = [
         'post_id',
         'author_id',
         'event_id',
@@ -59,6 +59,15 @@ class Post extends Model
         'video_url',
         'visibility',
     ];
+
+	const select_more = [
+		'created_at',
+		'updated_at'
+	];
+
+	const jsonVars = [ 'photo_ids', 'video_ids', 'post_visibility_user_ids' ];
+
+	protected $fillable = Post::select;
 
 	const validation = [
 		'post_id' => 'required|unique:posts|numeric',
@@ -76,6 +85,15 @@ class Post extends Model
 		'photo_ids' => 'json',
 		'video_ids' => 'json',
 		'post_visibility_user_ids' => 'json'
+	];
+
+	/**
+	 * The attributes that should be hidden for arrays.
+	 *
+	 * @var array
+	 */
+	protected $hidden = [
+		'password', 'remember_token',
 	];
 
 	public function newEloquentBuilder( $query ) {

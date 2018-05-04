@@ -20,7 +20,7 @@ class UserController extends Controller
 	public function timeline( $after = null ) {
 		$posts = Auth::user()->selectorTimeline()->limit( 20 );
 		if( $after != null ) {
-			$posts->where( 'post_id', '<', $after );
+			$posts->where( 'posts.post_id', '<', $after );
 		}
 		$posts = $posts->get();
 
