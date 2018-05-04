@@ -103,7 +103,7 @@ class Post extends Model
 
     public function getAuthor()
     {
-        return $this->belongsTo('User', 'author_id');
+        return \App\User::find( $this->author_id );
     }
 
     public function getEvent()

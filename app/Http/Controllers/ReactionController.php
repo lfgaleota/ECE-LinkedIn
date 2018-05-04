@@ -6,9 +6,11 @@ use App\Comment;
 use App\Post;
 use App\Reaction;
 use App\Snowflake;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Notifications\React;
 
 class ReactionController extends Controller {
 	public function forPost( $post_id ) {
@@ -64,6 +66,9 @@ class ReactionController extends Controller {
 		}
 
 		$post = Reaction::create( $params );
+
+		$post->getPost()->getAuthor()->notify( new React( Auth::user() ) );
+
 		return response()->json( $post );
 	}
 
