@@ -53,7 +53,7 @@ class FriendRequestReceived extends Notification
     public function toArray($notifiable)
     {
        return [
-            'requester' => $this->requester
+            'sender' => $this->requester
         ];
     }
 }
