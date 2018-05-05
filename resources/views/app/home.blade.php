@@ -14,11 +14,6 @@
 	</div>
 @endsection
 
-@section('styles')
-	@parent
-	<link href="{{ asset( 'css/home.css' ) }}" rel="stylesheet"/>
-@endsection
-
 @section('scripts')
 	@parent
 	@include( 'app.inc.tags' )

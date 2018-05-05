@@ -233,3 +233,16 @@ table.profile_img img {
 		white-space: pre-wrap;
 	}
 }
+
+#notificationPanel {
+	max-width: 500px;
+	width: 100vh;
+	z-index: 10;
+}
+
+#notificationPanel .read-action .badge {
+	min-width: auto;
+	width: 1em;
+	height: 1em;
+	margin-right: 1em;
+}

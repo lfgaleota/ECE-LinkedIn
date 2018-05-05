@@ -22,7 +22,6 @@
 		<div class="toolbar">
 			<like-button item={ opts.item } addsopts={ opts.addsopts } iscomment="false"></like-button>
 			<button class="button float-right" onclick={ toggleComment }><i class="fas fa-comments"></i></button>
-			<button class="button float-right"><i class="fas fa-share"></i></button>
 		</div>
 		<comment-section if={ commentOpened } post_id={ opts.item.post_id } addsopts={ opts.addsopts }></comment-section>
 	</div>
