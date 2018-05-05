@@ -11,22 +11,39 @@
 @import "~@fortawesome/fontawesome-free-webfonts/scss/fa-regular.scss";
 @import "~@fortawesome/fontawesome-free-webfonts/scss/fa-solid.scss";
 
+// InstantSearch.js
+@import "~instantsearch.js/dist/instantsearch.css";
+@import "~instantsearch.js/dist/instantsearch-theme-algolia.css";
+
 $animated-search-form-initial-width: 10rem;
 $animated-search-form-transition-duration: 0.4s;
 
-.animated-search-form[type=search] {
-	width: $animated-search-form-initial-width;
-	border: 0.125rem solid $light-gray;
-	box-shadow: 0 0 3.125rem rgba(0, 0, 0, 0.18);
+input[type=search] {
 	border-radius: $global-radius;
-	background-image: url('//image.ibb.co/i7NbrQ/search_icon_15.png');
+	background-image: url('../img/search.png');
 	background-position: 0.625rem 0.625rem;
 	background-repeat: no-repeat;
 	padding: 0.75rem 1.25rem 0.75rem 2rem;
+}
+
+.animated-search-form[type=search] {
+	width: $animated-search-form-initial-width;
 	transition: width $animated-search-form-transition-duration ease-in-out;
 
 	&:focus {
 		width: 100%;
+	}
+}
+
+.ais-search-box--input {
+	padding: 0.5rem 2rem;
+	height: 2.6rem;
+}
+
+.ais-search-box--magnifier {
+	svg {
+		height: 1rem;
+		width: 1rem;
 	}
 }
 
@@ -79,6 +96,7 @@ $animated-search-form-transition-duration: 0.4s;
 	background-position: center;
 	background-image: linear-gradient(135deg, darken(map-get($foundation-palette, primary), 20%) 0%, map-get($foundation-palette, primary) 100%);
 	text-align: center;
+	box-shadow: 0 5px 5px 0 rgba(0,0,0,0.2);
 }
 
 .profile-header-card .header img {
@@ -123,23 +141,54 @@ $animated-search-form-transition-duration: 0.4s;
 
 .friend-line {
 	padding: 1em;
-}
 
-.friend-line img {
-	width: 64px;
-	height: 64px;
-	border-radius: 50%;
-	border: 1px solid hsla(0, 0%, 4%, .25);
-}
+	img {
+		width: 64px;
+		height: 64px;
+		border-radius: 50%;
+		border: 1px solid hsla(0, 0%, 4%, .25);
+	}
 
-.friend-line p {
-	padding-top: 18px;
-	padding-top: calc(32px - 1em);
-	text-align: left;
+	p {
+		padding-top: 18px;
+		padding-top: calc(32px - 1em);
+		text-align: left;
+	}
 }
 
 .profile-network-content {
 	max-height: 90vh;
 	max-height: calc( 90vh - 3.5em );
 	overflow: auto;
+}
+
+.search-panel {
+	.card-divider {
+		padding: 0;
+
+		#search-box {
+			flex: 1;
+		}
+
+		.ais-search-box {
+			height: auto;
+			max-width: unset;
+		}
+
+		input {
+			margin: 0;
+			border-top: none;
+			width: 100%;
+		}
+
+		.menu a {
+			padding: 0.8rem 1rem;
+		}
+
+		.provider {
+			height: 2rem;
+			margin: 0.25rem 0.25rem 0 0.25rem;
+			fill: map-get($foundation-palette, primary);
+		}
+	}
 }

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\FriendRequestReceived;
 use App\Notifications\FriendRequestAccepted;
+use Laravel\Scout\Searchable;
 
 /**
  * App\User
@@ -47,7 +48,7 @@ use App\Notifications\FriendRequestAccepted;
  * @mixin \Eloquent
  */
 class User extends Authenticatable {
-	use Notifiable;
+	use Notifiable, Searchable;
 
 	protected $table = 'users';
 	public $timestamps = true;
@@ -136,6 +137,8 @@ class User extends Authenticatable {
 		'created_at',
 		'updated_at'
 	];
+
+	const searchable_fields = [ 'username', 'photo_url', 'name', 'surname', 'title', 'infos' ];
 
 	const default_photo_url = 'http://99deaefa0b5ada8f76c5-300aeeb3886c20b990a2b7efeaace3cd.r77.cf5.rackcdn.com/images/generic.png';
 
@@ -479,5 +482,21 @@ class User extends Authenticatable {
 				'user2_id' => $model->user_id
 			]);
 		});
+	}
+
+	/**
+	 * Get the indexable data array for the model.
+	 *
+	 * @return array
+	 */
+	public function toSearchableArray() {
+		$origArray = $this->toArray();
+		$array = [];
+
+		foreach( User::searchable_fields as $searchableField ) {
+			$array[ $searchableField ] = $origArray[ $searchableField ];
+		}
+
+		return $array;
 	}
 }

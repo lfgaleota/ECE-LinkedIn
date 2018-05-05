@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 /**
  * App\JobOffer
@@ -25,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class JobOffer extends Model 
 {
+	use Searchable;
 
     protected $table = 'job_offers';
     public $timestamps = true;
@@ -44,6 +46,8 @@ class JobOffer extends Model
         'position',
         'description',
     ];
+
+	const searchable_fields = [ 'job_id', 'position', 'description' ];
 
     public function getAuthor()
     {
@@ -81,4 +85,19 @@ class JobOffer extends Model
     }
 
 
+	/**
+	 * Get the indexable data array for the model.
+	 *
+	 * @return array
+	 */
+	public function toSearchableArray() {
+		$origArray = $this->toArray();
+		$array = [];
+
+		foreach( JobOffer::searchable_fields as $searchableField ) {
+			$array[ $searchableField ] = $origArray[ $searchableField ];
+		}
+
+		return $array;
+	}
 }
