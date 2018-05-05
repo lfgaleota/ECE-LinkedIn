@@ -14,30 +14,26 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $type
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Reaction whereAuthorId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Reaction whereCommentId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Reaction whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Reaction wherePostId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Reaction whereReactionId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Reaction whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Reaction whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Reaction whereAuthorId( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Reaction whereCommentId( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Reaction whereCreatedAt( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Reaction wherePostId( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Reaction whereReactionId( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Reaction whereType( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Reaction whereUpdatedAt( $value )
  * @mixin \Eloquent
  */
-class Reaction extends Model 
-{
+class Reaction extends Model {
 	protected $table = 'reactions';
-    public $timestamps = true;
-
-    protected $primaryKey = 'reaction_id';
-    public $incrementing = false;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = Reaction::select;
-
+	public $timestamps = true;
+	protected $primaryKey = 'reaction_id';
+	public $incrementing = false;
+	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $fillable = Reaction::select;
 	/**
 	 * The attributes that should be validated and their respective format
 	 */
@@ -48,7 +44,6 @@ class Reaction extends Model
 		'author_id' => 'required|numeric',
 		'type' => 'required|string'
 	];
-
 	const select = [
 		'reaction_id',
 		'post_id',
@@ -56,7 +51,6 @@ class Reaction extends Model
 		'author_id',
 		'type',
 	];
-
 	const select_more = [
 		'created_at',
 		'updated_at'
@@ -67,19 +61,15 @@ class Reaction extends Model
 			->join( 'users AS authors', 'reactions.author_id', '=', 'authors.user_id' );
 	}
 
-    public function getPost()
-    {
-        return \App\Post::find($this->post_id);
-    }
+	public function post() {
+		return $this->belongsTo('\App\Post', 'post_id');
+	}
 
-    public function getComment()
-    {
-        return $this->belongsTo('Comment', 'comment_id');
-    }
+	public function comment() {
+		return $this->belongsTo( '\App\Comment', 'comment_id' );
+	}
 
-    public function getAuthor()
-    {
-        return $this->belongsTo('User', 'author_id');
-    }
-
+	public function author() {
+		return $this->belongsTo( '\App\User', 'author_id' );
+	}
 }

@@ -9,6 +9,10 @@
 			</div>
 			<like-button item={ comment } addsopts={ opts.addsopts } iscomment="true"></like-button>
 		</div>
+		<loader if={ loading }></loader>
+		<div class="callout alert" if={ hasError }>
+			<p><i class="fas fa-exclamation-triangle"></i> Erreur lors du chargements des commentaires.</p>
+		</div>
 	</div>
 	<form ref="form" onsubmit={ submit }>
 		<div class="grid-x">
@@ -110,10 +114,15 @@
 	<script>
 		this.post_id = null;
 		this.comments = [];
+		this.loading = false;
+		this.hasError = false;
 
 		let that = this;
 
 		loadComments() {
+			that.loading = true;
+			that.hasError = false;
+			that.update();
 			window.axios.get(
 				opts.addsopts.baseapipath + '/post/' + opts.post_id + '/comments',
 				null,
@@ -123,10 +132,13 @@
 					}
 				}
 			).then( function( response ) {
+				that.loading = false;
 				that.enable();
 				that.setProgress( 0 );
 				that.setItems( response.data );
 			}).catch( function( error ) {
+				that.loading = false;
+				that.hasError = true;
 				that.enable();
 				that.setProgress( 0 );
 				console.log( error );
@@ -143,7 +155,9 @@
 		}
 
 		postComment() {
+			that.hasError = false;
 			that.disable();
+			that.update();
 			let data = getForm();
 			data[ '_method' ] = 'PUT';
 			window.axios.post(
@@ -159,7 +173,9 @@
 				that.setProgress( 0 );
 				that.reload();
 			}).catch( function( error ) {
+				that.hasError = true;
 				that.enable();
+				that.update();
 				that.setProgress( 0 );
 				console.log( error );
 			});

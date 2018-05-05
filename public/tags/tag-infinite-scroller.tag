@@ -70,7 +70,7 @@
 
 		error() {
 			that.loading = false;
-			that.hasError = false;
+			that.hasError = true;
 			that.update();
 		}
 

@@ -56,8 +56,8 @@
 						tag.error();
 						console.log( error );
 					} );
-				} ).catch( function( error ) {
-				tag.error();
+				}).catch( function( error ) {
+					tag.error();
 				console.log( error );
 			} );
 		}
