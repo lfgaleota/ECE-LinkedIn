@@ -49,10 +49,36 @@ class JobOffer extends Model
     {
         return $this->belongsTo('User', 'author_id');
     }
+        public function getPosition()
+    {
+        return $this->position;
+    }
+            public function getDescription()
+    {
+        return $this->description;
+    }
+
+
 
     public function getEntity()
     {
         return $this->belongsTo('Entity', 'entity_id');
     }
+
+    public function setEntity($entity)
+    {
+        return $this->entity_id=$entity;
+    }
+
+             public function setPosition( $position)
+    {
+       return  $this->position=$position;
+    }
+
+         public function setDescritpion( $description)
+    {
+       return  $this->description=$description;
+    }
+
 
 }

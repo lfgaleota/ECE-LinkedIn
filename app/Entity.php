@@ -47,5 +47,22 @@ class Entity extends Model
     {
         return $this->belongsTo('User', 'author_id');
     }
+             public function getName()
+    {
+       return  $this->name;
+    }
+   public function getId()
+    {
+        return $this->entity_id;
+    }
+     public function setAuthor( $author)
+    {
+       return  $this->author=$author;
+    }
+         public function setName( $name)
+    {
+       return  $this->name=$name;
+    }
+
 
 }

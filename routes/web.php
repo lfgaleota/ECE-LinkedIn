@@ -113,6 +113,13 @@ Route::middleware(['auth', 'api'])->group( function() {
 Auth::routes();
 
 /*
+* JOB
+*/
+	Route::get('job', 'JobController@show')->name( 'job.show' );
+	Route::put('api/job/new', 'JobController@add')->name( 'api.job.create' );
+
+
+/*
  * USER PROFILE
  *
  * (last one because it handles every other possible URLs)

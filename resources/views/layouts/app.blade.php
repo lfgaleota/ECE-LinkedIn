@@ -43,7 +43,7 @@
             <div class="top-bar-right">
                 <ul class="dropdown menu" data-dropdown-menu>
                     @auth
-                    <li><a href="#"><i class="fas fa-suitcase"></i></a></li>
+                    <li><a href="{{ route( 'job.show' ) }}"><i class="fas fa-suitcase"></i></a></li>
                     <li><a href="{{ route( 'user.network.list' ) }}"><i class="fas fa-users"></i></a></li>
                     <li><a href="#"><i class="fas fa-envelope"></i></a></li>
                     <li>

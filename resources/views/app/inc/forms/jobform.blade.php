@@ -1,5 +1,5 @@
 <div class="job-form">
-	{!!  Form::model($user, ['route' => ['user.update', $user->username], 'files' => true]) !!}
+	{!!  Form::model( ['route' => ['api.job.create']]) !!}
 
 	<div>
 		{{ Form::label('position', 'Poste', ['class' => ($errors->has('position') ? 'is-invalid-label' : '')]) }}
