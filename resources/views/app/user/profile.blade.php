@@ -15,7 +15,11 @@
 						</div>
 					@else
 						@if( Auth::user()->role == 'ADMIN' || Auth::user()->isSame( $user ) )
-							<button type="submit" class="edit button tiny secondary" data-toggle="profileEditModal"><i class="fas fa-edit"></i></button>
+							{!! Form::open(['route' => [ 'user.delete', $user->username ], 'class' => 'remove_form']) !!}
+								{{ method_field('DELETE') }}
+								<button type="submit" class="remove button tiny alert"><i class="fas fa-times"></i></button>
+							{!! Form::close() !!}
+							<button type="button" class="edit button tiny secondary" data-toggle="profileEditModal"><i class="fas fa-edit"></i></button>
 						@endif
 						@if( !Auth::user()->isSame( $user ) )
 							<div class="interact">

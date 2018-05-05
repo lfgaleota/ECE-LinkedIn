@@ -123,6 +123,12 @@ input[type=search] {
 	right: 0;
 }
 
+.profile-header-card .remove {
+	position: absolute;
+	top: 0;
+	right: 2rem;
+}
+
 .profile-header-card .interact {
 	border-top: 1px solid rgba(10, 10, 10, 0.25);
 	text-align: right;
