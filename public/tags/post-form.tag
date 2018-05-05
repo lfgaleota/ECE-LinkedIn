@@ -217,7 +217,7 @@
 		}
 
 		function friendGet( tag ) {
-			tag.loading();
+			tag.isLoading();
 			window.axios.get( opts.baseApiPath + '/network' )
 				.then( function( response ) {
 					let constructItems = response.data;
@@ -268,7 +268,7 @@
 		}
 
 		function imagesGet( tag ) {
-			tag.loading();
+			tag.isLoading();
 			window.axios.get( opts.baseApiPath + '/images' )
 				.then( function( response ) {
 					tag.notLoading();
@@ -338,7 +338,7 @@
 		}
 
 		function videosGet( tag ) {
-			tag.loading();
+			tag.isLoading();
 			window.axios.get( opts.baseApiPath + '/videos' )
 				.then( function( response ) {
 					tag.notLoading();

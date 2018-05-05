@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\Reaction;
 use App\Snowflake;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -93,12 +94,18 @@ class PostController extends Controller {
 	}
 
 	public function createImage( Request $request ) {
+		return $this->createImageUser( $request, Auth::user()->username );
+	}
+
+	public function createImageUser( Request $request, $username ) {
+		$user = User::whereUsername( $username )->firstOrFail();
+
 		$params = $request->all();
 		if( !isset( $params[ 'post_id' ] ) ) {
 			$params[ 'post_id' ] = Snowflake::create( with( new Post )->getTable() );
 		}
 
-		$params[ 'author_id' ] = Auth::user()->user_id;
+		$params[ 'author_id' ] = $user->user_id;
 		$params[ 'type' ] = 'IMAGE';
 
 		$validator = Validator::make( $params, Post::validation );
@@ -121,12 +128,18 @@ class PostController extends Controller {
 	}
 
 	public function createVideo( Request $request ) {
+		return $this->createVideoUser( $request, Auth::user()->username );
+	}
+
+	public function createVideoUser( Request $request, $username ) {
+		$user = User::whereUsername( $username )->firstOrFail();
+
 		$params = $request->all();
 		if( !isset( $params[ 'post_id' ] ) ) {
 			$params[ 'post_id' ] = Snowflake::create( with( new Post )->getTable() );
 		}
 
-		$params[ 'author_id' ] = Auth::user()->user_id;
+		$params[ 'author_id' ] = $user->user_id;
 		$params[ 'type' ] = 'VIDEO';
 
 		$validator = Validator::make( $params, Post::validation );

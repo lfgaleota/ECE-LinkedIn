@@ -6,13 +6,7 @@
 		<div class="grid-x grid-padding-x">
 			<div class="large-8 medium-8 cell">
 				<div class="callout profile-header-card">
-					<p>{{ $user->cover_id or '' }}</p>
-					<h3>pouet cover pouet pp </h3>
-					<hr/>
-					<h1>{{ $user->getName() }}</h1>
-					<hr/>
-					<h2>{{ $user->title or 'No title' }}</h2>
-					<p>{{ $user->photo_id or '' }}</p>
+					@include( 'app.inc.users.profile-card', [ 'user' => $user, 'frame' => false ] )
 
 					@guest
 						<div class="interact">
@@ -20,14 +14,11 @@
 						</div>
 					@else
 						@if( Auth::user()->role == 'ADMIN' || Auth::user()->isSame( $user ) )
-							<button type="submit" class="edit button" data-toggle="profileEditModal"><i class="fas fa-edit"></i></button>
+							<button type="submit" class="edit button tiny secondary" data-toggle="profileEditModal"><i class="fas fa-edit"></i></button>
 						@endif
-						@if( Auth::user()->isSame( $user ) )
-							<button type="submit" class="edit button" data-toggle="profileEditModal"><i
-										class="fas fa-edit"></i></button>
-						@else
+						@if( !Auth::user()->isSame( $user ) )
 							<div class="interact">
-								@if( Auth::user()->isInNetwork( $user ) )
+								@if( $user->isInNetwork( Auth::user() ) )
 									@include( 'app.inc.buttons.remove.network', [ 'username' => $user->username ] )
 								@else
 									@include( 'app.inc.buttons.add.network', [ 'username' => $user->username ] )
@@ -50,30 +41,28 @@
 						@endif
 					@endguest
 				</div>
+
+				@auth
+					<education-renderer></education-renderer>
+					<experience-renderer></experience-renderer>
+					<skill-renderer></skill-renderer>
+				@endauth
 			</div>
 
-			<div class="large-4 medium-4 cell">
-				<div class="callout">
-					<h5>Réseau</h5>
-					@include( 'app.inc.users.list', ['users' => $user->getNetworkMembers()])
+			@if( Auth::user()->role == 'ADMIN' || Auth::user()->isInNetwork( $user ) )
+				<div class="large-4 medium-4 cell profile-network-card">
+					<div class="callout card">
+						<div class="card-divider">Réseau</div>
+						<div class="card-section profile-network-content">
+							@include( 'app.inc.users.list', ['users' => $user->getNetworkMembers()])
+						</div>
+					</div>
 				</div>
-			</div>
-
-			<div class="large-8 medium-8 cell">
-				<education-renderer></education-renderer>
-			</div>
-
-			<div class="large-8 medium-8 cell">
-				<experience-renderer></experience-renderer>
-			</div>
-
-			<div class="large-8 medium-8 cell">
-				<skill-renderer></skill-renderer>
-			</div>
+			@endif
 		</div>
 	</div>
 
-	@if( Auth::user()->isSame( $user ) )
+	@if( Auth::user()->role == 'ADMIN' || Auth::user()->isSame( $user ) )
 		<div class="reveal" id="profileEditModal" data-reveal data-close-on-click="true"
 		     data-animation-in="spin-in" data-animation-out="spin-out">
 			@include( 'app.inc.forms.edit', [ 'user' => $user ])

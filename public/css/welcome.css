@@ -1,3 +1,9 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
 section#login {
     position: relative;
     overflow: hidden;
@@ -66,4 +72,24 @@ section#login .switch-paddle {
 
 section#login .switch-paddle::after {
     height: 1rem;
+}
+
+.reset-password,
+.forgot-password {
+    margin: 2em 0 0;
+}
+
+.reset-password .cell,
+.forgot-password .cell {
+    margin: auto;
+}
+
+.video-bg video {
+    position: fixed; right: 0; bottom: 0;
+    min-width: 100%; min-height: 100%;
+    width: auto; height: auto; z-index: -100;
+}
+
+.welcome-left {
+    color: white;
 }

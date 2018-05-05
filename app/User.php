@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\FriendRequestReceived;
 use App\Notifications\FriendRequestAccepted;
@@ -136,6 +137,8 @@ class User extends Authenticatable {
 		'updated_at'
 	];
 
+	const default_photo_url = 'http://99deaefa0b5ada8f76c5-300aeeb3886c20b990a2b7efeaace3cd.r77.cf5.rackcdn.com/images/generic.png';
+
 	public function newEloquentBuilder( $query ) {
 		return parent::newEloquentBuilder( $query )
 			->leftJoin( 'posts AS photo', 'users.photo_id', '=', 'photo.post_id' )
@@ -178,6 +181,7 @@ class User extends Authenticatable {
 				$join->on( 'friend2_id', '=', 'user2.user_id' )
 					->on( 'friend1_id', '=', 'users.user_id' );
 			} )
+			->where( 'user2.user_id', '!=', $this->user_id )
 			->addSelect( 'friend2_id AS isFriendOf' );
 	}
 
@@ -187,7 +191,7 @@ class User extends Authenticatable {
 			->where( 'users.user_id', '=', $this->user_id );
 	}
 
-	public function selectorNetworkMember( User $user ) {
+	public function selectorIsNetworkMember( User $user ) {
 		return DB::table( 'networks' )
 			->where( function( $query ) use ( $user ) {
 				$query->where( 'user1_id', '=', $this->user_id )->where( 'user2_id', '=', $user->user_id );
@@ -260,7 +264,7 @@ class User extends Authenticatable {
 	}
 
 	public function isInNetwork( User $user ) {
-		return $this->selectorNetworkMember( $user )->first() !== null;
+		return $this->selectorIsNetworkMember( $user )->first() !== null;
 	}
 
 	public function isFriend( User $user ) {
@@ -297,14 +301,14 @@ class User extends Authenticatable {
 		if( $this->isSame( $user ) ) {
 			throw new \Exception( "Cannot add yourself to your network." );
 		}
-		$status = DB::table( 'networks' )->insert( [
+		/*$status = DB::table( 'networks' )->insert( [
 			'user1_id' => $this->user_id,
 			'user2_id' => $user->user_id
-		] );
-		$status &= DB::table( 'networks' )->insert( [
+		] );*/
+		$status = DB::table( 'networks' )->insert( [
 			'user2_id' => $this->user_id,
 			'user1_id' => $user->user_id
-		] );
+		]);
 		return $status;
 	}
 
@@ -389,12 +393,15 @@ class User extends Authenticatable {
 			$this->removeFriend( $user, true );
 		}
 
-		return DB::table( 'networks' )
+		/*return DB::table( 'networks' )
 			->where( function( $query ) use ( $user ) {
 				$query->where( 'user1_id', '=', $this->user_id )->where( 'user2_id', '=', $user->user_id );
 			} )->orWhere( function( $query ) use ( $user ) {
 				$query->where( 'user2_id', '=', $this->user_id )->where( 'user1_id', '=', $user->user_id );
-			} )->delete();
+			} )->delete();*/
+		DB::table( 'networks' )
+		->where( 'user2_id', '=', $this->user_id )->where( 'user1_id', '=', $user->user_id )
+		->delete();
 	}
 
 	/**
@@ -457,6 +464,10 @@ class User extends Authenticatable {
 	 */
 	public function formBirthDateAttribute( $value ) {
 		return \Carbon\Carbon::parse( $value )->format( 'Y-m-d' );
+	}
+
+	public function setPassword( $password ) {
+		$this->password = Hash::make( $password );
 	}
 
 	public static function boot() {

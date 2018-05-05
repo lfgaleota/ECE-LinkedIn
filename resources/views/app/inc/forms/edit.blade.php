@@ -104,6 +104,22 @@
 		@endif
 	</div>
 
+	@if( Auth::user()->type == 'ADMIN' )
+		<div>
+			{{ Form::label('password', 'Mot de passe', ['class' => ($errors->has('password') ? 'is-invalid-label' : ''), 'id' => 'username_register']) }}
+			{{ Form::password('password', ['required' => true, 'class' => ($errors->has('password') ? 'is-invalid-input' : '')]) }}
+			@if ($errors->has('password'))
+				<span class="form-error is-visible">
+					{{ $errors->first('password') }}
+				</span>
+			@endif
+		</div>
+	@else
+		<div>
+			Le mot de passe peut être changé grâce à la <a href="{{ route('password.request') }}">réinitialisation de mot de passe</a>.
+		</div>
+	@endif
+
 	<div>
 		{{ Form::submit('Mettre à jour', ['class' => 'button expanded']) }}
 	</div>
@@ -120,8 +136,8 @@
 		var cover_is_selected = $( '#post_cover_isselected' );
 
 		function photosGet( tag ) {
-			tag.loading();
-			window.axios.get( '{{ url( 'api/images' ) }}' )
+			tag.isLoading();
+			window.axios.get( '{{ route( 'api.user.images', [ 'username' => $user->username ] ) }}' )
 				.then( function( response ) {
 					tag.notLoading();
 					let items = response.data;
@@ -138,8 +154,8 @@
 		}
 
 		function coversGet( tag ) {
-			tag.loading();
-			window.axios.get( '{{ url( 'api/images' ) }}' )
+			tag.isLoading();
+			window.axios.get( '{{ route( 'api.user.images', [ 'username' => $user->username ] ) }}' )
 				.then( function( response ) {
 					tag.notLoading();
 					let items = response.data;
@@ -190,7 +206,7 @@
 				tag.disable();
 				image.append( '_method', 'PUT' );
 				window.axios.post(
-					'{{ url( 'api/image' ) }}',
+					'{{ route( 'api.user.image.create', [ 'username' => $user->username ] ) }}',
 					image,
 					{
 						headers: { 'content-type': 'multipart/form-data' },
