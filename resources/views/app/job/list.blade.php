@@ -1,10 +1,15 @@
-@foreach( $jobs as $job )
+@extends('layouts.app', ['profile_sidebar' => true])
 
-		<div class="cell auto">
-			<h1>{{ $job->getPosition() }}</h1>
-			<h2>{{ $job->getEntity()->getName() }}</h2>
-			<p>{{ $job->getDescription() }}</p>
-		</div>
+@section('content')
+	@foreach( $jobs as $job )
 
-@endforeach
+			<div class="cell auto">
+				<h1>{{ $job->position }}</h1>
+				<h2>{{ $job->entity->name }}</h2>
+				<p>{{ $job->description }}</p>
+			</div>
 
+	@endforeach
+
+	{{ $jobs->links() }}
+@endsection

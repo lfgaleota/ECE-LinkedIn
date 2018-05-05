@@ -8,6 +8,8 @@ window.__getProfileUrl = function( original_url ) {
 	return original_url;
 };
 
+window.__getEntityPhotoUrl = window.__getProfileUrl;
+
 window.__post__loadAdditional = function( baseapipath, posts, onSuccess, onError ) {
 	let ids = [];
 	for( let i = 0; i < posts.length; i++ ) {

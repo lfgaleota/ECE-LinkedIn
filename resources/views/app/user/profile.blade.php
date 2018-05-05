@@ -65,7 +65,7 @@
 	@if( Auth::user()->role == 'ADMIN' || Auth::user()->isSame( $user ) )
 		<div class="reveal" id="profileEditModal" data-reveal data-close-on-click="true"
 		     data-animation-in="spin-in" data-animation-out="spin-out">
-			@include( 'app.inc.forms.edit', [ 'user' => $user ])
+			@include( 'app.inc.forms.user-edit', [ 'user' => $user ])
 
 			<button class="close-button" data-close aria-label="Close reveal" type="button">
 				<span aria-hidden="true">&times;</span>

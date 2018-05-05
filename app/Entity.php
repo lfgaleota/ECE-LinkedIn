@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * App\Entity
@@ -13,56 +14,55 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $location
  * @property string|null $photo_url
  * @property string|null $description
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity whereAuthorId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity whereEntityId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity whereLocation($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity wherePhotoUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity whereAuthorId( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity whereDescription( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity whereEntityId( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity whereLocation( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity whereName( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity wherePhotoUrl( $value )
  * @mixin \Eloquent
  */
-class Entity extends Model 
-{
+class Entity extends Model {
+	protected $table = 'entities';
+	public $timestamps = false;
+	protected $primaryKey = 'entity_id';
+	public $incrementing = true;
+	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $fillable = [
+		'author_id',
+		'name',
+		'location',
+		'photo_url',
+		'description',
+	];
 
-    protected $table = 'entities';
-    public $timestamps = false;
+	const validation_create = [
+		'name' => 'required|string',
+		'location' => 'required|string',
+		'description' => 'required|string',
+		'photo' => 'required|mimes:jpeg,png'
+	];
 
-    protected $primaryKey = 'entity_id';
-    public $incrementing = true;
+	const validation_update = [
+		'name' => 'string',
+		'location' => 'string',
+		'description' => 'string',
+		'photo' => 'mimes:jpeg,png'
+	];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'author_id',
-        'name',
-        'location',
-        'photo_url',
-        'description',
-    ];
+	const searchable_fields = [ 'name', 'location', 'description' ];
 
-    public function getAuthor()
-    {
-        return $this->belongsTo('User', 'author_id');
-    }
-             public function getName()
-    {
-       return  $this->name;
-    }
-   public function getId()
-    {
-        return $this->entity_id;
-    }
-     public function setAuthor( $author)
-    {
-       return  $this->author=$author;
-    }
-         public function setName( $name)
-    {
-       return  $this->name=$name;
-    }
+	const default_photo_url = 'http://99deaefa0b5ada8f76c5-300aeeb3886c20b990a2b7efeaace3cd.r77.cf5.rackcdn.com/images/generic.png';
 
+	public function author() {
+		return $this->belongsTo( '\App\User', 'author_id' );
+	}
 
+	public function setPhoto( $file ) {
+		$this->photo_url = Storage::url( $file->store( 'images' ) );
+	}
 }

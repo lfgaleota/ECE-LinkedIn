@@ -102,7 +102,7 @@ class User extends Authenticatable {
 		'birth_date' => 'required|date',
 		'title' => 'string',
 		'infos' => 'json|nullable',
-		'cv' => 'mimes:pdf',
+		'cv' => 'mimes:pdf|nullable',
 		'photo_id' => 'numeric',
 		'cover_id' => 'numeric'
 	];
@@ -509,5 +509,9 @@ class User extends Authenticatable {
 	 */
 	public function sendPasswordResetNotification( $token ) {
 		$this->notify( new ResetPassword( $token ) );
+	}
+
+	public function hasFullEditRight() {
+		return $this->type == 'ADMIN';
 	}
 }
