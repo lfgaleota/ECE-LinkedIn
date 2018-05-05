@@ -35,7 +35,7 @@
 					tag.clear();
 					tag.setProgress( 0 );
 					tag.enable();
-					infiniteScroller.reload();
+					window.infiniteScroller.reload();
 				} ).catch( function( error ) {
 				tag.enable();
 				tag.setProgress( 0 );
@@ -62,7 +62,11 @@
 			} );
 		}
 
-		var infiniteScroller = window.riot.mount( 'tag-infinite-scroller', {
+		function setInfiniteScroller( tag ) {
+			window.infiniteScroller = tag;
+		}
+
+		window.riot.mount( 'tag-infinite-scroller', {
 			load: loadPost,
 			getItemId: getPostId,
 			component: 'post-renderer',
@@ -71,8 +75,8 @@
 				basepath: '{{ url( '/' ) }}',
 				baseapipath: '{{ url( 'api' ) }}',
 				currentuserid: '{{ Auth::user()->user_id }}'
-			}
+			},
+			onMounted: setInfiniteScroller
 		} );
-		infiniteScroller = infiniteScroller[ 0 ];
 	</script>
 @endsection
