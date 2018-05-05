@@ -171,3 +171,7 @@ Auth::routes();
  * (last one because it handles every other possible URLs)
  */
 Route::get('{username}', 'UserController@profile')->name( 'user.profile' );
+
+Route::middleware(['auth'])->group( function() {
+	Route::delete('{username}', 'UserController@delete')->name( 'user.delete' );
+});

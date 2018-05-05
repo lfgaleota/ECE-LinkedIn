@@ -239,4 +239,16 @@ class UserController extends Controller
 
 		return response()->json();
 	}
+
+	public function delete( $username ) {
+		$user = User::whereUsername( $username )->firstOrFail();
+
+		if( !Auth::user()->role == 'ADMIN' && !Auth::user()->isSame( $user ) ) {
+			return response()->json( [ 'errors' => 'Unauthorized' ], 401 );
+		}
+
+		$user->delete();
+
+		return redirect()->route( 'index' );
+	}
 }
