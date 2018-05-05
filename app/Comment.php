@@ -57,9 +57,9 @@ class Comment extends Model
         return $this->belongsTo('Post', 'post_id');
     }
 
-    public function getAuthor()
+    public function author()
     {
-        return $this->belongsTo('User', 'author_id');
+        return $this->belongsTo('\App\User', 'author_id');
     }
 
     public function getReactions()

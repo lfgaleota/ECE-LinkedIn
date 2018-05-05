@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Notifications\ReactComment;
 use App\Post;
 use App\Reaction;
 use App\Snowflake;
@@ -10,7 +11,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use App\Notifications\React;
+use App\Notifications\ReactPost;
 
 class ReactionController extends Controller {
 	public function forPost( $post_id ) {
@@ -65,11 +66,11 @@ class ReactionController extends Controller {
 			$old->delete();
 		}
 
-		$post = Reaction::create( $params );
+		$reaction = Reaction::create( $params );
 
-		$post->getPost()->getAuthor()->notify( new React( Auth::user() ) );
+		$reaction->post->getAuthor()->notify( new ReactPost( Auth::user(), $reaction->post ) );
 
-		return response()->json( $post );
+		return response()->json( $reaction );
 	}
 
 	public function addForComment( Request $request, $comment_id ) {
@@ -92,8 +93,11 @@ class ReactionController extends Controller {
 			$old->delete();
 		}
 
-		$post = Reaction::create( $params );
-		return response()->json( $post );
+		$reaction = Reaction::create( $params );
+
+		$reaction->comment->author->notify( new ReactComment( Auth::user(), $reaction->comment ) );
+
+		return response()->json( $reaction );
 	}
 
 	public function removeForPost( $post_id ) {

@@ -69,10 +69,10 @@
 
 		buildPath() {
 			let path = opts.addsopts.baseapipath;
-			if( opts.iscomment ) {
-				path +=  '/post/' + opts.item.post_id + '/reaction';
-			} else {
+			if( opts.iscomment === "true" || opts.iscomment === true ) {
 				path +=  '/comment/' + opts.item.comment_id + '/reaction';
+			} else {
+				path +=  '/post/' + opts.item.post_id + '/reaction';
 			}
 			return path;
 		}
@@ -91,7 +91,7 @@
 				let data = {
 					'_method': 'DELETE',
 				};
-				if( opts.iscomment ) {
+				if( opts.iscomment === "true" || opts.iscomment === true ) {
 					data.comment_id = opts.item.comment_id;
 				} else {
 					data.post_id = opts.item.post_id;
@@ -107,7 +107,7 @@
 					'_method': 'PUT',
 					type: e.item.name
 				};
-				if( opts.iscomment ) {
+				if( opts.iscomment === "true" || opts.iscomment === true ) {
 					data.comment_id = opts.item.comment_id;
 				} else {
 					data.post_id = opts.item.post_id;
