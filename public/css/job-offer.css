@@ -30,6 +30,33 @@ section.job-offer .header .button {
 	margin-bottom: 0;
 }
 
+section.job-offer .header .edit,
+section.job-offer .header .remove {
+	position: absolute;
+	top: 0;
+}
+
+section.job-offer .header .edit {
+	right: 0;
+}
+
+section.job-offer .header .remove {
+	right: 2rem;
+}
+
 section.job-offer .description .card-section {
 	white-space: pre-wrap;
+}
+
+#applicationForm {
+	padding: 1rem 0 0 0;
+}
+
+#applicationForm form .content {
+	margin: 1rem;
+}
+
+#applicationForm .toolbar button {
+	margin-bottom: 0;
+	float: right;
 }

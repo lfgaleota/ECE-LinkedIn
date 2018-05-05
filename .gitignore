@@ -12,4 +12,3 @@ yarn-error.log
 .env
 /public/node_modules
 _ide_helper.php
-/public/**/vendor/
