@@ -43,7 +43,7 @@ class JobOffer extends Model {
 		'position',
 		'description',
 	];
-	const searchable_fields = [ 'job_id', 'position', 'description' ];
+	const searchable_fields = [ 'job_id', 'position', 'description', 'created_at' ];
 
 	const validation_create = [
 		'entity_id' => 'required|numeric',

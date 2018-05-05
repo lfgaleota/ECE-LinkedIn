@@ -2,35 +2,38 @@ section.job .card-section {
 	padding-bottom: 0;
 }
 
-section.job .offer {
+.job-offer {
 	display: flex;
 	flex-flow: column nowrap;
 	font-size: 0.9em;
-	min-height: 270px;
 	padding: 1rem;
 	margin-bottom: 1rem;
 	color: black;
 }
 
-section.job .offer p {
+.job-offer:not(.no-height) {
+	min-height: 270px;
+}
+
+.job-offer p {
 	margin-bottom: 0;
 }
 
-section.job .offer .fill {
+.job-offer .fill {
 	flex: 1;
 }
 
-section.job .offer .position {
+.job-offer .position {
 	font-weight: bold;
 }
 
-section.job .offer .entity-location,
-section.job .offer .date {
+.job-offer .entity-location,
+.job-offer .date {
 	font-size: 0.95em;
 	color: #575757;
 }
 
-section.job .offer img {
+.job-offer img {
 	width: 64px;
 	height: 64px;
 }

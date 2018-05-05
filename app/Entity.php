@@ -54,7 +54,7 @@ class Entity extends Model {
 		'photo' => 'mimes:jpeg,png'
 	];
 
-	const searchable_fields = [ 'name', 'location', 'description' ];
+	const searchable_fields = [ 'name', 'location', 'description', 'photo_url' ];
 
 	const default_photo_url = 'http://99deaefa0b5ada8f76c5-300aeeb3886c20b990a2b7efeaace3cd.r77.cf5.rackcdn.com/images/generic.png';
 

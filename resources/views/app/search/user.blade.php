@@ -35,7 +35,7 @@
 					<div class="card-divider">
 						<ul class="menu">
 							<li class="is-active"><a>Utilisateurs</a></li>
-							<li><a>Offres d'emplois</a></li>
+							<li><a href="{{ route( 'search.job', [ 'q' => $query ] ) }}">Offres d'emplois</a></li>
 						</ul>
 						<div id="search-box"></div>
 						<a href="http://algolia.com/" title="Fourni par Algolia" target="_blank">
@@ -58,7 +58,6 @@
 		let generateTemplate = function( item ) {
 			let url = '{{ route( 'user.profile', [ 'username' => "#username#" ] ) }}';
 				url = url.replace( '#username#', item.username );
-				console.log( item );
 			let name = item._highlightResult.name.value.length > 0 ? item._highlightResult.name.value : item.name;
 			let surname = item._highlightResult.surname.value.length > 0 ? item._highlightResult.surname.value : item.surname;
 			return '<a href="' + url + '" class="friend-line grid-x grid-padding-x">\n' +
@@ -79,24 +78,14 @@
 		});
 
 		// initialize RefinementList
-		search.addWidget(
-			window.instantsearch_widgets.refinementList( {
-				container: '#refinement-list-name',
-				attributeName: 'name'
-			} )
-		);
-		search.addWidget(
-			window.instantsearch_widgets.refinementList( {
-				container: '#refinement-list-surname',
-				attributeName: 'surname'
-			} )
-		);
-		search.addWidget(
-			window.instantsearch_widgets.refinementList( {
-				container: '#refinement-list-title',
-				attributeName: 'title'
-			} )
-		);
+		_.forEach([ 'name', 'surname', 'title' ], function( criter ) {
+			search.addWidget(
+				window.instantsearch_widgets.refinementList( {
+					container: '#refinement-list-' + criter,
+					attributeName: criter
+				} )
+			);
+		});
 
 		// initialize SearchBox
 		search.addWidget(

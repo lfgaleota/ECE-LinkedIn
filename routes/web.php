@@ -108,14 +108,6 @@ Route::middleware(['auth', 'api'])->group( function() {
 });
 
 /*
- * SEARCH
- */
-Route::middleware('auth')->group( function() {
-	Route::get('search/users', 'SearchController@users')->name( 'search.user' );
-	Route::get('search/jobs', 'SearchController@jobs')->name( 'search.jobs' );
-});
-
-/*
  * JOBS
  */
 Route::middleware( 'auth' )->group( function() {
@@ -157,6 +149,14 @@ Route::middleware( 'auth' )->group( function() {
 
 Route::middleware(['auth', 'api'])->group( function() {
 	Route::get('api/entity', 'EntityController@getAll')->name( 'api.entity' );
+});
+
+/*
+ * SEARCH
+ */
+Route::middleware('auth')->group( function() {
+	Route::get('search/users', 'SearchController@users')->name( 'search.user' );
+	Route::get('search/jobs', 'SearchController@jobs')->name( 'search.job' );
 });
 
 /*
