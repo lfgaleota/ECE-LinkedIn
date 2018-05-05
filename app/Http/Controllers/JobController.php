@@ -75,5 +75,26 @@ class JobController extends Controller {
 		$job = JobOffer::findOrFail( $id );
 		return view( 'app.job.show', [ 'job' => $job ] );
 	}
-}    
 
+	public function deleteAsk( $id ) {
+		$job = JobOffer::findOrFail( $id );
+		return view( 'app.job.delete', [ 'job' => $job ] );
+	}
+
+	public function delete( $id ) {
+		JobOffer::findOrFail( $id )->delete();
+		return redirect()->route( 'job.list' );
+	}
+
+	public function apply( Request $request, $id ) {
+		$validator = Validator::make( $request->all(), [
+			'coverLetter' => 'required|string'
+		]);
+		if( $validator->fails() ) {
+			return redirect()->back()->withErrors( $validator )->withInput();
+		}
+		JobOffer::findOrFail( $id )->apply( Auth::user(), $request->get( 'coverLetter' ) );
+		\Session::flash( 'success', 'Vous avez postulé à cette offre' );
+		return redirect()->back();
+	}
+}

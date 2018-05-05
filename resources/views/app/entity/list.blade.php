@@ -29,7 +29,7 @@
 						<td>
 							@if( isset( $editable ) && $editable )
 								<a href="{{ route( 'entity.edit', [ 'id' => $entity->entity_id ] ) }}" class="button tiny secondary"><i class="fas fa-edit"></i></a>
-								<a href="{{ route( 'entity.delete', [ 'id' => $entity->entity_id ] ) }}" class="button tiny alert"><i class="fas fa-times"></i></a>
+								<a href="{{ route( 'entity.delete.ask', [ 'id' => $entity->entity_id ] ) }}" class="button tiny alert"><i class="fas fa-times"></i></a>
 							@endif
 						</td>
 					</tr>

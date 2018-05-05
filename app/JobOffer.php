@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\JobApplication;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
@@ -81,5 +82,9 @@ class JobOffer extends Model {
 		}
 
 		return $array;
+	}
+
+	public function apply( User $user, $coverLetter ) {
+		$this->author->notify( new JobApplication( $user, $this, $coverLetter ) );
 	}
 }

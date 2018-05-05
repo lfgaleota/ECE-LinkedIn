@@ -94,5 +94,15 @@ class EntityController extends Controller {
 	public function getAll() {
 		return response()->json( Entity::all() );
 	}
+
+	public function deleteAsk( $id ) {
+		$entity = Entity::findOrFail( $id );
+		return view( 'app.entity.delete', [ 'entity' => $entity ] );
+	}
+
+	public function delete( $id ) {
+		Entity::findOrFail( $id )->delete();
+		return redirect()->route( 'entity.list' );
+	}
 }
 
