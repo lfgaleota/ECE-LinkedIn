@@ -29,13 +29,14 @@ class PostController extends Controller {
 		return response()->json( $finalAssocs );
 	}
 
-	public function view( $post_id ) {
-		return view( 'post.view', [ 'post_id' => $post_id ] );
+	public function show( $post_id ) {
+		return view( 'app.post.show', [ 'post_id' => $post_id ] );
 	}
 
 	public function get( $post_id ) {
 		$post = Post::findOrFail( $post_id );
-		$post->subposts = Post::join( 'sub_posts', 'posts.post_id', '=', 'sub_posts.parent_post_id' )->get();
+		$post->subposts = Post::join( 'sub_posts', 'posts.post_id', '=', 'sub_posts.child_post_id' )
+			->where( 'sub_posts.parent_post_id', '=', $post_id )->get();
 		$post->reactions = Reaction::wherePostId( $post_id )->get();
 		return response()->json( $post );
 	}

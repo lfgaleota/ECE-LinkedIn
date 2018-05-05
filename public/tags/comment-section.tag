@@ -1,7 +1,7 @@
 <comment-section>
 	<div class="comments">
 		<div class="comment" each={ comment in comments }>
-			<a class="comment-author" href={ opts.addsopts.basepath + '/' + comment.user_id }>
+			<a class="comment-author" href={ opts.addsopts.basepath + '/' + comment.username }>
 				{ comment.name } { comment.surname }
 			</a>
 			<div class="comment-content">
