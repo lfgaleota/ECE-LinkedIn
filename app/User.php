@@ -495,7 +495,11 @@ class User extends Authenticatable {
 		$array = [];
 
 		foreach( User::searchable_fields as $searchableField ) {
-			$array[ $searchableField ] = $origArray[ $searchableField ];
+			if( isset( $origArray[ $searchableField ] ) ) {
+				$array[ $searchableField ] = $origArray[ $searchableField ];
+			} else {
+				$array[ $searchableField ] = null;
+			}
 		}
 
 		return $array;

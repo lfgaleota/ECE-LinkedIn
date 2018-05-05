@@ -170,7 +170,11 @@ class Post extends Model
 		$array = [];
 
 		foreach( Post::searchable_fields as $searchableField ) {
-			$array[ $searchableField ] = $origArray[ $searchableField ];
+			if( isset( $origArray[ $searchableField ] ) ) {
+				$array[ $searchableField ] = $origArray[ $searchableField ];
+			} else {
+				$array[ $searchableField ] = null;
+			}
 		}
 
 		return $array;

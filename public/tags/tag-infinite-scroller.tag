@@ -99,6 +99,9 @@
 					}
 				}
 			});
+			if( opts.onMounted ) {
+				opts.onMounted( that );
+			}
 		});
 	</script>
 </tag-infinite-scroller>

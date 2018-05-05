@@ -74,11 +74,21 @@ class JobOffer extends Model {
 		$array = [];
 
 		foreach( JobOffer::searchable_fields as $searchableField ) {
-			$array[ $searchableField ] = $origArray[ $searchableField ];
+			if( isset( $origArray[ $searchableField ] ) ) {
+				$array[ $searchableField ] = $origArray[ $searchableField ];
+			} else {
+				$array[ $searchableField ] = null;
+			}
 		}
 
+		$origEntity = $this->entity->toArray();
+
 		foreach( Entity::searchable_fields as $searchableField ) {
-			$array[ 'entity_' . $searchableField ] = $this->entity->$searchableField;
+			if( isset( $origEntity[ $searchableField ] ) ) {
+				$array[ 'entity_' . $searchableField ] = $origEntity[ $searchableField ];
+			} else {
+				$array[ 'entity_' . $searchableField ] = null;
+			}
 		}
 
 		return $array;
