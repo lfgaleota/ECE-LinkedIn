@@ -104,21 +104,25 @@
 		@endif
 	</div>
 
-	@if( Auth::user()->hasFullEditRight() )
-		<div>
-			{{ Form::label('password', 'Mot de passe', ['class' => ($errors->has('password') ? 'is-invalid-label' : ''), 'id' => 'username_register']) }}
-			{{ Form::password('password', ['required' => true, 'class' => ($errors->has('password') ? 'is-invalid-input' : '')]) }}
-			@if ($errors->has('password'))
-				<span class="form-error is-visible">
-					{{ $errors->first('password') }}
-				</span>
-			@endif
-		</div>
-	@else
-		<div>
-			Le mot de passe peut être changé grâce à la <a href="{{ route('password.request') }}">réinitialisation de mot de passe</a>.
-		</div>
-	@endif
+	<div>
+		{{ Form::label('password', 'Mot de passe', ['class' => ($errors->has('password') ? 'is-invalid-label' : ''), 'id' => 'username_register']) }}
+		{{ Form::password('password', ['class' => ($errors->has('password') ? 'is-invalid-input' : '')]) }}
+		@if ($errors->has('password'))
+			<span class="form-error is-visible">
+				{{ $errors->first('password') }}
+			</span>
+		@endif
+	</div>
+
+	<div>
+		{{ Form::label('password_confirmation', 'Confirmer le mot de passe', ['class' => ($errors->has('password_confirmation') ? 'is-invalid-label' : ''), 'id' => 'username_register']) }}
+		{{ Form::password('password_confirmation', ['class' => ($errors->has('password_confirmation') ? 'is-invalid-input' : '')]) }}
+		@if ($errors->has('password_confirmation'))
+			<span class="form-error is-visible">
+				{{ $errors->first('password_confirmation') }}
+			</span>
+		@endif
+	</div>
 
 	<div>
 		{{ Form::submit('Mettre à jour', ['class' => 'button expanded']) }}

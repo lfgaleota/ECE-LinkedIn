@@ -13,7 +13,7 @@
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
-	<title>{{ config('app.name') }}</title>
+	<title>{{ isset( $title ) ? $title . ' | ' . config('app.name') : config('app.name') }}</title>
 
 	<!-- Styles -->
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -44,6 +44,7 @@
 			<ul class="dropdown menu" data-dropdown-menu>
 				@auth
 					@if( Auth::user()->hasFullEditRight() )
+						<li><a href="{{ route( 'user.list' ) }}" title="Utilisateurs">Utilisateurs</a></li>
 						<li><a href="{{ route( 'entity.list' ) }}" title="Entreprises/Ecoles"><i class="fas fa-building"></i></a></li>
 					@else
 						<li><a href="{{ route( 'entity.list.own' ) }}" title="Mes entreprises/écoles"><i class="fas fa-building"></i></a></li>

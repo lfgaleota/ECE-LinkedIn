@@ -1,3 +1,4 @@
+@php($title = $user->getName())
 @extends('layouts.app')
 
 @section('content')

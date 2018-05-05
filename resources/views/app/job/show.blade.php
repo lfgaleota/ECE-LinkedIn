@@ -1,3 +1,4 @@
+@php($title = $job->position . " chez " . $job->entity->name)
 @extends('layouts.app', ['profile_sidebar' => true])
 
 @section('content')

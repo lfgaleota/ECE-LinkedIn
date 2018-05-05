@@ -1,3 +1,4 @@
+@php($title = "Offres d'emploi")
 @extends('layouts.app', ['profile_sidebar' => true])
 
 @section('content')

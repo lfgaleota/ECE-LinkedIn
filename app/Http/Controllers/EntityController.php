@@ -73,7 +73,7 @@ class EntityController extends Controller {
 	public function list() {
 		$entities = Entity::paginate( 20 );
 
-		return view( 'app.entity.list', [ 'entities' => $entities ] );
+		return view( 'app.entity.list', [ 'entities' => $entities, 'editable' => Auth::user()->hasFullEditRight() ] );
 	}
 
 	public function listOwn() {

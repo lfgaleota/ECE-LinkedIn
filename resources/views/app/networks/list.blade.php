@@ -1,3 +1,4 @@
+@php($title = "Votre réseau")
 @extends('layouts.app')
 
 @section('content')
