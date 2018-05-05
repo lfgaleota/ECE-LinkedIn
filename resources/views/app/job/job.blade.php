@@ -12,12 +12,18 @@
 				<tag-infinite-scroller></tag-infinite-scroller>
 			</div>
 		</div>
+		
+		<div class="cell small-12 medium-8 large-9" id="jobList">
+			<button type="submit" class="job button tiny" data-toggle="jobModal"><i class="fas fa-plus-circle"></i> Ajouter une offre</button>
+				@include( 'app.job.list' )
+			</div>
 	</div>
 
 @endsection
 
-@section('content')
-<div class="reveal" id="profileEditModal" data-reveal data-close-on-click="true"
+
+
+<div class="reveal" id="jobModal" data-reveal data-close-on-click="true"
 		     data-animation-in="spin-in" data-animation-out="spin-out">
 			@include('app.inc.forms.jobform')
 
@@ -26,5 +32,3 @@
 			</button>
 		</div>
 
-
-@endsection
