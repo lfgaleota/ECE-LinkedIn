@@ -14,6 +14,11 @@ Il est tout d'abord nécessaire d'avoir le gestionnaire de paquet Composer (http
 
 Un VirtualHost dédié et PHP 7.0 sont également requis.
 
+Il est possible de se passer du VirtualHost dédié (et du serveur) en utilisant le serveur interne de PHP, lançable par:
+```
+php -S localhost:8000 server.php
+```
+
 La recherche dépend d'un compte Algolia (https://algolia.com) et a besoin d'un numéro d'application et d'une clé API Algolia.
 La version communautaire est largement suffisante pour ce projet.
 
@@ -27,6 +32,7 @@ composer install
 Une fois l'installation des dépendances effectuées, il est nécessaire de configurer l'application.
 
 Copiez le fichier ``.env.example`` en ``.env`` et modifiez les valeurs nécessaires.
+Le champ ``APP_URL`` doit correspondre au chemin du serveur/VirtualHost.
 
 Générez la donnée ``APP_KEY`` avec la commande:
 ```
