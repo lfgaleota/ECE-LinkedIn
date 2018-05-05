@@ -17,7 +17,7 @@
                 <h1>Bienvenue sur Calamar Flamboyant</h1>
                 <h4>Le réseau social des professionnels</h4>
                 <div class="text-center hide-for-small-only">
-                    <img src="{{asset('img/logo.png')}}" alt="Logo">
+                    <img src="{{asset('images/logo.png')}}" alt="Logo">
                 </div>
             </div>
 

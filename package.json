@@ -20,6 +20,6 @@
     "laravel-mix-riot": "^1.1.7",
     "lodash": "^4.17.4",
     "moment": "^2.22.1",
-    "riot": "^3.9.4"
+    "typeface-open-sans": "0.0.54"
   }
 }

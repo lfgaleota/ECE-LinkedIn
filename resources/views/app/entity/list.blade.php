@@ -8,8 +8,8 @@
 				<a href="{{ route( 'entity.create' ) }}" class="button tiny success force-right"><i class="fas fa-plus"></i></a>
 			@endif
 		</div>
-		<div class="card-section nopadding noborder">
-			<table class="hover profile_img">
+		<div class="card-section nopadding">
+			<table class="hover profile_img noborder">
 				<thead>
 				<tr>
 					<th></th>

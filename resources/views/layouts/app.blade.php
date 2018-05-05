@@ -25,7 +25,7 @@
 		<div class="top-bar-left">
 			<ul class="menu">
 				<li>
-					<img src="{{asset('img/logo-menu.png')}}" alt="Logo">
+					<img src="{{asset('images/logo-menu.png')}}" alt="Logo">
 				</li>
 				<li>
 					<a href="{{ url('/') }}"><i class="fas fa-home"></i></a>

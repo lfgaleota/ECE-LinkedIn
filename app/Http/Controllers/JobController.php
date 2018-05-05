@@ -70,5 +70,10 @@ class JobController extends Controller {
 
 		return view( 'app.job.list', [ 'jobs' => $jobs ] );
 	}
+
+	public function show( $id ) {
+		$job = JobOffer::findOrFail( $id );
+		return view( 'app.job.show', [ 'job' => $job ] );
+	}
 }    
 
