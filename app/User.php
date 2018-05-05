@@ -120,7 +120,8 @@ class User extends Authenticatable {
 		'cv' => 'mimes:pdf|nullable',
 		'photo_id' => 'numeric|nullable',
 		'cover_id' => 'numeric|nullable',
-		'infos' => 'json|nullable'
+		'infos' => 'json|nullable',
+		'password' => 'string|nullable|confirmed'
 	];
 
 	const select = [
@@ -516,6 +517,6 @@ class User extends Authenticatable {
 	}
 
 	public function hasFullEditRight() {
-		return $this->type == 'ADMIN';
+		return $this->role == 'ADMIN';
 	}
 }

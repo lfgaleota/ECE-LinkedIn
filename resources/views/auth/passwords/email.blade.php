@@ -1,3 +1,4 @@
+@php($title = "Réinitialiser un mot de passe")
 @extends('layouts.app')
 
 @section( 'styles' )

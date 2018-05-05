@@ -1,3 +1,4 @@
+@php($title = "Liste des utilisateurs")
 @extends('layouts.app')
 
 @section('content')

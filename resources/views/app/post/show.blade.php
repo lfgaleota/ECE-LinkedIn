@@ -1,3 +1,4 @@
+@php($title = "Publication")
 @extends('layouts.app', ['profile_sidebar' => true])
 
 @section('content')

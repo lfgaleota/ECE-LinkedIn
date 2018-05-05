@@ -1,3 +1,4 @@
+@php($title = 'Modifier une entreprises/école')
 @extends('layouts.app', ['profile_sidebar' => true])
 
 @section('content')
