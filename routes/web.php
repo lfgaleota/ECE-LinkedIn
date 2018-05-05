@@ -108,6 +108,13 @@ Route::middleware(['auth', 'api'])->group( function() {
 });
 
 /*
+ * SEARCH
+ */
+Route::middleware('auth')->group( function() {
+	Route::get('search/users', 'SearchController@users')->name( 'search.user' );
+});
+
+/*
  * AUTH
  */
 Auth::routes();

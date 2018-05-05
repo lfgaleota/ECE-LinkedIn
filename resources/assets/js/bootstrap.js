@@ -58,3 +58,9 @@ if (token) {
  * Loads Moment.js for date and time manipulation.
  */
 window.moment = require( 'moment' );
+
+/**
+ * Loads InstazntSearch.js.
+ */
+window.instantsearch = require('instantsearch.js').default;
+window.instantsearch_widgets = require('instantsearch.js/es/widgets');

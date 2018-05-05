@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use Laravel\Scout\Searchable;
 
 /**
  * App\Post
@@ -35,6 +36,7 @@ use Illuminate\Support\Facades\DB;
  */
 class Post extends Model 
 {
+	use Searchable;
 
 	protected $table = 'posts';
     public $timestamps = true;
@@ -96,8 +98,10 @@ class Post extends Model
 	 * @var array
 	 */
 	protected $hidden = [
-		'password', 'remember_token',
+		'post_id', 'password', 'remember_token',
 	];
+
+	const searchable_fields = [ 'description', 'location', 'mood' ];
 
 	public function newEloquentBuilder( $query ) {
 		return parent::newEloquentBuilder( $query )
@@ -154,5 +158,21 @@ class Post extends Model
 				'user_id' => $user_id
 			]);
 		}
+	}
+
+	/**
+	 * Get the indexable data array for the model.
+	 *
+	 * @return array
+	 */
+	public function toSearchableArray() {
+		$origArray = $this->toArray();
+		$array = [];
+
+		foreach( Post::searchable_fields as $searchableField ) {
+			$array[ $searchableField ] = $origArray[ $searchableField ];
+		}
+
+		return $array;
 	}
 }

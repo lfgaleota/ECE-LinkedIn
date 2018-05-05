@@ -135,14 +135,23 @@ class UserController extends Controller
 		if( $request->hasFile('cv') ) {
 			$user->setCV( $request->file('cv') );
 		}
-		if( $request->has('photo_id')) {
-	    	if( Post::find( $request->input('photo_id') )->author_id != $user->user_id ) {
+		if( $request->has('photo_id') && $request->input('photo_id') != null ) {
+			$photo = Post::find( $request->input('photo_id') );
+			if( $photo == null ) {
+				throw new \Exception( 'Invalid Photo ID.' );
+			}
+			if( $photo->author_id != $user->user_id ) {
 				throw new \Exception( 'Cannot set picture from another user.' );
-		    }
+			}
 			$user->photo_id = $request->input('photo_id');
 		}
-		if( $request->has('cover_id')) {
-			if( Post::find( $request->input('cover_id') )->author_id != $user->user_id ) {
+
+		if( $request->has('cover_id') && $request->input('cover_id') != null ) {
+			$cover = Post::find( $request->input('cover_id') );
+			if( $cover == null ) {
+				throw new \Exception( 'Invalid Cover ID.' );
+			}
+			if( $cover->author_id != $user->user_id ) {
 				throw new \Exception( 'Cannot set picture from another user.' );
 			}
 			$user->cover_id = $request->input('cover_id');
