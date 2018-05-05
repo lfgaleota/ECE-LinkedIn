@@ -21,7 +21,7 @@
 	</div>
 
 	<style>
-		button {s
+		button {
 			margin: 0 !important;
 		}
 

@@ -184,12 +184,14 @@
             }
         }
 
-        loading() {
-            this.loading = true;
+        isLoading() {
+            that.loading = true;
+	        that.update();
         }
 
         notLoading() {
-            this.loading = false;
+            that.loading = false;
+	        that.update();
         }
     </script>
 </tag-selector>

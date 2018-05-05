@@ -24,9 +24,17 @@ Route::get('user/', 'UserController@list')->name( 'user.list' );
 Route::post('user/{id}', 'UserController@update')->name( 'user.update' );
 
 Route::middleware(['auth', 'api'])->group( function() {
+	Route::get('api/{username}/images/{last_id?}', 'UserController@imagesUser')->name( 'api.user.images' );
+	Route::get('api/{username}/videos/{last_id?}', 'UserController@videosUser')->name( 'api.user.videos' );
+	Route::get('api/{username}/events/{last_id?}', 'UserController@eventsUser')->name( 'api.user.events' );
+
 	Route::post('api/{username}/education', 'UserController@education');
 	Route::post('api/{username}/experience', 'UserController@experience');
 	Route::post('api/{username}/skill', 'UserController@skill');
+
+	Route::get('api/images/{last_id?}', 'UserController@images');
+	Route::get('api/videos/{last_id?}', 'UserController@videos');
+	Route::get('api/events/{last_id?}', 'UserController@events');
 });
 
 /*
@@ -49,9 +57,6 @@ Route::middleware(['auth', 'api'])->group( function() {
     Route::get('api/network', 'NetworkMembersController@get')->name( 'api.user.network.list' );
     Route::get('api/friend', 'FriendController@get')->name( 'api.user.friend.list' );
 	Route::get('api/timeline/{last_id?}', 'UserController@timeline')->name( 'api.user.timeline' );
-	Route::get('api/images/{last_id?}', 'UserController@images')->name( 'api.user.images' );
-	Route::get('api/videos/{last_id?}', 'UserController@videos')->name( 'api.user.videos' );
-	Route::get('api/events/{last_id?}', 'UserController@events')->name( 'api.user.events' );
 });
 
 /*
@@ -70,6 +75,9 @@ Route::middleware(['auth', 'api'])->group( function() {
 	Route::put('api/post', 'PostController@create')->name( 'api.post.create' );
 	Route::put('api/image', 'PostController@createImage')->name( 'api.image.create' );
 	Route::put('api/video', 'PostController@createVideo')->name( 'api.video.create' );
+
+	Route::put('api/{username}/image', 'PostController@createImageUser')->name( 'api.user.image.create' );
+	Route::put('api/{username}/video', 'PostController@createVideoUser')->name( 'api.user.video.create' );
 
 	Route::get('api/post/{post_id}/comments', 'CommentController@get');
 	Route::put('api/post/{post_id}/comments', 'CommentController@post');

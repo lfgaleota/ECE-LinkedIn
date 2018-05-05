@@ -13,10 +13,12 @@
 @section('content')
     <div class="grid-container">
         <div class="grid-x grid-padding-x">
-            <div class="cell small-12 medium-7 large-9">
+            <div class="cell hidden-for-small-only medium-7 large-9 welcome-left">
                 <h1>Bienvenue sur Calamar Flamboyant</h1>
                 <h4>Le réseau social des professionnels</h4>
-                <img src="{{asset('img/logo.png')}}" alt="Logo">
+                <div class="text-center hide-for-small-only">
+                    <img src="{{asset('img/logo.png')}}" alt="Logo">
+                </div>
             </div>
 
             <div class="cell small-12 medium-5 large-3">
@@ -29,8 +31,8 @@
                                 @else
                                     @include('auth.inc.login')
                                 @endif
-                                <p class="separator">or</p>
-                                <a id="register_switch" href="#" class="button expanded">Register</a>
+                                <p class="separator">ou</p>
+                                <a id="register_switch" href="#" class="button expanded">S'inscrire</a>
                             </div>
                             <div id="register_pane">
                                 @if(old('registration'))
@@ -38,13 +40,19 @@
                                 @else
                                     @include('auth.inc.register', ['errors' => new \Illuminate\Support\ViewErrorBag()])
                                 @endif
-                                <p class="separator">or</p>
-                                <a id="login_switch" href="#" class="button expanded">Login</a>
+                                <p class="separator">ou</p>
+                                <a id="login_switch" href="#" class="button expanded">Se connecter</a>
                             </div>
                         </section>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="video-bg">
+        <video loop muted autoplay>
+            <source src="http://99deaefa0b5ada8f76c5-300aeeb3886c20b990a2b7efeaace3cd.r77.cf5.rackcdn.com/bg.mp4" type="video/mp4">
+        </video>
     </div>
 @endsection

@@ -8469,7 +8469,7 @@ a.thumbnail image {
 }
 
 /*!
- * Font Awesome Free 5.0.11 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.0.12 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 
@@ -10005,6 +10005,10 @@ readers do not read off random characters that represent icons */
   content: "\F2B0";
 }
 
+.fa-first-order-alt:before {
+  content: "\F50A";
+}
+
 .fa-firstdraft:before {
   content: "\F3A1";
 }
@@ -10105,8 +10109,20 @@ readers do not read off random characters that represent icons */
   content: "\F119";
 }
 
+.fa-fulcrum:before {
+  content: "\F50B";
+}
+
 .fa-futbol:before {
   content: "\F1E3";
+}
+
+.fa-galactic-republic:before {
+  content: "\F50C";
+}
+
+.fa-galactic-senate:before {
+  content: "\F50D";
 }
 
 .fa-gamepad:before {
@@ -10505,6 +10521,10 @@ readers do not read off random characters that represent icons */
   content: "\F4E4";
 }
 
+.fa-jedi-order:before {
+  content: "\F50E";
+}
+
 .fa-jenkins:before {
   content: "\F3B6";
 }
@@ -10703,6 +10723,10 @@ readers do not read off random characters that represent icons */
 
 .fa-male:before {
   content: "\F183";
+}
+
+.fa-mandalorian:before {
+  content: "\F50F";
 }
 
 .fa-map:before {
@@ -10917,6 +10941,10 @@ readers do not read off random characters that represent icons */
   content: "\F264";
 }
 
+.fa-old-republic:before {
+  content: "\F510";
+}
+
 .fa-opencart:before {
   content: "\F23D";
 }
@@ -11027,6 +11055,10 @@ readers do not read off random characters that represent icons */
 
 .fa-phoenix-framework:before {
   content: "\F3DC";
+}
+
+.fa-phoenix-squadron:before {
+  content: "\F511";
 }
 
 .fa-phone:before {
@@ -11205,7 +11237,7 @@ readers do not read off random characters that represent icons */
   content: "\F10E";
 }
 
-.fa-r:before {
+.fa-r-project:before {
   content: "\F4F7";
 }
 
@@ -11467,6 +11499,10 @@ readers do not read off random characters that represent icons */
 
 .fa-sitemap:before {
   content: "\F0E8";
+}
+
+.fa-sith:before {
+  content: "\F512";
 }
 
 .fa-skyatlas:before {
@@ -11863,6 +11899,10 @@ readers do not read off random characters that represent icons */
 
 .fa-toggle-on:before {
   content: "\F205";
+}
+
+.fa-trade-federation:before {
+  content: "\F513";
 }
 
 .fa-trademark:before {
@@ -12273,6 +12313,10 @@ readers do not read off random characters that represent icons */
   content: "\F4E3";
 }
 
+.fa-wolf-pack-battalion:before {
+  content: "\F514";
+}
+
 .fa-won-sign:before {
   content: "\F159";
 }
@@ -12378,8 +12422,8 @@ readers do not read off random characters that represent icons */
   font-family: 'Font Awesome 5 Free';
   font-style: normal;
   font-weight: 400;
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-regular-400.eot?1171ddc256133f5df882a6926a3a4e16);
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-regular-400.eot?1171ddc256133f5df882a6926a3a4e16) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-regular-400.woff2?c9f1e8267a3e6f7948d917d8e4a30cf8) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-regular-400.woff?f75282d24a812ddc751429ab332c36e6) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-regular-400.ttf?40f024432378ec0d73e937affb1a83b6) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-regular-400.svg?fbabf575d956d083cd9da36d96d4182d) format("svg");
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-regular-400.eot?86636605942a5a7fdc37d063dcc47ae3);
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-regular-400.eot?86636605942a5a7fdc37d063dcc47ae3) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-regular-400.woff2?4233afd632da228b9e2e88b5ccfe380f) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-regular-400.woff?4a1d3aa7846caed65e25cc3632da6e60) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-regular-400.ttf?d6ec181c23a4d0283975731b770b4d8f) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-regular-400.svg?683aea2d6dbe01d00511266ee839bde4) format("svg");
 }
 
 .far {
@@ -12391,8 +12435,8 @@ readers do not read off random characters that represent icons */
   font-family: 'Font Awesome 5 Free';
   font-style: normal;
   font-weight: 900;
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-solid-900.eot?315ef8a647956632ef1e00a02dd841b9);
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-solid-900.eot?315ef8a647956632ef1e00a02dd841b9) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-solid-900.woff2?cc0b8e199ccc6c1cb2e265f2db2a32f2) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-solid-900.woff?e57c2d2b37ee7f557eb807929650de5c) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-solid-900.ttf?648fbefc53319533f1dc295b6bd34064) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-solid-900.svg?84f1235368df805a5aaf323c937ddb2f) format("svg");
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-solid-900.eot?b971151ae89832d63c4742c06b4578ce);
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-solid-900.eot?b971151ae89832d63c4742c06b4578ce) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-solid-900.woff2?aac0239f809734fc35318f3624aa1267) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-solid-900.woff?48f24713d44854d6238c577c83f5aee4) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-solid-900.ttf?5f54e01a97292d92a9b766e0fb9c95e7) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free-webwebfa-solid-900.svg?84f1235368df805a5aaf323c937ddb2f) format("svg");
 }
 
 .fa,
@@ -12446,11 +12490,6 @@ readers do not read off random characters that represent icons */
   color: #0a0a0a;
 }
 
-.profile-content-card {
-  padding: 0;
-  border: 1px solid rgba(10, 10, 10, 0.25);
-}
-
 .top-bar .menu:not(.vertical) > li > a {
   color: #e6e6e6;
 }
@@ -12461,7 +12500,80 @@ readers do not read off random characters that represent icons */
   background-color: #e6e6e6;
 }
 
-h3 {
-  color: #23a3ba;
+.profile-header-card {
+  padding: 0;
+}
+
+.profile-header-card .header {
+  height: 192px;
+  margin-bottom: 68px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-image: linear-gradient(135deg, #135864 0%, #23a3ba 100%);
+  text-align: center;
+}
+
+.profile-header-card .header img {
+  display: inline-block;
+  width: 128px;
+  height: 128px;
+  margin-top: 124px;
+  border-radius: 50%;
+  border: 3px solid #e6e6e6;
+}
+
+.profile-header-card .summary {
+  text-align: center;
+  padding: 0 0.5rem;
+}
+
+.profile-header-card .edit {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.profile-header-card .interact {
+  border-top: 1px solid rgba(10, 10, 10, 0.25);
+  text-align: right;
+}
+
+.profile-header-card .interact form {
+  display: inline-block;
+  margin: 0;
+}
+
+.profile-header-card .interact button {
+  margin: 0;
+}
+
+.callout.card,
+.profile-content-card {
+  padding: 0;
+  border: 1px solid rgba(10, 10, 10, 0.25);
+}
+
+.friend-line {
+  padding: 1em;
+}
+
+.friend-line img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid rgba(10, 10, 10, 0.25);
+}
+
+.friend-line p {
+  padding-top: 18px;
+  padding-top: calc(32px - 1em);
+  text-align: left;
+}
+
+.profile-network-content {
+  max-height: 90vh;
+  max-height: calc( 90vh - 3.5em);
+  overflow: auto;
 }
 

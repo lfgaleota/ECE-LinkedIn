@@ -29,7 +29,13 @@ class UserController extends Controller
 	}
 
 	public function images( $after = null ) {
-		$posts = Auth::user()->selectorImages()->limit( 20 );
+		return $this->imagesUser( Auth::user()->username, $after );
+	}
+
+	public function imagesUser( $username, $after = null ) {
+		$user = User::whereUsername( $username )->firstOrFail();
+
+		$posts = $user->selectorImages()->limit( 20 );
 		if( $after != null ) {
 			$posts->where( 'post_id', '<', $after );
 		}
@@ -39,7 +45,13 @@ class UserController extends Controller
 	}
 
 	public function videos( $after = null ) {
-		$posts = Auth::user()->selectorVideos()->limit( 20 );
+		return $this->videosUser( Auth::user()->username, $after );
+	}
+
+	public function videosUser( $username, $after = null ) {
+		$user = User::whereUsername( $username )->firstOrFail();
+
+		$posts = $user->selectorVideos()->limit( 20 );
 		if( $after != null ) {
 			$posts->where( 'post_id', '<', $after );
 		}
@@ -49,7 +61,13 @@ class UserController extends Controller
 	}
 
 	public function events( $after = null ) {
-		$posts = Auth::user()->selectorEvents()->limit( 20 );
+		return $this->eventsUser( Auth::user()->username, $after );
+	}
+
+	public function eventsUser( $username, $after = null ) {
+		$user = User::whereUsername( $username )->firstOrFail();
+
+		$posts = $user->selectorEvents()->limit( 20 );
 		if( $after != null ) {
 			$posts->where( 'event_id', '<', $after );
 		}
@@ -68,8 +86,12 @@ class UserController extends Controller
 
 	public function network() {
 		$networkmembers = Auth::user()->selectorNetworkMembers( Auth::user() )->paginate( 20 );
+		$inviters = User::join( 'friend_requests', 'friend_requests.requester_id', '=', 'users.user_id' )
+			->where( 'invited_id', '=', Auth::user()->user_id )
+			->get();
 
 		return view( 'app.networks.list', [
+			'inviters' => $inviters,
 			'networkmembers' => $networkmembers
 		]);
 	}
@@ -106,19 +128,22 @@ class UserController extends Controller
 		if( $request->has('title')) {
 			$user->title = $request->input('title') ;
 		}
+		if( $request->has('password') && Auth::user()->type == 'ADMIN' ) {
+			$user->setPassword( $request->input('password') );
+		}
 
 		if( $request->hasFile('cv') ) {
 			$user->setCV( $request->file('cv') );
 		}
 		if( $request->has('photo_id')) {
 	    	if( Post::find( $request->input('photo_id') )->author_id != $user->user_id ) {
-				throw new \Exception( 'Cannot set picture from anotehr user.' );
+				throw new \Exception( 'Cannot set picture from another user.' );
 		    }
 			$user->photo_id = $request->input('photo_id');
 		}
 		if( $request->has('cover_id')) {
 			if( Post::find( $request->input('cover_id') )->author_id != $user->user_id ) {
-				throw new \Exception( 'Cannot set picture from anotehr user.' );
+				throw new \Exception( 'Cannot set picture from another user.' );
 			}
 			$user->cover_id = $request->input('cover_id');
 		}
