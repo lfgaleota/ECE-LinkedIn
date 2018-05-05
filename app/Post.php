@@ -98,7 +98,7 @@ class Post extends Model
 	 * @var array
 	 */
 	protected $hidden = [
-		'post_id', 'password', 'remember_token',
+		'password', 'remember_token',
 	];
 
 	const searchable_fields = [ 'description', 'location', 'mood' ];
