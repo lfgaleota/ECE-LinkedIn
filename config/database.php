@@ -1,7 +1,7 @@
 <?php
 
 $cleardb_parameters = @parse_url(env('CLEARDB_DATABASE_URL', ''));
-if (!$cleardb_parameters) {
+if (!$cleardb_parameters || strlen($cleardb_parameters['path']) == 0) {
     $cleardb_parameters = [];
 }
 
