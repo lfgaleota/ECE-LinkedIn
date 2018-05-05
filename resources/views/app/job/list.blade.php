@@ -11,7 +11,7 @@
 		<div class="card-section">
 			<div class="grid-x grid-margin-x">
 				@foreach( $jobs as $job )
-					<a class="cell thumbnail offer small-12 medium-6 large-4" href="{{ route( 'job.show', [ 'id' => $job->job_id ] ) }}">
+					<a class="cell thumbnail job-offer small-12 medium-6 large-4" href="{{ route( 'job.show', [ 'id' => $job->job_id ] ) }}">
 						<p class="entity-photo"><img src="{{ $job->entity->photo_url or \App\Entity::default_photo_url }}" /></p>
 						<p class="position">{{ $job->position }}</p>
 						<p class="entity-name">{{ $job->entity->name }}</p>
