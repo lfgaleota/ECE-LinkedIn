@@ -63,7 +63,7 @@
 
 	<div>
 		{{ Form::label('cv', 'CV', ['class' => ($errors->has('cv') ? 'is-invalid-label' : '')]) }}
-		{{ Form::file('cv', ['class' => ($errors->has('cv') ? 'is-invalid-input' : '' ), 'accept' => '.pdf']) }}
+		{{ Form::file('cv', ['class' => ($errors->has('cv') ? 'is-invalid-input' : '' ), 'accept' => 'application/pdf']) }}
 		@if ($user->cv_url !=null)
 			Le profil possède un CV
 		@endif
@@ -75,8 +75,8 @@
 	</div>
 
 	<div>
-		{{ Form::label('photo', 'Photo', ['class' => ($errors->has('photo_id') ? 'is-invalid-label' : '')]) }}
-		<button id="post_photo_selector" class="button" type="button">
+		{{ Form::label('photo_open', 'Photo', ['class' => ($errors->has('photo_id') ? 'is-invalid-label' : '')]) }}
+		<button id="post_photo_selector" class="button" type="button" name="photo_open">
 			Sélectionner <span id="post_photo_isselected" style="{{ $user->photo_id == null ? 'display: none' :'' }}">
 				<i class="fa fa-check"></i>
 			</span>
@@ -90,8 +90,8 @@
 	</div>
 
 	<div>
-		{{ Form::label('cover', 'Photo de couverture', ['class' => ($errors->has('cover_id') ? 'is-invalid-label' : '')]) }}
-		<button id="post_cover_selector" class="button" type="button">
+		{{ Form::label('cover_open', 'Photo de couverture', ['class' => ($errors->has('cover_id') ? 'is-invalid-label' : '')]) }}
+		<button id="post_cover_selector" class="button" type="button" name="cover_open">
 			Sélectionner <span id="post_cover_isselected" style="{{ $user->cover_id == null ? 'display: none' :'' }}">
 				<i class="fa fa-check"></i>
 			</span>
@@ -104,7 +104,7 @@
 		@endif
 	</div>
 
-	@if( Auth::user()->type == 'ADMIN' )
+	@if( Auth::user()->hasFullEditRight() )
 		<div>
 			{{ Form::label('password', 'Mot de passe', ['class' => ($errors->has('password') ? 'is-invalid-label' : ''), 'id' => 'username_register']) }}
 			{{ Form::password('password', ['required' => true, 'class' => ($errors->has('password') ? 'is-invalid-input' : '')]) }}
@@ -238,7 +238,8 @@
 				component: 'image-renderer',
 				itemGetInitier: photosGet,
 				hasAdd: true,
-				add: openImage
+				add: openImage,
+				unique: true
 			});
 		});
 
@@ -252,7 +253,8 @@
 				component: 'image-renderer',
 				itemGetInitier: coversGet,
 				hasAdd: true,
-				add: openImage
+				add: openImage,
+				unique: true
 			});
 		});
 	</script>

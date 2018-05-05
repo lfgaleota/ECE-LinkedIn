@@ -128,7 +128,7 @@ class UserController extends Controller
 		if( $request->has('title')) {
 			$user->title = $request->input('title') ;
 		}
-		if( $request->has('password') && Auth::user()->type == 'ADMIN' ) {
+		if( $request->has('password') && Auth::user()->hasFullEditRight() ) {
 			$user->setPassword( $request->input('password') );
 		}
 

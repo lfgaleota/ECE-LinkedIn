@@ -84,7 +84,7 @@ class Post extends Model
 		'mood' => 'string',
 		'image_url' => 'string',
 		'image' => 'mimes:jpeg,png',
-		'video' => 'mimes:video/avi,video/mpeg,video/quicktime,video/mp4,video/ogg,video/webm',
+		'video' => 'mimes:avi,mpeg,quicktime,mp4,ogg,webm',
 		'video_url' => 'string',
 		'visibility' => 'required|string',
 		'photo_ids' => 'json',

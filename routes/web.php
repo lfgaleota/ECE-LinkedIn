@@ -112,18 +112,55 @@ Route::middleware(['auth', 'api'])->group( function() {
  */
 Route::middleware('auth')->group( function() {
 	Route::get('search/users', 'SearchController@users')->name( 'search.user' );
+	Route::get('search/jobs', 'SearchController@jobs')->name( 'search.jobs' );
+});
+
+/*
+ * JOBS
+ */
+Route::middleware( 'auth' )->group( function() {
+	Route::get('job', 'JobController@list')->name( 'job.list' );
+	Route::get('job/own', 'JobController@listOwn')->name( 'job.list.own' );
+	Route::get('job/create', 'JobController@create')->name( 'job.create' );
+	Route::get('job/edit/{id}', 'JobController@edit')->name( 'job.edit' );
+
+	Route::get('job/{id}', 'JobController@show')->name( 'job.show' );
+
+	Route::post('job/{id}', 'JobController@update')->name( 'job.update' );
+
+
+	Route::put('job', 'JobController@store')->name( 'job.store' );
+
+	Route::delete('job/{id}', 'JobController@delete')->name( 'job.delete' );
+});
+
+/*
+ * ENTITIES
+ */
+Route::middleware( 'auth' )->group( function() {
+	Route::get('entity', 'EntityController@list')->name( 'entity.list' );
+	Route::get('entity/own', 'EntityController@listOwn')->name( 'entity.list.own' );
+	Route::get('entity/create', 'EntityController@create')->name( 'entity.create' );
+	Route::get('entity/edit/{id}', 'EntityController@edit')->name( 'entity.edit' );
+
+	Route::get('entity/{id}', 'EntityController@show')->name( 'entity.show' );
+
+	Route::post('entity/{id}', 'EntityController@update')->name( 'entity.update' );
+
+
+	Route::put('entity', 'EntityController@store')->name( 'entity.store' );
+
+	Route::delete('entity/{id}', 'EntityController@delete')->name( 'entity.delete' );
+});
+
+Route::middleware(['auth', 'api'])->group( function() {
+	Route::get('api/entity', 'EntityController@getAll')->name( 'api.entity' );
 });
 
 /*
  * AUTH
  */
 Auth::routes();
-
-/*
-* JOB
-*/
-	Route::get('job', 'JobController@show')->name( 'job.show' );
-	Route::put('api/job/new', 'JobController@add')->name( 'api.job.create' );
 
 
 /*

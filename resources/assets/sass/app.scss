@@ -192,3 +192,20 @@ input[type=search] {
 		}
 	}
 }
+
+.nopadding {
+	padding: 0!important;
+}
+
+.noborder {
+	border: none !important;
+}
+
+.card-divider .force-right {
+	position: absolute;
+	right: 1rem;
+}
+
+table.profile_img img {
+	max-height: 32px;
+}
