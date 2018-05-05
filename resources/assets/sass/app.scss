@@ -18,9 +18,13 @@
 $animated-search-form-initial-width: 10rem;
 $animated-search-form-transition-duration: 0.4s;
 
+body {
+	font-family: "Open Sans", Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
+}
+
 input[type=search] {
 	border-radius: $global-radius;
-	background-image: url('../img/search.png');
+	background-image: url('../images/search.png');
 	background-position: 0.625rem 0.625rem;
 	background-repeat: no-repeat;
 	padding: 0.75rem 1.25rem 0.75rem 2rem;
@@ -208,4 +212,24 @@ input[type=search] {
 
 table.profile_img img {
 	max-height: 32px;
+}
+
+.card.entity {
+	.header {
+		img {
+			width: 64px;
+			height: 64px;
+		}
+
+		.name {
+			font-size: 1.2em;
+			font-weight: bold;
+			padding-top: 0.9rem;
+		}
+	}
+
+	.description {
+		margin-top: 1rem;
+		white-space: pre-wrap;
+	}
 }

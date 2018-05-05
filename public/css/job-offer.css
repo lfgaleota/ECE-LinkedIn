@@ -1,0 +1,35 @@
+section.job-offer p {
+	margin-bottom: 0.25rem;
+}
+
+section.job-offer .card-section {
+	padding: 1.5rem;
+}
+
+section.job-offer .header img {
+	width: 120px;
+	height: 120px;
+}
+
+section.job-offer .header .position {
+	font-weight: bold;
+	font-size: 1.1em;
+}
+
+section.job-offer .header .entity,
+section.job-offer .header .date {
+	font-size: 0.95em;
+	color: #575757;
+}
+
+section.job-offer .header .date {
+	font-size: 0.9em;
+}
+
+section.job-offer .header .button {
+	margin-bottom: 0;
+}
+
+section.job-offer .description .card-section {
+	white-space: pre-wrap;
+}

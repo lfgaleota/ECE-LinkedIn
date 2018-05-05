@@ -64,3 +64,8 @@ window.moment = require( 'moment' );
  */
 window.instantsearch = require('instantsearch.js').default;
 window.instantsearch_widgets = require('instantsearch.js/es/widgets');
+
+/**
+ * Loads the Open Sans typeface
+ */
+require("typeface-open-sans");
