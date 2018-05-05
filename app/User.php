@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\ResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
@@ -498,5 +499,15 @@ class User extends Authenticatable {
 		}
 
 		return $array;
+	}
+
+	/**
+	 * Send the password reset notification.
+	 *
+	 * @param  string $token
+	 * @return void
+	 */
+	public function sendPasswordResetNotification( $token ) {
+		$this->notify( new ResetPassword( $token ) );
 	}
 }
