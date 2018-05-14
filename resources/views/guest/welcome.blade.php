@@ -1,3 +1,4 @@
+@php($is_index = true)
 @extends('layouts.app')
 
 @section( 'styles' )

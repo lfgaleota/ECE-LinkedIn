@@ -103,8 +103,10 @@
 						</ul>
 					</li>
 				@else
-					<li><a href="{{ url( '/' ) }}">Connexion</a></li>
-					<li><a href="{{ url( '/' ) }}">Inscription</a></li>
+					@if(!isset($is_index) || !$is_index)
+						<li><a href="{{ url( '/' ) }}">Connexion</a></li>
+						<li><a href="{{ url( '/#register' ) }}">Inscription</a></li>
+					@endif
 				@endauth
 			</ul>
 		</div>
