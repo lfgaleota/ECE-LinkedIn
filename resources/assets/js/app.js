@@ -43,3 +43,6 @@ window.__post__loadAdditional = function( baseapipath, posts, onSuccess, onError
 		onError( error );
 	});
 };
+
+window.locale = window.navigator.userLanguage || window.navigator.language;
+moment.locale( window.locale );

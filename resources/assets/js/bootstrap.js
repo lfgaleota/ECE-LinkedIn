@@ -58,6 +58,8 @@ if (token) {
  * Loads Moment.js for date and time manipulation.
  */
 window.moment = require( 'moment' );
+moment.locale( 'fr' );
+moment.locale( 'en' );
 
 /**
  * Loads InstazntSearch.js.
