@@ -33,11 +33,13 @@ class TrustProxies extends Middleware
         parent::__construct($config);
 
         if (App::environment('heroku')) {
-            $this->proxies = '*';
+            $this->proxies = '**';
             $this->headers = [
                 Request::HEADER_X_FORWARDED_FOR => 'X_FORWARDED_FOR',
                 Request::HEADER_X_FORWARDED_PORT => 'X_FORWARDED_PORT',
                 Request::HEADER_X_FORWARDED_PROTO => 'X_FORWARDED_PROTO',
+	            Request::HEADER_FORWARDED => null,
+	            Request::HEADER_X_FORWARDED_HOST  => null,
             ];
         }
     }
