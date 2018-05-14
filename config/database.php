@@ -5,6 +5,11 @@ if (!$cleardb_parameters || strlen($cleardb_parameters['path']) == 0) {
     $cleardb_parameters = [];
 }
 
+$rediscloud_parameters = @parse_url(env('REDISCLOUD_URL', ''));
+if (!$rediscloud_parameters || isset($rediscloud_parameters['path'])) {
+	$rediscloud_parameters = [];
+}
+
 return [
 
     /*
@@ -114,9 +119,9 @@ return [
         'client' => 'predis',
 
         'default' => [
-            'host' => env('REDIS_HOST', '127.0.0.1'),
-            'password' => env('REDIS_PASSWORD', null),
-            'port' => env('REDIS_PORT', 6379),
+            'host' => isset($rediscloud_parameters['host']) ? $rediscloud_parameters['host'] : env('REDIS_HOST', '127.0.0.1'),
+            'password' => isset($rediscloud_parameters['pass']) ? $rediscloud_parameters['pass'] : env('REDIS_PASSWORD', null),
+            'port' => isset($rediscloud_parameters['port']) ? $rediscloud_parameters['port'] : env('REDIS_PORT', 6379),
             'database' => 0,
         ],
 
