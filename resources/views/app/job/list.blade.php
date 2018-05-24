@@ -5,9 +5,7 @@
 	<section class="callout card job">
 		<div class="card-divider">
 			Offres d'emploi
-			@if( isset( $editable ) && $editable )
-				<a href="{{ route( 'entity.create' ) }}" class="button tiny success force-right"><i class="fas fa-plus"></i></a>
-			@endif
+			<a href="{{ route( 'entity.create' ) }}" class="button tiny success force-right"><i class="fas fa-plus"></i></a>
 		</div>
 		<div class="card-section">
 			<div class="grid-x grid-margin-x">
