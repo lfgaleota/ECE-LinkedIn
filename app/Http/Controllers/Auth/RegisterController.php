@@ -74,6 +74,7 @@ class RegisterController extends Controller
         {
             $params = $data;
             $params[ 'password' ] = Hash::make( $params[ 'password' ] );
+            $params[ 'role' ] = 'AUTHOR';
 
             return User::create( $params );
         }
