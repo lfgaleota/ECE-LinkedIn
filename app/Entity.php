@@ -63,6 +63,6 @@ class Entity extends Model {
 	}
 
 	public function setPhoto( $file ) {
-		$this->photo_url = Storage::url( $file->store( 'images' ) );
+		$this->photo_url = \App\Utils::getFileUrl( $file->store( 'images' ) );
 	}
 }

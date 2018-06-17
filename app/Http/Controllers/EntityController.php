@@ -17,7 +17,7 @@ class EntityController extends Controller {
 		}
 
 		$params = $request->all();
-		$params[ 'photo_url' ] = Storage::url( $request->file( 'photo' )->store( 'images' ) );
+		$params[ 'photo_url' ] = \App\Utils::getFileUrl( $request->file( 'photo' )->store( 'images' ) );
 		$params[ 'author_id' ] = Auth::user()->user_id;
 
 		Entity::create( $params );

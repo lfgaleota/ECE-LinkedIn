@@ -119,7 +119,7 @@ class PostController extends Controller {
 			throw new \Exception( "Image not uploaded." );
 		}
 		$path = $request->file( 'image' )->store( 'images' );
-		$params[ 'image_url' ] = Storage::url( $path );
+		$params[ 'image_url' ] = \App\Utils::getFileUrl( $path );
 
 		$post = Post::create( $params );
 		if( isset( $params[ 'post_visibility_user_ids' ] ) && $params[ 'visibility' ] == 'RESTRICTED' ) {
@@ -153,7 +153,7 @@ class PostController extends Controller {
 			throw new \Exception( "Video not uploaded." );
 		}
 		$path = $request->file( 'video' )->store( 'videos' );
-		$params[ 'video_url' ] = Storage::url( $path );
+		$params[ 'video_url' ] = \App\Utils::getFileUrl( $path );
 
 		$post = Post::create( $params );
 		if( isset( $params[ 'post_visibility_user_ids' ] ) && $params[ 'visibility' ] == 'RESTRICTED' ) {
