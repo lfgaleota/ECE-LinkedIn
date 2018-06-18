@@ -54,47 +54,53 @@
 				@endauth
 			</div>
 
-			@if( Auth::user()->role == 'ADMIN' || Auth::user()->isInNetwork( $user ) )
-				<div class="large-4 medium-4 cell profile-network-card">
-					<div class="callout card">
-						<div class="card-divider">Réseau</div>
-						<div class="card-section profile-network-content">
-							@include( 'app.inc.users.list', ['users' => $user->getNetworkMembers()])
+			@auth
+				@if( Auth::user()->hasFullEditRight() || Auth::user()->isInNetwork( $user ) )
+					<div class="large-4 medium-4 cell profile-network-card">
+						<div class="callout card">
+							<div class="card-divider">Réseau</div>
+							<div class="card-section profile-network-content">
+								@include( 'app.inc.users.list', ['users' => $user->getNetworkMembers()])
+							</div>
 						</div>
 					</div>
-				</div>
-			@endif
+				@endif
+			@endauth
 		</div>
 	</div>
 
-	@if( Auth::user()->role == 'ADMIN' || Auth::user()->isSame( $user ) )
-		<div class="reveal" id="profileEditModal" data-reveal data-close-on-click="true"
-		     data-animation-in="spin-in" data-animation-out="spin-out">
-			@include( 'app.inc.forms.user-edit', [ 'user' => $user ])
+	@auth
+		@if( Auth::user()->hasFullEditRight() || Auth::user()->isSame( $user ) )
+			<div class="reveal" id="profileEditModal" data-reveal data-close-on-click="true"
+			     data-animation-in="spin-in" data-animation-out="spin-out">
+				@include( 'app.inc.forms.user-edit', [ 'user' => $user ])
 
-			<button class="close-button" data-close aria-label="Close reveal" type="button">
-				<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-	@endif
+				<button class="close-button" data-close aria-label="Close reveal" type="button">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		@endif
+	@endauth
 @endsection
 
 @section('scripts')
 	@parent
 	@include('app.inc.tags')
 
-	@if($errors->any())
+	@auth
+		@if($errors->any())
+			<script>
+				$( '#profileEditModal' ).foundation( 'open' );
+			</script>
+		@endif
 		<script>
-			$( '#profileEditModal' ).foundation( 'open' );
+			let canEdit = {{ Auth::user()->hasFullEditRight() || Auth::user()->isSame( $user ) ? 'true' : 'false' }};
+			let username = '{!! str_replace( "'", "\'", $user->username ) !!}';
+			let infos = '{!! str_replace( "'", "\'", $user->infos ) !!}';
+			infos = ( infos.length > 0 ? JSON.parse( infos ) : {} );
+			window.riot.mount( 'education-renderer', { baseapipath: '{{ url( 'api' ) }}', initialitems: infos[ 'education' ], username: username, canedit: canEdit } );
+			window.riot.mount( 'experience-renderer', { baseapipath: '{{ url( 'api' ) }}', initialitems: infos[ 'experience' ], username: username, canedit: canEdit } );
+			window.riot.mount( 'skill-renderer', { baseapipath: '{{ url( 'api' ) }}', initialitems: infos[ 'skill' ], username: username, canedit: canEdit } );
 		</script>
-	@endif
-	<script>
-		let canEdit = {{ Auth::user()->role == 'ADMIN' || Auth::user()->isSame( $user ) ? 'true' : 'false' }};
-		let username = '{!! str_replace( "'", "\'", $user->username ) !!}';
-		let infos = '{!! str_replace( "'", "\'", $user->infos ) !!}';
-		infos = ( infos.length > 0 ? JSON.parse( infos ) : {} );
-		window.riot.mount( 'education-renderer', { baseapipath: '{{ url( 'api' ) }}', initialitems: infos[ 'education' ], username: username, canedit: canEdit } );
-		window.riot.mount( 'experience-renderer', { baseapipath: '{{ url( 'api' ) }}', initialitems: infos[ 'experience' ], username: username, canedit: canEdit } );
-		window.riot.mount( 'skill-renderer', { baseapipath: '{{ url( 'api' ) }}', initialitems: infos[ 'skill' ], username: username, canedit: canEdit } );
-	</script>
+	@endauth
 @endsection
