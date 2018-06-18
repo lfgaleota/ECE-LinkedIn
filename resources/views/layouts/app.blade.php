@@ -1,3 +1,15 @@
+@php
+	if(!isset($is_index)) {
+		$is_index = false;
+	}
+	if(!isset($same_background)) {
+		$same_background = false;
+	}
+	if(!isset($vertically_centered)) {
+		$vertically_centered = false;
+	}
+@endphp
+
 @section( 'scripts' )
 	<script src="{{ asset('js/app.js') }}"></script>
 	<script src="https://cdn.jsdelivr.net/npm/riot@3.9/riot+compiler.min.js"></script>
@@ -19,7 +31,7 @@
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 	@yield( 'styles' )
 </head>
-<body>
+<body class="@if($same_background) same-background @endif @if($vertically_centered) vertically-centered @endif">
 <div id="app">
 	<nav id="menubar" class="top-bar">
 		<div class="top-bar-left">
@@ -47,7 +59,7 @@
 			</ul>
 		</div>
 
-		@if(!isset($is_index) || !$is_index)
+		@if(!$is_index)
 			<div class="top-bar-right">
 				<ul class="dropdown menu" data-dropdown-menu data-disable-hover="true" data-click-open="true">
 					@auth
@@ -116,9 +128,9 @@
 							</ul>
 						</li>
 					@else
-							<li class="hide-for-small-only"><a href="{{ url( '/' ) }}">Connexion</a></li>
-							<li class="hide-for-small-only"><a href="{{ url( '/#register' ) }}">Inscription</a></li>
-							<li class="show-for-small-only"><a href="{{ url( '/' ) }}"><i class="fas fa-sign-in-alt"></i></a></li>
+						<li class="hide-for-small-only"><a href="{{ url( '/' ) }}">Connexion</a></li>
+						<li class="hide-for-small-only"><a href="{{ url( '/#register' ) }}">Inscription</a></li>
+						<li class="show-for-small-only"><a href="{{ url( '/' ) }}"><i class="fas fa-sign-in-alt"></i></a></li>
 					@endauth
 				</ul>
 			</div>
