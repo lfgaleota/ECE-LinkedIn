@@ -1,0 +1,13 @@
+{
+	"short_name": "Calamar Flamboyant",
+	"name": "Calamar Flamboyant",
+	"icons": [
+		{
+			"src": "/images/icon-pin.png",
+			"sizes": "310x310",
+			"type": "image/png"
+		}
+	],
+	"start_url": "/",
+	"display": "standalone"
+}

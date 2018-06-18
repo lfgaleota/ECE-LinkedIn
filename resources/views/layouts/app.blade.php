@@ -21,6 +21,9 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<link rel="manifest" href="{{ asset('manifest.json') }}">
 
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -30,6 +33,15 @@
 	<!-- Styles -->
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 	@yield( 'styles' )
+
+	<!-- Icons & Colors -->
+	<meta name="theme-color" content="#23a3ba">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="icon" sizes="64x64" href="{{ asset('images/icon-fav.png') }}">
+	<link rel="icon" sizes="310x310" href="{{ asset('images/icon-pin.png') }}">
+	<link rel="apple-touch-icon" href="{{ asset('images/icon-pin.png') }}">
+	<meta name="msapplication-square310x310logo" content="{{ asset('images/icon-pin.png') }}">
+
 </head>
 <body class="@if($same_background) same-background @endif @if($vertically_centered) vertically-centered @endif">
 <div id="app">
