@@ -143,7 +143,7 @@ class User extends Authenticatable {
 
 	const searchable_fields = [ 'username', 'photo_url', 'name', 'surname', 'title', 'infos' ];
 
-	const default_photo_url = 'http://99deaefa0b5ada8f76c5-300aeeb3886c20b990a2b7efeaace3cd.r77.cf5.rackcdn.com/images/generic.png';
+	const default_photo_url = '/images/avatar.png';
 
 	public function newEloquentBuilder( $query ) {
 		return parent::newEloquentBuilder( $query )

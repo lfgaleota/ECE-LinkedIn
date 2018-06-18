@@ -54,7 +54,7 @@
 
     <div class="video-bg">
         <video loop muted autoplay>
-            <source src="http://99deaefa0b5ada8f76c5-300aeeb3886c20b990a2b7efeaace3cd.r77.cf5.rackcdn.com/bg.mp4" type="video/mp4">
+            <source src="{{ asset('images/bg.mp4') }}" type="video/mp4">
         </video>
     </div>
 @endsection
