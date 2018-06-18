@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -63,6 +64,6 @@ class Entity extends Model {
 	}
 
 	public function setPhoto( $file ) {
-		$this->photo_url = \App\Utils::getFileUrl( $file->store( 'images' ) );
+		$this->photo_url = \App\Utils::getFileUrl( Utils::store( Auth::user(), $file, 'images' ) );
 	}
 }

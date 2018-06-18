@@ -145,6 +145,9 @@ class User extends Authenticatable {
 
 	const default_photo_url = '/images/avatar.png';
 
+	// Max usage in MB
+	const quota_usage_max = 20;
+
 	public function newEloquentBuilder( $query ) {
 		return parent::newEloquentBuilder( $query )
 			->leftJoin( 'posts AS photo', 'users.photo_id', '=', 'photo.post_id' )
@@ -454,7 +457,7 @@ class User extends Authenticatable {
 		if( $this->cv_url != null ) {
 			Storage::delete( $this->cv_url );
 		}
-		$this->cv_url = $file->store( 'cvs' );
+		$this->cv_url = Utils::store( $this, $file, 'cvs' );
 	}
 
 	public function getBirthDateAttribute( $value ) {

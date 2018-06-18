@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Entity;
+use App\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +18,7 @@ class EntityController extends Controller {
 		}
 
 		$params = $request->all();
-		$params[ 'photo_url' ] = \App\Utils::getFileUrl( $request->file( 'photo' )->store( 'images' ) );
+		$params[ 'photo_url' ] = \App\Utils::getFileUrl( Utils::store( Auth::user(), $request->file( 'photo' ), 'images' ) );
 		$params[ 'author_id' ] = Auth::user()->user_id;
 
 		Entity::create( $params );

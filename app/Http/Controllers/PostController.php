@@ -6,6 +6,7 @@ use App\Post;
 use App\Reaction;
 use App\Snowflake;
 use App\User;
+use App\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -118,7 +119,7 @@ class PostController extends Controller {
 		if( !$request->hasFile( 'image' ) ) {
 			throw new \Exception( "Image not uploaded." );
 		}
-		$path = $request->file( 'image' )->store( 'images' );
+		$path = Utils::store( $user, $request->file( 'image' ), 'images' );
 		$params[ 'image_url' ] = \App\Utils::getFileUrl( $path );
 
 		$post = Post::create( $params );
@@ -152,7 +153,7 @@ class PostController extends Controller {
 		if( !$request->hasFile( 'video' ) ) {
 			throw new \Exception( "Video not uploaded." );
 		}
-		$path = $request->file( 'video' )->store( 'videos' );
+		$path = Utils::store( $user, $request->file( 'video' ), 'videos' );
 		$params[ 'video_url' ] = \App\Utils::getFileUrl( $path );
 
 		$post = Post::create( $params );
