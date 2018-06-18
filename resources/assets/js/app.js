@@ -59,3 +59,18 @@ window.__post__loadAdditional = function( baseapipath, posts, onSuccess, onError
 
 window.locale = window.navigator.userLanguage || window.navigator.language;
 moment.locale( window.locale );
+
+$('.top-bar .is-dropdown-submenu-parent > a').click(function(event) {
+	let parent = $(this).parent();
+	if( parent.attr('data-is-click') === 'true' ) {
+		parent.attr('data-is-click', null);
+		parent.removeClass('is-active');
+		parent.find('ul.submenu').removeClass('js-dropdown-active');
+		event.stopImmediatePropagation();
+		event.preventDefault();
+	}
+});
+
+try {
+	$(document).foundation();
+} catch (e) {}

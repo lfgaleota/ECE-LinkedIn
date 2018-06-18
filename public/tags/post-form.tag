@@ -73,6 +73,7 @@
 
 		.visibility-dropdown {
 			padding: 0;
+			width: auto;
 		}
 
 		.visilibity-selector {
