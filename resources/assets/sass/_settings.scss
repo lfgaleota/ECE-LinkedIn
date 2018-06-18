@@ -14,6 +14,9 @@ $dark-gray: #8a8a8a;
 $black: #0a0a0a;
 $white: #fefefe;
 
-
 $topbar-background: map-get($foundation-palette, primary) !global;
-$topbar-submenu-background: $light-gray;
+$topbar-submenu-background: $white;
+$topbar-link-hover-color: $light-gray;
+
+$topbar-retract-speed: 0.15s;
+$popoverpanel-retract-speed: 0.10s;

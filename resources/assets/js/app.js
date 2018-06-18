@@ -44,5 +44,18 @@ window.__post__loadAdditional = function( baseapipath, posts, onSuccess, onError
 	});
 };
 
+(function($) {
+	let prev = 0;
+	let $window = $( window );
+	let nav = $( '#menubar' );
+
+
+	$window.on( 'scroll', function() {
+		let scrollTop = $window.scrollTop();
+		nav.toggleClass( 'scrolled-out', scrollTop > prev );
+		prev = scrollTop;
+	});
+})(jQuery);
+
 window.locale = window.navigator.userLanguage || window.navigator.language;
 moment.locale( window.locale );

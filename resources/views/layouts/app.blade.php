@@ -24,39 +24,42 @@
 	<nav id="menubar" class="top-bar">
 		<div class="top-bar-left">
 			<ul class="menu">
-				<li>
+				<li class="hide-for-small-only">
 					<img src="{{asset('images/logo-menu.png')}}" alt="Logo">
 				</li>
 				<li>
 					<a href="{{ url('/') }}"><i class="fas fa-home"></i></a>
 				</li>
 				@auth
-					<li>
+					<li class="hide-for-small-only">
 						{!! Form::open(['route' => 'search.user', 'method' => 'GET']) !!}
 							<input type="search" placeholder="Rechercher..." class="animated-search-form" name="q">
 						{!! Form::close() !!}
+					</li>
+					<li class="show-for-small-only">
+						<a href="{{ route( 'search.user' ) }}"><i class="fas fa-search"></i></a>
 					</li>
 				@endauth
 			</ul>
 		</div>
 
 		<div class="top-bar-right">
-			<ul class="dropdown menu" data-dropdown-menu>
+			<ul class="dropdown menu" data-dropdown-menu data-disable-hover="true" data-click-open="true">
 				@auth
 					@if( Auth::user()->hasFullEditRight() )
-						<li><a href="{{ route( 'user.list' ) }}" title="Utilisateurs">Utilisateurs</a></li>
-						<li><a href="{{ route( 'entity.list' ) }}" title="Entreprises/Ecoles"><i class="fas fa-building"></i></a></li>
+						<li class="hide-for-small-only"><a href="{{ route( 'user.list' ) }}" title="Utilisateurs">Utilisateurs</a></li>
+						<li class="hide-for-small-only"><a href="{{ route( 'entity.list' ) }}" title="Entreprises/Ecoles"><i class="fas fa-building"></i></a></li>
 					@else
-						<li><a href="{{ route( 'entity.list.own' ) }}" title="Mes entreprises/écoles"><i class="fas fa-building"></i></a></li>
+						<li class="hide-for-small-only"><a href="{{ route( 'entity.list.own' ) }}" title="Mes entreprises/écoles"><i class="fas fa-building"></i></a></li>
 					@endif
 					<li><a href="{{ route( 'job.list' ) }}" title="Offres d'emploi"><i class="fas fa-suitcase"></i></a></li>
 					<li><a href="{{ route( 'user.network.list' ) }}" title="Mon réseau"><i class="fas fa-users"></i></a></li>
 					<li>
 						<a href="#">
 							<i class="fas fa-bell"></i><span
-									class="badge">{{count(auth()->user()->unreadNotifications)}}</span>
+									class="badge notification-badge">{{count(auth()->user()->unreadNotifications)}}</span>
 						</a>
-						<ul id="notificationPanel" class="menu vertical">
+						<ul id="notificationPanel" class="menu vertical popover-panel">
 							@foreach(auth()->user()->unreadNotifications as $notification)
 								@php
 									$filename = preg_split( "/\\\\/", $notification->type );
@@ -79,7 +82,7 @@
 					<li>
 						<a href="{{ route( 'user.profile', [ 'username' => Auth::user()->username ] ) }}"><i
 									class="fas fa-user-circle"></i></a>
-						<ul class="menu vertical">
+						<ul class="menu vertical popover-panel">
 
 							<li>
 								<a href="{{ route( 'user.profile', [ 'username' => Auth::user()->username ] ) }}">
@@ -87,7 +90,12 @@
 								</a>
 
 							</li>
-
+							@if( Auth::user()->hasFullEditRight() )
+								<li class="show-for-small-only"><a href="{{ route( 'user.list' ) }}" title="Utilisateurs">Utilisateurs</a></li>
+								<li class="show-for-small-only"><a href="{{ route( 'entity.list' ) }}" title="Entreprises/Ecoles">Entreprises/Ecoles</a></li>
+							@else
+								<li class="show-for-small-only"><a href="{{ route( 'entity.list.own' ) }}" title="Mes entreprises/écoles">Mes entreprises/écoles</a></li>
+							@endif
 							<li>
 								<a href="{{ route('logout') }}"
 								   onclick="event.preventDefault();
@@ -104,8 +112,9 @@
 					</li>
 				@else
 					@if(!isset($is_index) || !$is_index)
-						<li><a href="{{ url( '/' ) }}">Connexion</a></li>
-						<li><a href="{{ url( '/#register' ) }}">Inscription</a></li>
+						<li class="hide-for-small-only"><a href="{{ url( '/' ) }}">Connexion</a></li>
+						<li class="hide-for-small-only"><a href="{{ url( '/#register' ) }}">Inscription</a></li>
+						<li class="show-for-small-only"><a href="{{ url( '/' ) }}"><i class="fas fa-sign-in-alt"></i></a></li>
 					@endif
 				@endauth
 			</ul>
