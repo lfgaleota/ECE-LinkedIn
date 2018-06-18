@@ -8,7 +8,6 @@ section#login {
     position: relative;
     overflow: hidden;
     height: auto;
-    transition: height 0.5s;
 }
 
 section#login .separator {
