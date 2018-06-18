@@ -8,6 +8,7 @@
 
 @section( 'scripts' )
     @parent
+    <script>var _captcha_js_url='{{ app('captcha')->getCaptchaJs() }}';var _captcha_site_key='{{ app('captcha')->getSiteKey() }}';</script>
     <script src="{{ asset('js/welcome.js') }}"></script>
 @endsection
 

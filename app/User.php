@@ -104,7 +104,8 @@ class User extends Authenticatable {
 		'infos' => 'json|nullable',
 		'cv' => 'mimes:pdf|nullable',
 		'photo_id' => 'numeric',
-		'cover_id' => 'numeric'
+		'cover_id' => 'numeric',
+		'g-recaptcha-response' => 'required|captcha'
 	];
 
 	/**

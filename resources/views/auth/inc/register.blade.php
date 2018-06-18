@@ -73,6 +73,15 @@
 	            @endif
             </div>
 
+            <div class='_g-recaptcha' id='_g-recaptcha_register'></div>
+            <div>
+                @if ($errors->has('g-recaptcha-response'))
+                    <span class="form-error is-visible">
+                        {{ $errors->first('g-recaptcha-response') }}
+                    </span>
+                @endif
+            </div>
+
             <div>
                 {{ Form::submit('S\'inscrire', ['class' => 'button expanded']) }}
             </div>

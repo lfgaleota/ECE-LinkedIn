@@ -27,3 +27,31 @@
 		loginElem.attr( 'data-selected', 'register' );
 	}
 })( jQuery );
+
+var _captchaCallback, _captchaForms, _submitForm, _submitBtn;
+var _submitAction = true, _captchaForm;
+
+(function( $ ) {
+	$.getScript( _captcha_js_url ).done( function( data, status, jqxhr ) {
+		_captchaForms = $( "._g-recaptcha" ).closest( "form" );
+		_captchaForms.each( function() {
+			$( this )[ 0 ].addEventListener( "submit", function( e ) {
+				e.preventDefault();
+				_captchaForm = $( this );
+				_submitBtn = $( this ).find( ":submit" );
+				grecaptcha.execute();
+			} );
+		});
+		_submitForm = function() {
+			_submitBtn.trigger( "captcha" );
+			if( _submitAction ) {
+				_captchaForm.submit();
+			}
+		};
+		_captchaCallback = function() {
+			$('._g-recaptcha').each(function(index, el) {
+				grecaptcha.render(el, { sitekey: _captcha_site_key, size: 'invisible', callback: _submitForm });
+			});
+		}
+	});
+})( jQuery );
