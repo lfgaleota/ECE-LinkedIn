@@ -19,9 +19,9 @@ Route::get('/', 'IndexController@get')->name('index');
 /*
  * USERS
  */
-Route::get('user/', 'UserController@list')->name( 'user.list' );
-
-Route::post('user/{id}', 'UserController@update')->name( 'user.update' );
+Route::middleware(['auth'])->group( function() {
+	Route::get('user/', 'UserController@list')->name( 'user.list' );
+});
 
 Route::middleware(['auth', 'api'])->group( function() {
 	Route::get('api/{username}/images/{last_id?}', 'UserController@imagesUser')->name( 'api.user.images' );
@@ -164,7 +164,6 @@ Route::middleware('auth')->group( function() {
  */
 Auth::routes();
 
-
 /*
  * USER PROFILE
  *
@@ -173,5 +172,6 @@ Auth::routes();
 Route::get('{username}', 'UserController@profile')->name( 'user.profile' );
 
 Route::middleware(['auth'])->group( function() {
+	Route::post('user/{id}', 'UserController@update')->name( 'user.update' );
 	Route::delete('{username}', 'UserController@delete')->name( 'user.delete' );
 });
