@@ -19,6 +19,6 @@
     "laravel-mix": "^1.0",
     "lodash": "^4.17.4",
     "moment": "^2.22.1",
-    "typeface-open-sans": "0.0.54"
+    "typeface-open-sans": "0.0.75"
   }
 }
