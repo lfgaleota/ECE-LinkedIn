@@ -17,7 +17,7 @@
     "instantsearch.js": "^2.7.4",
     "jquery": "^3.2",
     "laravel-mix": "^1.0",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.20",
     "moment": "^2.22.1",
     "typeface-open-sans": "0.0.54"
   }
