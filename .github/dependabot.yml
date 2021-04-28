@@ -1,0 +1,30 @@
+version: 2
+updates:
+- package-ecosystem: composer
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: instantsearch.js
+    versions:
+    - 4.13.1
+    - 4.13.2
+    - 4.14.0
+    - 4.14.1
+    - 4.14.2
+    - 4.15.0
+    - 4.16.0
+    - 4.16.1
+    - 4.17.0
+    - 4.18.0
+    - 4.19.0
+    - 4.20.0
+  - dependency-name: lodash
+    versions:
+    - 4.17.20
